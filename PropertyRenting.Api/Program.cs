@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PropertyRenting.Api.Helpers;
 using PropertyRenting.Api.Interceptors;
-using PropertyRenting.Api.Models.Contexts;
 using PropertyRenting.Api.Models.Helpers;
 using PropertyRenting.Api.Repositories;
 using PropertyRenting.Api.Services.Token;
@@ -14,7 +12,12 @@ using System.Text;
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
-
+if (builder.Environment.IsDevelopment())
+    builder.Configuration.AddUserSecrets("PropertyRenting_Old_Dev");
+else if (builder.Environment.IsProduction())
+    builder.Configuration.AddUserSecrets("PropertyRenting_Old_Prod");
+else if (builder.Environment.IsStaging())
+    builder.Configuration.AddUserSecrets("PropertyRenting_Old_Stg");
 builder.Services.AddSingleton<AutidableInterceptor>();
 builder.Services.AddSingleton<ActionsInterceptor>();
 builder.Services.AddDbContext<AppDbContext>((sp, options) =>
@@ -123,7 +126,7 @@ builder.Services.AddAuthorization();
 //}
 
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

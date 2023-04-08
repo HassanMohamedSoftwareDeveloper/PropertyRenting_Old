@@ -6,7 +6,18 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
 	</PropertyGroup>
-
+	<!--<PropertyGroup  Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<UserSecretsId>PropertyRenting_Old_Prod</UserSecretsId>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<UserSecretsId>PropertyRenting_Old_Dev</UserSecretsId>
+	</PropertyGroup>-->
+	<!--<PropertyGroup Condition="$(ASPNETCORE_ENVIRONMENT)=='Development'">
+		<UserSecretsId>PropertyRenting_Old_Dev</UserSecretsId>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(ASPNETCORE_ENVIRONMENT)=='Production'">
+		<UserSecretsId>PropertyRenting_Old_Prod</UserSecretsId>
+	</PropertyGroup>-->
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="appsettings.Production.json" />
 	</ItemGroup>
