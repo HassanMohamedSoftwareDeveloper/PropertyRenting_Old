@@ -4,7 +4,6 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>disable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<UserSecretsId>9a083b22-375a-4248-a837-ef6fbcbc5c17</UserSecretsId>
 		<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
 	</PropertyGroup>
 
@@ -39,12 +38,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="wwwroot\Reports\Exchange.rdlc">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="wwwroot\Reports\Receipt.rdlc">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+		<Content Update="wwwroot\Reports\Exchange.rdlc">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="wwwroot\Reports\Receipt.rdlc">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 </Project>
