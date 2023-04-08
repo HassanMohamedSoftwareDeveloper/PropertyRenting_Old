@@ -66,6 +66,15 @@ public class BuildingController : BaseController
         var mappedEntity = Mapper.Map<BuildingEntity>(building);
         await Context.Buildings.AddAsync(mappedEntity);
 
+        var contributers = Mapper.Map<List<BuildingContributerEntity>>(building.Contributers);
+        contributers.ForEach(contributer =>
+        {
+            contributer.Id = Guid.NewGuid();
+            contributer.BuildingId = mappedEntity.Id;
+        });
+
+        Context.BuildingContributers.AddRange(contributers);
+
         bool saved = (await Context.SaveChangesAsync()) > 0;
         if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
 
