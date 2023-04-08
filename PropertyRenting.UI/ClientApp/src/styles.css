@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "~@ng-select/ng-select/themes/material.theme.css";
+/*@import "~@ng-select/ng-select/themes/default.theme.css";*/
+
+:root {
+  --side-bar-width: 90px;
+  --shrink-side-bar-width: 300px;
+  --topNavbarHeight: 4rem;
+  --footer-height: 44px;
+}
+
+body,
+button {
+  font-family: "Inter", sans-serif;
+}
+
+html:lang(ar) * {
+  text-align: right;
+  direction: rtl;
+}
+
+.me-auto:lang(ar) {
+  margin-left: auto !important;
+  margin-right: unset !important;
+}
+
+.ms-auto:lang(ar) {
+  margin-right: auto !important;
+  margin-left: unset !important;
+}
+
+.dropdown-menu-end:lang(ar) {
+  left: 0 !important;
+  right: auto !important;
+}
+
+.me-5:lang(ar) {
+  margin-left: 3rem !important;
+}
+
+.ms-3:lang(ar) {
+  margin-right: 1rem !important;
+}
+
+.me-2:lang(ar) {
+  margin-left: .5rem !important;
+}
+
+.ms-2:lang(ar) {
+  margin-right: .5rem !important;
+}
+
+.me-3:lang(ar) {
+  margin-left: 1rem !important;
+}
+
+.ps-3:lang(ar) {
+  padding-right: 1rem !important;
+  padding-left: unset !important;
+}
+
+
+
+.ng-option:lang(ar) {
+  text-align: right !important;
+}
+
+.ng-option-marked {
+  background: rgb(0 0 0 / 15%) !important;
+}
+
+td .ng-dropdown-panel {
+  min-width: fit-content !important;
+}
+
+  td .ng-dropdown-panel.ng-select-bottom {
+    top: auto !important;
+  }
+
+    td .ng-dropdown-panel.ng-select-bottom:lang(ar) {
+      right: auto !important;
+      left: unset !important;
+    }
+
+  td .ng-dropdown-panel.ng-select-top:lang(ar) {
+    right: auto !important;
+    left: unset !important;
+  }
+
+
+.confirm-dialog-container .mat-dialog-container {
+  border-radius: 0;
+  padding: 0px;
+}
+
+.confirm-dialog-container .content-container {
+  margin: 5px 5px 15px 5px;
+  color: #8f9cb5;
+  display: flex;
+}
+
+.confirm-dialog-container #close-icon {
+  order: 2;
+  font-weight: bolder;
+}
+
+.confirm-dialog-container:lang(en) #close-icon {
+  margin-left: auto;
+}
+
+.confirm-dialog-container:lang(ar ) #close-icon {
+  margin-right: auto;
+}
+
+.confirm-dialog-container #close-icon:hover {
+  cursor: pointer;
+}
+
+.confirm-dialog-container #no-button {
+  height: 50px;
+  width: 50%;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 0px;
+}
+
+.confirm-dialog-container #yes-button {
+  height: 50px;
+  width: 50%;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 0px;
+}
+
+.confirm-dialog-container span.content-span {
+  padding: 35px 16px;
+  text-align: center;
+  font-size: 20px;
+}
+
+
+
+th, td {
+  vertical-align: middle;
+}
+
+
+.cdk-overlay-connected-position-bounding-box:lang(ar) {
+  align-items: flex-end !important;
+}
+
+button.mat-menu-item {
+  padding: 0 5px;
+}
+
+button:hover:not(:disabled).mat-menu-item {
+  background-color: rgb(0 0 0 / 15%) !important;
+}
+
+.mat-radio-label-content:lang(en) {
+  margin-left: 5px;
+}
+
+.mat-radio-label-content:lang(ar) {
+  margin-right: 5px;
+}
+
+.balance-class {
+  background-color: #007abd !important;
+  color: white !important;
+}
+
+tr td, tr th {
+  padding: 2px .5rem !important;
+}
+
+/*.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: red !important;
+}*/

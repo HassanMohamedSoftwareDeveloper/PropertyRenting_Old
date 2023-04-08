@@ -1,0 +1,22 @@
+<app-list title="{{'User.PageTitle'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
+
+  <a actions class="nav-link" routerLink="/auth/users/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th>{{'User.Username'|translate}}</th>
+        <th>{{'User.Email'|translate}}</th>
+        <th>{{'User.Role'|translate}}</th>
+      </tr>
+
+      <tr tableBody *ngFor="let user of users">
+        <td>{{user.username}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.role}}</td>
+      </tr>
+    </app-grid-page>
+  </div>
+
+</app-list>
+

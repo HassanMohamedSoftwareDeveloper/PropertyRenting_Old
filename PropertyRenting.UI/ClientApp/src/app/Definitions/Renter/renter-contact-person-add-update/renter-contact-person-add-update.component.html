@@ -1,0 +1,131 @@
+<div class="row">
+  <div class="col-12">
+    <form (ngSubmit)='onSubmit()' [formGroup]="contactPersonForm">
+      <div class="row">
+        <div class="form-group col-6">
+          <label class="form-label">{{'Renter.Code'|translate}}</label>
+          <input type="number" class="form-control" formControlName="Code" [(ngModel)]="contactPerson.code" />
+          <div class="error-block" *ngIf="Code.invalid && (submitted||Code.touched)">
+            {{'RequiredField'|translate}}
+          </div>
+        </div>
+
+        <div class="form-group col-6">
+          <label class="form-label">{{'Status'|translate}}</label>
+          <div class="btn-group d-block d-flex justify-content-between" btnRadioGroup formControlName="Status" [(ngModel)]="status">
+            <label btnRadio="1" class="btn btn-outline-primary mb-0">{{'ActiveStatus'|translate}}</label>
+            <label btnRadio="0" class="btn btn-outline-primary mb-0">{{'NotActiveStatus'|translate}}</label>
+          </div>
+          <div class="error-block" *ngIf="Status.invalid && (submitted||Status.touched)">
+            {{'RequiredField'|translate}}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="form-group col-6">
+          <label class="form-label">{{'NameAR'|translate}}</label>
+          <input type="text" class="form-control" formControlName="NameAR" [(ngModel)]="contactPerson.nameAR" />
+          <div class="error-block" *ngIf="NameAR.invalid && (submitted||NameAR.touched)">
+            {{'RequiredField'|translate}}
+          </div>
+        </div>
+        <div class="form-group col-6">
+          <label class="form-label">{{'NameEN'|translate}}</label>
+          <input type="text" class="form-control" formControlName="NameEN" [(ngModel)]="contactPerson.nameEN" />
+          <div class="error-block" *ngIf="NameEN.invalid && (submitted||NameEN.touched)">
+            {{'RequiredField'|translate}}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-12">
+          <label class="form-label">{{'Renter.IdentityType'|translate}}</label>
+          <ng-select formControlName="IdentityType" [(ngModel)]="contactPerson.identityTypeId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+            <ng-option *ngFor="let type of identityTypes" [value]="type.id">{{type.description|translate}}</ng-option>
+          </ng-select>
+          <!--<div class="btn-group d-block d-flex justify-content-between" btnRadioGroup formControlName="IdentityType" [(ngModel)]="identityTypeId">
+            <label *ngFor="let type of identityTypes" btnRadio="{{type.id}}" class="btn btn-outline-dark mb-0">{{type.description|translate}}</label>
+          </div>-->
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-6">
+          <label class="form-label">{{'Renter.IdentityNumber'|translate}} </label>
+          <div>
+            <input type="text" class="form-control" formControlName="IdentityNumber" [(ngModel)]="contactPerson.identityNumber" />
+          </div>
+        </div>
+        <div class="form-group col-6">
+          <label class="form-label">{{'Renter.IdentityIssuePlace'|translate}} </label>
+          <div>
+            <input type="text" class="form-control" formControlName="IdentityIssuePlace" [(ngModel)]="contactPerson.identityIssuePlace" />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-6">
+          <label class="form-label">{{'Renter.IdentityIssueDate'|translate}} </label>
+          <div>
+            <input type="text" class="form-control" formControlName="IdentityIssueDate" [(ngModel)]="contactPerson.identityIssueDate"
+                   bsDatepicker [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}" />
+          </div>
+        </div>
+        <div class="form-group col-6">
+          <label class="form-label">{{'Renter.IdentityExpiryDate'|translate}} </label>
+          <div>
+            <input type="text" class="form-control" formControlName="IdentityExpiryDate" [(ngModel)]="contactPerson.identityExpiryDate"
+                   bsDatepicker [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}">
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-12">
+          <label class="form-label">{{'Renter.Email'|translate}} </label>
+          <div>
+            <input type="email" class="form-control" formControlName="Email" [(ngModel)]="contactPerson.email">
+            <div class="error-block" *ngIf="Email.invalid && (submitted||Email.touched)">
+              {{'InvalidEmail'|translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-6">
+          <label class="form-label">{{'Renter.PhoneNumber'|translate}} </label>
+          <div>
+            <input type="text" class="form-control" formControlName="PhoneNumber" [(ngModel)]="contactPerson.phone1" />
+          </div>
+        </div>
+        <div class="form-group col-6">
+          <label class="form-label">{{'Renter.MobileNumber'|translate}} </label>
+          <div>
+            <input type="text" class="form-control" formControlName="MobileNumber" [(ngModel)]="contactPerson.mobile1" />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-12">
+          <label class="form-label">{{'Renter.Notes'|translate}} </label>
+          <div>
+            <textarea class="form-control" formControlName="Notes" [(ngModel)]="contactPerson.notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-12 d-flex justify-content-end">
+        <button type="submit" class="btn btn-outline-primary ">{{'Submit'|translate}}</button>
+        <button type="button" (click)="resetFrom()" class="btn btn-outline-dark">{{'Reset'|translate}}</button>
+        <button type="button" class="btn btn-outline-info" (click)="cancel()">{{'Cancel'|translate}}</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+table {
+  border: 2px solid #b5b5b5;
+}
+
+  table > thead {
+    background-color: #dbd9d9;
+    border: 2px solid #b5b5b5;
+  }

@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <pagination [itemsPerPage]="pageSize"
+                [boundaryLinks]="showBoundaryLinks"
+                [totalItems]="totalItems"
+                [(ngModel)]="pagePage"
+                [maxSize]=5
+                (pageChanged)="pageChanged($event)"
+                [firstText]="firstText"
+                [lastText]="lastText"
+                [nextText]="nextText"
+                [previousText]="previousText">
+
+    </pagination>
+  </div>
+</div>

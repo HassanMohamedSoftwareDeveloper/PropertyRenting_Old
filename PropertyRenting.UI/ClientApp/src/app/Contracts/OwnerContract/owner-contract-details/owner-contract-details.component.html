@@ -1,0 +1,144 @@
+<app-list title="{{'Contract.AddEditPageTitle'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
+  <a actions class="nav-link" (click)="ActivateContract(contract.id)" *ngIf="contract.contractState==1 && showForm && showActivateButton">{{'Contract.ActivateContract'|translate}}</a>
+
+  <div body>
+    <form (ngSubmit)='onSubmit()' [formGroup]="contractForm" *ngIf="showForm">
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Contract.ContractNumber'|translate}}</label>
+          <div class="row">
+            <div class="col-md-2 " *ngIf="contract.id!=null" [ngClass]="{'pe-0':contract.id!=null}">
+              <input readonly type="text" formControlName="AutoNumber" class="form-control  contract-auto" [(ngModel)]="contract.autoNumber"
+                     style="border: 1px solid #b7b9b8 !important; background-color: #b7b9b8 !important; ">
+            </div>
+            <div [ngClass]="{'ps-0':contract.id!=null,'col-md-10':contract.id!=null,'col-md-12':contract.id==null}">
+              <input type="text" class="form-control" formControlName="ContractNumber" [(ngModel)]="contract.contractNumber">
+              <div class="error-block" *ngIf="ContractNumber.invalid && (submitted||ContractNumber.touched)">
+                {{'RequiredField'|translate}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+        <div *ngIf="contract.id!=null" class="form-group col-md-2">
+          <label class="form-label">{{'Contract.ContractState'|translate}}</label>
+          <div class="btn-group d-block d-flex justify-content-between" btnRadioGroup>
+            <label btnRadio class="btn btn-outline-primary mb-0 active">{{GetContractState(contract.contractState||0)|translate}}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Contract.Building'|translate}} </label>
+          <div>
+            <ng-select formControlName="BuildingId" [(ngModel)]="contract.buildingId"
+                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+              <ng-option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</ng-option>
+            </ng-select>
+            <div class="error-block" *ngIf="BuildingId.invalid && (submitted||BuildingId.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Contract.Owner'|translate}} </label>
+          <div>
+            <ng-select formControlName="OwnerId" [(ngModel)]="contract.ownerId"
+                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+              <ng-option *ngFor="let owner of owners" [value]="owner.id">{{owner.nameAR}} - {{owner.nameEN}}</ng-option>
+            </ng-select>
+            <div class="error-block" *ngIf="OwnerId.invalid && (submitted||OwnerId.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Contract.ContractAmount'|translate}}</label>
+          <div>
+            <input class="form-control" formControlName="ContractAmount" [(ngModel)]="contract.contractAmount" (keypress)="keyPressNumbersWithDecimal($event,contract.contractAmount)">
+            <div class="error-block" *ngIf="ContractAmount.invalid && (submitted||ContractAmount.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label class="form-label">{{'Contract.ContractDate'|translate}}</label>
+          <div>
+            <input type="text" class="form-control" formControlName="ContractDate" [(ngModel)]="contract.contractDate" bsDatepicker
+                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}">
+            <div class="error-block" *ngIf="ContractDate.invalid && (submitted||ContractDate.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label class="form-label">{{'Contract.ContractStartDate'|translate}}</label>
+          <div>
+            <input type="text" class="form-control" formControlName="ContractStartDate" [(ngModel)]="contract.contractStartDate" bsDatepicker
+                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}"
+                   (bsValueChange)="EmptyEndDate($event)">
+            <div class="error-block" *ngIf="ContractStartDate.invalid && (submitted||ContractStartDate.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label class="form-label">{{'Contract.ContractEndDate'|translate}}</label>
+          <div>
+            <input type="text" class="form-control" formControlName="ContractEndDate" [(ngModel)]="contract.contractEndDate" bsDatepicker
+                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}"
+                   [minDate]="MinDate" [isDisabled]="ContractStartDate.invalid">
+            <div class="error-block" *ngIf="ContractEndDate.invalid && (submitted||ContractEndDate.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Contract.PaymentMethod'|translate}}</label>
+          <ng-select formControlName="PaymentMethod" [(ngModel)]="contract.paymentMethod" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+            <ng-option *ngFor="let type of paymentMethods" [value]="type.id">{{type.description|translate}}</ng-option>
+          </ng-select>
+          <div class="error-block" *ngIf="PaymentMethod.invalid && (submitted||PaymentMethod.touched)">
+            {{'RequiredField'|translate}}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label class="form-label">{{'Contract.Description'|translate}}</label>
+          <div>
+            <textarea class="form-control" formControlName="Description" [(ngModel)]="contract.description"></textarea>
+            <div class="error-block" *ngIf="Description.invalid && (submitted||Description.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="d-flex justify-content-end mt-2">
+        <button *ngIf="contract.id==null|| contract.contractState==1" type="submit" class="btn btn-outline-primary ">{{'Submit'|translate}}</button>
+        <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
+      </div>
+
+    </form>
+  </div>
+</app-list>

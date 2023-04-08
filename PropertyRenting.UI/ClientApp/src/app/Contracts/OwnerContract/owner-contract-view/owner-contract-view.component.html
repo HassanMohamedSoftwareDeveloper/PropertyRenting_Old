@@ -1,0 +1,72 @@
+<app-list title="{{'Contract.AddEditPageTitle'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
+  <a actions class="nav-link" (click)="CancelContract(contract.id)" *ngIf="contract.contractState==2">{{'Contract.CancelContract'|translate}}</a>
+  <a actions class="nav-link" routerLink="/financials/exchange/add" *ngIf="contract.contractState==2">{{'Contract.ExchangeVoucher'|translate}}</a>
+
+
+  <div body>
+    <div class="row">
+      <app-grid-page class="contract-details">
+        <tr tableBody>
+          <th>{{'Contract.ContractNumber'|translate}}</th>
+          <td>{{contract.autoNumber}} - {{contract.contractNumber}}</td>
+          <td colspan="2"></td>
+          <th>{{'Contract.ContractState'|translate}}</th>
+          <td>{{GetContractState(contract.contractState||0)|translate}}</td>
+        </tr>
+        <tr tableBody>
+          <th>{{'Contract.Building'|translate}}</th>
+          <td>{{contract.building}}</td>
+          <td colspan="2"></td>
+          <th>{{'Contract.Owner'|translate}}</th>
+          <td>{{contract.owner}}</td>
+        </tr>
+        <tr tableBody>
+          <th>{{'Contract.ContractAmount'|translate}}</th>
+          <td>{{contract.contractAmount}}</td>
+          <td colspan="2"></td>
+          <th>{{'Contract.PaymentMethod'|translate}}</th>
+          <td>{{GetPaymentMethod(contract.paymentMethod||0)|translate}}</td>
+        </tr>
+        <tr tableBody>
+          <th>{{'Contract.ContractDate'|translate}}</th>
+          <td>{{contract.contractDate|date:'yyyy-MM-dd'}}</td>
+          <th>{{'Contract.ContractStartDate'|translate}}</th>
+          <td>{{contract.contractStartDate|date:'yyyy-MM-dd'}} </td>
+          <th>{{'Contract.ContractEndDate'|translate}}</th>
+          <td>{{contract.contractEndDate|date:'yyyy-MM-dd'}} </td>
+        </tr>
+        <tr tableBody>
+          <th>{{'Contract.Description'|translate}}</th>
+          <td colspan="5">{{contract.description}}</td>
+        </tr>
+        <tr tableBody *ngIf="(contract.ownerFinancialTransactions||[]).length>0">
+          <td colspan="6">
+            <app-grid-page>
+              <tr tableHeader><th colspan="5" class="text-center">{{'Contract.InstallmentsDetails'|translate}}</th></tr>
+              <tr tableBody>
+                <th>{{'#'|translate}}</th>
+                <th>{{'Contract.TransAmount'|translate}}</th>
+                <th>{{'Contract.DueDate'|translate}}</th>
+                <th>{{'Contract.IsPaid'|translate}}</th>
+                <th>{{'Contract.IsCancelled'|translate}}</th>
+              </tr>
+
+              <tr tableBody *ngFor="let trans of contract.ownerFinancialTransactions||[];index as index">
+                <td>{{index+1}}</td>
+                <td>{{trans.amount}}</td>
+                <td>{{trans.dueDate|date:'yyyy-MM-dd'}}</td>
+                <td>{{(trans.isPaid?'Yes':'No')|translate}}</td>
+                <td>{{(trans.isCancelled?'Yes':'No')|translate}}</td>
+              </tr>
+            </app-grid-page>
+          </td>
+        </tr>
+      </app-grid-page>
+    </div>
+
+
+    <div class="d-flex justify-content-end mt-2">
+      <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
+    </div>
+  </div>
+</app-list>

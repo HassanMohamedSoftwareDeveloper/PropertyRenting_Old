@@ -1,0 +1,9 @@
+.pe-0:lang(ar) {
+  padding-right: calc(var(--bs-gutter-x) * .5) !important;
+  padding-left: 0 !important;
+}
+
+.ps-0:lang(ar) {
+  padding-right: 0 !important;
+  padding-left: calc(var(--bs-gutter-x) * .5) !important;
+}

@@ -1,0 +1,48 @@
+.example-tree {
+  border: 2px solid #b5b5b5;
+}
+
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+
+.example-tree:lang(en) .mat-nested-tree-node div[role=group] {
+  padding-left: 40px;
+  border-left: 1px solid;
+}
+
+.example-tree:lang(ar) .mat-nested-tree-node div[role=group] {
+  padding-right: 40px;
+  border-right: 1px dashed;
+}
+
+.example-tree:lang(en) div[role=group] > .mat-tree-node {
+  padding-left: 40px;
+}
+
+.example-tree:lang(ar) div[role=group] > .mat-tree-node {
+  padding-right: 40px;
+}
+
+.mat-tree-node:hover {
+  background-color: #007abd;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+.account-details tr th {
+  background-color: #ddd !important;
+}
+
+label {
+  cursor: pointer;
+}

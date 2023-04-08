@@ -1,0 +1,25 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'Expense.PageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+  <a actions class="nav-link" routerLink="/accounts/expenses/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th>{{'NameAR'|translate}}</th>
+        <th>{{'NameEN'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let expense of expenses">
+        <td>{{expense.nameAR}}</td>
+        <td>{{expense.nameEN}}</td>
+        <td>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary" routerLink="/accounts/expenses/edit/{{expense.id}}"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteExpense(expense.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+</app-list>

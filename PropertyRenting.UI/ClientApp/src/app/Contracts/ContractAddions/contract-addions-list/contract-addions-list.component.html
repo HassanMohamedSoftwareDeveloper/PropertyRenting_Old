@@ -1,0 +1,25 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'ContractAddition.PageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+  <a actions class="nav-link" routerLink="/contracts/contract-additions/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th>{{'NameAR'|translate}}</th>
+        <th>{{'NameEN'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let addition of contractAdditions">
+        <td>{{addition.nameAR}}</td>
+        <td>{{addition.nameEN}}</td>
+        <td>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary" routerLink="/contracts/contract-additions/edit/{{addition.id}}"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteAddition(addition.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+</app-list>

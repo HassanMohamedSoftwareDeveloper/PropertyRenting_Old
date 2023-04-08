@@ -1,0 +1,84 @@
+﻿<div class="offcanvas offcanvas-start bg-dark text-white sidebar-nav" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-body p-0">
+        <nav class="navbar-dark">
+            <ul class="navbar-nav">
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3">@LayoutRes.Core</div>
+                </li>
+                <li>
+                    <a href="/" class="nav-link px-3 active">
+                        <span class="me-2">
+                            <i class="bi bi-house-fill"></i>
+                        </span>
+                        <span>@LayoutRes.HomePage</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="Privacy" class="nav-link px-3">
+                        <span class="me-2">
+                            <i class="bi bi-lock-fill"></i>
+                        </span>
+                        <span>@LayoutRes.PrivacyPage</span>
+                    </a>
+                </li>
+                <li class="my-4">
+                    <hr class="dropdown-divider" />
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3">@LayoutRes.Interface</div>
+                </li>
+                <li>
+                    <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <span class="me-2">
+                            <i class="bi bi-layout-split"></i>
+                        </span>
+                        <span>@LayoutRes.Layouts</span>
+                        <span class="right-icon ms-auto">
+                            <i class="bi bi-chevron-down"></i>
+                        </span>
+                    </a>
+                    <div class="collapse" id="collapseExample">
+                        <div>
+                            <ul class="navbar-nav ps-3">
+                                <li>
+                                    <a href="/" class="nav-link px-3">
+                                        <span class="me-2">
+                                            <i class="bi bi-layout-split"></i>
+                                        </span>
+                                        <span>@LayoutRes.NestedLink</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3">
+                        <span class="me-2"><i class="bi bi-book-fill"></i></span>
+                        <span>@LayoutRes.Pages</span>
+                    </a>
+                </li>
+                <li class="my-4">
+                    <hr class="dropdown-divider bg-light" />
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
+                        @LayoutRes.AddOns
+                    </div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3">
+                        <span class="me-2"><i class="bi bi-graph-up"></i></span>
+                        <span>@LayoutRes.Charts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3">
+                        <span class="me-2"><i class="bi bi-table"></i></span>
+                        <span>@LayoutRes.Tables</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

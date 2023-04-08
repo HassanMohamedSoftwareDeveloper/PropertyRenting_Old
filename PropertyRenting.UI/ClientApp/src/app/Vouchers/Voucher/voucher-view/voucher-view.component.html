@@ -1,0 +1,71 @@
+<app-list title="{{'Voucher.VoucherDetailsPageTitle'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
+
+  <div body>
+    <div class="row">
+      <app-grid-page class="voucher-details">
+        <tr tableBody>
+          <th colspan="2"></th>
+          <th>{{'Voucher.State'|translate}}</th>
+          <td>{{GetStateById(voucher.stateId||0)|translate}}</td>
+        </tr>
+        <tr tableBody>
+          <th>{{'Voucher.VoucherNumber'|translate}}</th>
+          <td>{{voucher.autoNumber}} - {{voucher.voucherId}}</td>
+          <th>{{'Voucher.VoucherDate'|translate}}</th>
+          <td>{{voucher.voucherDate|date:'yyyy-MM-dd'}}</td>
+        </tr>
+        <tr tableBody>
+          <th>{{'Voucher.RefType'|translate}}</th>
+          <td>{{voucher.referenceType}}</td>
+          <th>{{'Voucher.RefNumber'|translate}}</th>
+          <td>{{voucher.referenceAutoNumber}} - {{voucher.referenceManualNumber}}</td>
+        </tr>
+        <tr tableBody>
+          <th>{{'Voucher.Description'|translate}}</th>
+          <td colspan="3">{{voucher.description}}</td>
+        </tr>
+        <tr tableBody>
+          <td colspan="4">
+            <app-grid-page>
+              <tr tableHeader><th colspan="10" class="text-center">{{'Voucher.VoucherDetails'|translate}}</th></tr>
+              <tr tableBody>
+                <th>{{'#'|translate}}</th>
+                <th>{{'Voucher.Account'|translate}}</th>
+                <th>{{'Voucher.DebitAmount'|translate}}</th>
+                <th>{{'Voucher.CreditAmount'|translate}}</th>
+
+
+                <th>{{'Voucher.Renter'|translate}}</th>
+                <th>{{'Voucher.Owner'|translate}}</th>
+                <th>{{'Voucher.Contributer'|translate}}</th>
+                <th>{{'Voucher.Building'|translate}}</th>
+                <th>{{'Voucher.Unit'|translate}}</th>
+                <th>{{'Voucher.CashBank'|translate}}</th>
+              </tr>
+
+              <tr tableBody *ngFor="let detail of voucher.voucherDetails;index as index">
+                <td>{{index+1}}</td>
+                <td>{{detail.account}}</td>
+                <td>{{detail.debitAmount}}</td>
+                <td>{{detail.creditAmount}}</td>
+
+
+                <td>{{detail.renter}}</td>
+                <td>{{detail.owner}}</td>
+                <td>{{detail.contributer}}</td>
+                <td>{{detail.building}}</td>
+                <td>{{detail.unit}}</td>
+                <td>{{detail.cashBank}}</td>
+              </tr>
+            </app-grid-page>
+          </td>
+        </tr>
+      </app-grid-page>
+    </div>
+
+
+    <div class="d-flex justify-content-end mt-2">
+      <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
+    </div>
+  </div>
+</app-list>

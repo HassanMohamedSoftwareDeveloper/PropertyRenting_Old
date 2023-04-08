@@ -1,0 +1,40 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'Country.PageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+  <a actions class="nav-link" (click)="ShowAddModal()"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+  <div body>
+    <!--<div class="row">
+      <div class="input-group mb-3">
+        <span class="input-group-text" style="border-radius:0;" id="basic-addon1">Search : </span>
+        <input type="text" class="form-control" aria-describedby="basic-addon1">
+        <button type="button" class="input-group-text btn btn-outline-primary" style="border-radius:0;" id="basic-addon1"><i class="bi bi-search"></i></button>
+      </div>
+    </div>-->
+
+    <app-grid-page>
+      <tr tableHeader>
+        <th>{{'NameAR'|translate}}</th>
+        <th>{{'NameEN'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let country of countries">
+        <td>{{country.nameAR}}</td>
+        <td>{{country.nameEN}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button type="button" class="btn btn-primary" (click)="ShowEditModal(country)"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteCountry(country.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+
+  <div modal>
+    <app-modal #modal modalHeader="{{'Country.ModalHeader'|translate}}">
+      <app-country-add-update [country]="country" (hideModalWithRefreshEvent)="HideModal($event)"></app-country-add-update>
+    </app-modal>
+  </div>
+
+</app-list>

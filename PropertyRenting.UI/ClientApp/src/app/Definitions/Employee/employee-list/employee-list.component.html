@@ -1,0 +1,32 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'Employee.PageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+
+  <a actions class="nav-link" (click)="ShowAddModal()"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+  <div body>
+    <app-grid-page class="row">
+      <tr tableHeader>
+        <th>{{'NameAR'|translate}}</th>
+        <th>{{'NameEN'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let employee of employees">
+        <td>{{employee.nameAR}}</td>
+        <td>{{employee.nameEN}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button type="button" class="btn btn-primary" (click)="ShowEditModal(employee)"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteEmployee(employee.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+
+  <div modal>
+    <app-modal #modal modalHeader="{{'Employee.ModalHeader'|translate}}">
+      <app-employee-add-update [employee]="employee" (hideModalWithRefreshEvent)="HideModal($event)"></app-employee-add-update>
+    </app-modal>
+  </div>
+</app-list>

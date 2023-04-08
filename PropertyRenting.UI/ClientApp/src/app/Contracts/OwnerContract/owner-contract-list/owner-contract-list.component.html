@@ -1,0 +1,38 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'Contract.OwnerContractPageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+  <a actions class="nav-link" routerLink="/contracts/ownercontracts/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th colspan="2">{{'Contract.ContractNumber'|translate}}</th>
+        <th>{{'Contract.Building'|translate}}</th>
+        <th>{{'Contract.Owner'|translate}}</th>
+        <th>{{'Contract.ContractAmount'|translate}}</th>
+        <th>{{'Contract.PaymentMethod'|translate}}</th>
+        <th>{{'Contract.ContractState'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let contract of contracts">
+        <td>{{contract.autoNumber}}</td>
+        <td>{{contract.contractNumber}}</td>
+        <td>{{contract.building}}</td>
+        <td>{{contract.owner}}</td>
+        <td>{{contract.contractAmount}}</td>
+        <td>{{GetPaymentMethod(contract.paymentMethod||0)|translate}}</td>
+        <td>{{GetContractState(contract.contractState||0)|translate}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button *ngIf="contract.contractState===1" type="button" class="btn btn-primary" routerLink="/contracts/ownercontracts/edit/{{contract.id}}"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-success" routerLink="/contracts/ownercontracts/details/{{contract.id}}"><i class="bi bi-list"></i></button>
+            <button *ngIf="contract.contractState===1" type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteContract(contract.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+</app-list>
+
+

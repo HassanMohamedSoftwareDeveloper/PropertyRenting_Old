@@ -1,0 +1,37 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'Unit.PageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+  <a actions class="nav-link" routerLink="/definitions/units/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th>{{'Unit.UnitNumber'|translate}}</th>
+        <th>{{'Unit.UnitName'|translate}}</th>
+        <th>{{'Unit.Country'|translate}}</th>
+        <th>{{'Unit.City'|translate}}</th>
+        <th>{{'Unit.District'|translate}}</th>
+        <th>{{'Unit.RoomsNumber'|translate}}</th>
+        <th>{{'Unit.Floor'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let unit of units">
+        <td>{{unit.unitNumber}}</td>
+        <td>{{unit.unitName}}</td>
+        <td>{{unit.country}}</td>
+        <td>{{unit.city}}</td>
+        <td>{{unit.district}}</td>
+        <td>{{unit.roomsNumber}}</td>
+        <td>{{unit.floor}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button type="button" class="btn btn-primary " routerLink="/definitions/units/edit/{{unit.id}}"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteUnit(unit.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+</app-list>
+

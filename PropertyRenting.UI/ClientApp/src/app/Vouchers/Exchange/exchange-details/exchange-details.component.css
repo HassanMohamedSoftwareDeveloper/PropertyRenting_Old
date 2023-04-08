@@ -1,0 +1,43 @@
+.inline {
+  padding-top: 5px;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+
+td {
+  padding: 0 !important;
+}
+
+
+  td input, td ng-select {
+    border-radius: 0px;
+    margin: 0;
+    border: 0;
+  }
+
+  td input {
+    padding: .8rem !important;
+  }
+
+  td ng-select {
+    padding-bottom: 0 !important;
+    min-width: 150px !important;
+  }
+
+.example-radio-group {
+  margin: 0 15px;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.pe-0:lang(ar) {
+  padding-right: calc(var(--bs-gutter-x) * .5) !important;
+  padding-left: 0 !important;
+}
+
+.ps-0:lang(ar) {
+  padding-right: 0 !important;
+  padding-left: calc(var(--bs-gutter-x) * .5) !important;
+}

@@ -1,0 +1,150 @@
+<app-list title="{{'Voucher.VoucherDetailsPageTitle'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
+  <a actions class="nav-link" (click)="PostVoucher(voucher.id)" *ngIf="showForm&&showPostButton&&voucher.stateId==1">{{'Voucher.Post'|translate}}</a>
+
+  <div body>
+    <form (ngSubmit)='onSubmit()' [formGroup]="voucherForm" *ngIf="showForm">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Voucher.VoucherNumber'|translate}}</label>
+          <div class="row">
+            <div class="col-md-2 " *ngIf="voucher.id!=null" [ngClass]="{'pe-0':voucher.id!=null}">
+              <input readonly type="text" formControlName="AutoNumber" class="form-control" [(ngModel)]="voucher.autoNumber"
+                     style="border: 1px solid #b7b9b8 !important; background-color: #b7b9b8 !important; ">
+            </div>
+            <div class="col-md-10 " [ngClass]="{'ps-0':voucher.id!=null}">
+              <input class="form-control" type="text" formControlName="VoucherNumber" [(ngModel)]="voucher.voucherId">
+              <div class="error-block" *ngIf="VoucherNumber.invalid && (submitted||VoucherNumber.touched)">
+                {{'RequiredField'|translate}}
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Voucher.VoucherDate'|translate}}</label>
+          <div>
+            <input type="text" class="form-control" formControlName="VoucherDate" [(ngModel)]="voucher.voucherDate" bsDatepicker
+                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}">
+            <div class="error-block" *ngIf="VoucherDate.invalid && (submitted||VoucherDate.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label class="form-label">{{'Voucher.Description'|translate}}</label>
+          <div>
+            <textarea class="form-control" formControlName="Description" [(ngModel)]="voucher.description"></textarea>
+            <div class="error-block" *ngIf="Description.invalid && (submitted||Description.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row mt-2">
+        <div class="col-md-12 inline overflow-auto">
+          <table class="table table-bordered table-striped text-nowrap table-responsive">
+            <thead class="fw-bold">
+              <tr>
+                <th>{{'#'|translate}}</th>
+                <th>{{'Voucher.Account'|translate}}</th>
+                <th>{{'Voucher.DebitAmount'|translate}}</th>
+                <th>{{'Voucher.CreditAmount'|translate}}</th>
+                <th>{{'Voucher.Renter'|translate}}</th>
+                <th>{{'Voucher.Owner'|translate}}</th>
+                <th>{{'Voucher.Contributer'|translate}}</th>
+                <th>{{'Voucher.Building'|translate}}</th>
+                <th>{{'Voucher.Unit'|translate}}</th>
+                <th>{{'Voucher.CashBank'|translate}}</th>
+                <th>
+                  <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary me-2" (click)="addNewLine(null,null,null,null,null,null,null,null,null)"><i class="bi bi-plus"></i></button>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody formArrayName="VoucherLines">
+              <tr *ngFor="let fg of VoucherLinesFormGroups;index as index" [formGroup]="fg">
+                <td class="text-center align-middle">{{index+1}}</td>
+                <td>
+                  <ng-select formControlName="AccountId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                    <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.code}} - {{account.nameAR}} - {{account.nameEN}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <input #debitAmount class="form-control" formControlName="DebitAmount" (keypress)="keyPressNumbersWithDecimal($event,debitAmount.value)">
+                </td>
+                <td>
+                  <input #creditAmount class="form-control" formControlName="CreditAmount" (keypress)="keyPressNumbersWithDecimal($event,creditAmount.value)">
+                </td>
+                <td>
+                  <ng-select formControlName="RenterId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
+                             [readonly]="getControlByName(fg,'OwnerId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value">
+                    <ng-option *ngFor="let renter of renters" [value]="renter.id">{{renter.nameAR}} - {{renter.nameEN}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <ng-select formControlName="OwnerId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
+                             [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value">
+                    <ng-option *ngFor="let owner of owners" [value]="owner.id">{{owner.nameAR}} - {{owner.nameEN}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <ng-select formControlName="ContributerId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
+                             [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'OwnerId').value || getControlByName(fg,'CashBankId').value">
+                    <ng-option *ngFor="let contributer of contributers" [value]="contributer.id">{{contributer.nameAR}} - {{contributer.nameEN}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <ng-select #buildingCTR formControlName="BuildingId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
+                             (change)="onBuildingChange(unitCTR,buildingCTR)"
+                             [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'UnitId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value">
+                    <ng-option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <ng-select #unitCTR formControlName="UnitId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
+                             (change)="onUnitChange(unitCTR,buildingCTR)"
+                             [readonly]="getControlByName(fg,'OwnerId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value">
+                    <ng-option *ngFor="let unit of units" [value]="unit.id">{{unit.unitNumber}} - {{unit.unitName}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <ng-select formControlName="CashBankId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
+                             [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'OwnerId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'BuildingId').value || getControlByName(fg,'UnitId').value">
+                    <ng-option *ngFor="let cashBank of cashBanks" [value]="cashBank.id">{{cashBank.name}}</ng-option>
+                  </ng-select>
+                </td>
+                <th>
+                  <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="deleteRecord(index)"></i></button>
+                  </div>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="error-block" *ngIf="voucherForm.invalid && submitted">
+          <span *ngIf="voucherForm.hasError('notbalanced')">
+            {{'Voucher.Notbalanced'|translate}}
+          </span>
+          <span *ngIf="voucherForm.hasError('nolines')">
+            {{'Voucher.NoLines'|translate}}
+          </span>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end mt-2">
+        <button type="submit" class="btn btn-outline-primary ">{{'Submit'|translate}}</button>
+        <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
+      </div>
+    </form>
+  </div>
+
+</app-list>

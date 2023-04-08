@@ -1,0 +1,216 @@
+<app-list title="{{'Voucher.ExchangeDetailsPageTitle'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
+  <a actions class="nav-link" (click)="PostVoucher(voucher.id)" *ngIf="voucher.stateId==1 && showForm && showPostButton">{{'Voucher.Post'|translate}}</a>
+
+  <div body>
+    <form (ngSubmit)='onSubmit()' [formGroup]="voucherForm" *ngIf="showForm">
+      <div class="row">
+        <div class="col-md-12">
+          <label class="form-label">{{'Voucher.TypeTo'|translate}}</label>
+          <mat-radio-group color="primary" aria-labelledby="example-radio-group-label" class="example-radio-group"
+                           formControlName="SandadTypeId" [(ngModel)]="voucher.sanadTypeId" (change)="typeChange()">
+            <mat-radio-button class="example-radio-button" *ngFor="let type of sanadTypes" [value]="type.id">
+              {{type.description|translate}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <div class="error-block" *ngIf="SandadTypeId.invalid && (submitted||SandadTypeId.touched)">
+            {{'RequiredField'|translate}}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Voucher.SanadNumber'|translate}}</label>
+          <div class="row">
+            <div class="col-md-2 " *ngIf="voucher.id!=null" [ngClass]="{'pe-0':voucher.id!=null}">
+              <input readonly type="text" formControlName="AutoNumber" class="form-control" [(ngModel)]="voucher.autoNumber"
+                     style="border: 1px solid #b7b9b8 !important; background-color: #b7b9b8 !important; ">
+            </div>
+            <div class="col-md-10 " [ngClass]="{'ps-0':voucher.id!=null}">
+              <input class="form-control" type="text" formControlName="SanadNumber" [(ngModel)]="voucher.sanadNumber">
+              <div class="error-block" *ngIf="SanadNumber.invalid && (submitted||SanadNumber.touched)">
+                {{'RequiredField'|translate}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Voucher.SanadDate'|translate}}</label>
+          <div>
+            <input type="text" class="form-control" formControlName="SanadDate" [(ngModel)]="voucher.sanadDate" bsDatepicker
+                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}">
+            <div class="error-block" *ngIf="SanadDate.invalid && (submitted||SanadDate.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Voucher.CashORBank'|translate}} </label>
+          <div>
+            <ng-select formControlName="CashBankId" [(ngModel)]="voucher.cashBankId"
+                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+              <ng-option *ngFor="let cash of cashOrBanks" [value]="cash.id">{{cash.name}}</ng-option>
+            </ng-select>
+            <div class="error-block" *ngIf="CashBankId.invalid && (submitted||CashBankId.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-6" *ngIf="voucher.sanadTypeId==2">
+          <label class="form-label">{{'Voucher.Renter'|translate}} </label>
+          <div>
+            <ng-select formControlName="RenterId" [(ngModel)]="voucher.renterId"
+                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+              <ng-option *ngFor="let renter of renters" [value]="renter.id">{{renter.nameAR}} - {{renter.nameEN}}</ng-option>
+            </ng-select>
+            <div class="error-block" *ngIf="RenterId.invalid && (submitted||RenterId.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-6" *ngIf="voucher.sanadTypeId==3">
+          <label class="form-label">{{'Voucher.Owner'|translate}} </label>
+          <div>
+            <ng-select #owner formControlName="OwnerId" [(ngModel)]="voucher.ownerId" (change)="ownerChange(owner)"
+                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+              <ng-option *ngFor="let owner of owners" [value]="owner.id">{{owner.nameAR}} - {{owner.nameEN}}</ng-option>
+            </ng-select>
+            <div class="error-block" *ngIf="OwnerId.invalid && (submitted||OwnerId.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="form-group col-md-6" *ngIf="voucher.sanadTypeId==4">
+          <label class="form-label">{{'Voucher.Contributer'|translate}} </label>
+          <div>
+            <ng-select formControlName="ContributerId" [(ngModel)]="voucher.contributerId"
+                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+              <ng-option *ngFor="let contributer of contributers" [value]="contributer.id">{{contributer.nameAR}} - {{contributer.nameEN}}</ng-option>
+            </ng-select>
+            <div class="error-block" *ngIf="ContributerId.invalid && (submitted||ContributerId.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Voucher.AmountDescription'|translate}}</label>
+          <input class="form-control" formControlName="Amount" [(ngModel)]="voucher.amount"
+                 [readonly]="voucher.sanadTypeId!=4">
+          <div class="error-block" *ngIf="voucher.sanadTypeId==4 && Amount.invalid && (submitted||Amount.touched)">
+            {{'RequiredField'|translate}}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label class="form-label">{{'Voucher.Description'|translate}}</label>
+          <div>
+            <textarea class="form-control" formControlName="Description" [(ngModel)]="voucher.description"></textarea>
+            <div class="error-block" *ngIf="Description.invalid && (submitted||Description.touched)">
+              {{'RequiredField'|translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-2" *ngIf="voucher.sanadTypeId!=4">
+        <div class="col-md-12 inline overflow-auto">
+          <table class="table table-bordered table-striped text-nowrap table-responsive">
+            <thead class="fw-bold">
+              <tr>
+                <th>{{'#'|translate}}</th>
+                <th *ngIf="voucher.sanadTypeId==1">{{'Voucher.Expense'|translate}}</th>
+                <th *ngIf="voucher.sanadTypeId==2">{{'Voucher.Type'|translate}}</th>
+                <th *ngIf="false"></th>
+                <th *ngIf="showInstallmentBtn">{{'Voucher.Installment'|translate}}</th>
+                <th *ngIf="showInstallmentBtn">{{'Voucher.DueDate'|translate}}</th>
+                <th>{{'Voucher.Building'|translate}}</th>
+                <th>{{'Voucher.Unit'|translate}}</th>
+                <th>{{'Voucher.ReceivedAmount'|translate}}</th>
+                <th>
+                  <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary me-2" (click)="addNewInstallment(null,null,null,null,'',null,null,null)"><i class="bi bi-plus"></i></button>
+                    <button *ngIf="showInstallmentBtn" type="button" class="btn btn-secondary" (click)="addInstallments()"><i class="bi bi-list me-2"></i> {{'Voucher.AddInstallments'|translate}}</button>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody formArrayName="Installments">
+              <tr *ngFor="let fg of InstallmentsFormGroups;index as index" [formGroup]="fg">
+                <td class="text-center align-middle">{{index+1}}</td>
+                <td *ngIf="voucher.sanadTypeId==1">
+                  <ng-select formControlName="ExpenseId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                    <ng-option *ngFor="let expense of expenses" [value]="expense.id">{{expense.nameAR}} - {{expense.nameEN}}</ng-option>
+                  </ng-select>
+                </td>
+                <td *ngIf="voucher.sanadTypeId==2">
+                  <ng-select formControlName="AditionId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                    <ng-option *ngFor="let addition of additions" [value]="addition.id">{{addition.nameAR}} - {{addition.nameEN}}</ng-option>
+                  </ng-select>
+                </td>
+                <td *ngIf="false">
+                  <input type="text" class="form-control" formControlName="InstallmentId" />
+                </td>
+                <td *ngIf="showInstallmentBtn">
+                  <input *ngIf="getControlByName(fg,'InstallmentId').value" type="text" class="form-control" readonly formControlName="Installment" />
+                </td>
+                <td *ngIf="showInstallmentBtn">
+                  <input *ngIf="getControlByName(fg,'InstallmentId').value" type="text" class="form-control" formControlName="DueDate" readonly>
+                </td>
+                <td>
+                  <ng-select #buildingCTR formControlName="BuildingId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
+                             [readonly]="getControlByName(fg,'UnitId').value || getControlByName(fg,'InstallmentId').value || voucher.sanadTypeId==2" (change)="onBuildingChange(unitCTR,buildingCTR)">
+                    <ng-option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <ng-select #unitCTR formControlName="UnitId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
+                             (change)="onUnitChange(unitCTR,buildingCTR)" [readonly]="voucher.sanadTypeId==3">
+                    <ng-option *ngFor="let unit of units" [value]="unit.id">{{unit.unitNumber}} - {{unit.unitName}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <input #amount class="form-control" formControlName="Amount" (keypress)="keyPressNumbersWithDecimal($event,amount.value)">
+                </td>
+                <th>
+                  <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="deleteRecord(index,getControlByName(fg,'InstallmentId').value)"></i></button>
+                  </div>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="error-block" *ngIf="voucher.sanadTypeId!=4 && voucherForm.invalid && submitted && voucherForm.hasError('nolines')">
+          {{'Voucher.NoLines'|translate}}
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end mt-2">
+        <button type="submit" class="btn btn-outline-primary ">{{'Submit'|translate}}</button>
+        <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
+      </div>
+    </form>
+  </div>
+</app-list>
+
+
+
+<app-modal #modal modalHeader="{{'Voucher.InstallmentsModalHeader'|translate}}">
+  <app-installments [installments]="installments" (hideModalEvent)="HideModal()" (selectedInstallmentsEvent)="addSelectedInstallments($event)"></app-installments>
+</app-modal>

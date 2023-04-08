@@ -1,0 +1,44 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'Voucher.VoucherPageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+  <a actions class="nav-link" routerLink="/financials/voucher/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th>{{'#'|translate}}</th>
+        <th colspan="2">{{'Voucher.VoucherNumber'|translate}}</th>
+        <th>{{'Voucher.VoucherDate'|translate}}</th>
+        <th>{{'Voucher.Description'|translate}}</th>
+        <th>{{'Voucher.State'|translate}}</th>
+        <th>{{'Voucher.RefType'|translate}}</th>
+        <th colspan="2">{{'Voucher.RefNumber'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let voucher of vouchers;index as index">
+        <td>{{index+1}}</td>
+        <td>{{voucher.autoNumber}}</td>
+        <td>{{voucher.voucherId}}</td>
+        <td>{{voucher.voucherDate|date:'yyyy-MM-dd'}}</td>
+        <td>{{voucher.description}}</td>
+        <td>{{GetStateById(voucher.stateId||0)|translate}}</td>
+        <td>{{voucher.referenceType}}</td>
+        <td>{{voucher.referenceAutoNumber}}</td>
+        <td>{{voucher.referenceManualNumber}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button *ngIf="voucher.stateId===2 && voucher.referenceType=='OwnerContract'" type="button" class="btn btn-dark" routerLink="/contracts/ownercontracts/details/{{voucher.referenceId}}"><i class="bi bi-view-list"></i></button>
+            <button *ngIf="voucher.stateId===2 && voucher.referenceType=='RenterContract'" type="button" class="btn btn-dark" routerLink="/contracts/rentercontracts/details/{{voucher.referenceId}}"><i class="bi bi-view-list"></i></button>
+            <button *ngIf="voucher.stateId===2 && voucher.referenceType=='Exchange'" type="button" class="btn btn-dark" routerLink="/financials/exchange/details/{{voucher.referenceId}}"><i class="bi bi-view-list"></i></button>
+            <button *ngIf="voucher.stateId===2 && voucher.referenceType=='Receipt'" type="button" class="btn btn-dark" routerLink="/financials/receipt/details/{{voucher.referenceId}}"><i class="bi bi-view-list"></i></button>
+
+            <button *ngIf="voucher.stateId===1" type="button" class="btn btn-primary" routerLink="/financials/voucher/edit/{{voucher.id}}"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-success" routerLink="/financials/voucher/details/{{voucher.id}}"><i class="bi bi-list"></i></button>
+            <button *ngIf="voucher.stateId===1" type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteVoucher(voucher.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+</app-list>

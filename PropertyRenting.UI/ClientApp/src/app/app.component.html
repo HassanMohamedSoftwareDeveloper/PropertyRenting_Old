@@ -1,0 +1,15 @@
+<app-loader></app-loader>
+<app-login *ngIf="!isLoggedIn" class="d-flex justify-content-center align-items-center"></app-login>
+<!--<ngx-alerts></ngx-alerts>-->
+
+<div class="container-fluid g-0" *ngIf="isLoggedIn">
+  <app-nav-bar (sideNavToggled)="sideNavStatus=$event;"></app-nav-bar>
+  <main>
+    <app-side-bar [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open':sideNavStatus}" *ngIf="isLoggedIn"></app-side-bar>
+
+    <div class="dislay-area p-3" [ngClass]="{'dislay-area-shrink':sideNavStatus}">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer class="dislay-area" [ngClass]="{'dislay-area-shrink':sideNavStatus}"></app-footer>
+  </main>
+</div>

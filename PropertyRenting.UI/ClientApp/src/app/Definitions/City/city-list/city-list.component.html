@@ -1,0 +1,37 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'City.PageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+  <a actions class="nav-link" (click)="ShowAddModal()"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th>{{'NameAR'|translate}}</th>
+        <th>{{'NameEN'|translate}}</th>
+        <th>{{'City.Country'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+
+      <tr tableBody *ngFor="let city of cities">
+        <td>{{city.nameAR}}</td>
+        <td>{{city.nameEN}}</td>
+        <td>{{city.country}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button type="button" class="btn btn-primary" (click)="ShowEditModal(city)"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteCity(city.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+
+    </app-grid-page>
+  </div>
+
+  <div modal>
+    <app-modal #modal modalHeader="{{'City.ModalHeader'|translate}}">
+      <app-city-add-update [city]="city" (hideModalWithRefreshEvent)="HideModal($event)"></app-city-add-update>
+    </app-modal>
+  </div>
+</app-list>
+

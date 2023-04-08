@@ -1,0 +1,35 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'Contributer.PageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+
+  <a actions class="nav-link" (click)="ShowAddModal()"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th>{{'NameAR'|translate}}</th>
+        <th>{{'NameEN'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+
+      <tr tableBody *ngFor="let contributer of contributers">
+        <td>{{contributer.nameAR}}</td>
+        <td>{{contributer.nameEN}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button type="button" class="btn btn-primary" (click)="ShowEditModal(contributer)"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteContributer(contributer.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+
+  <div modal>
+    <app-modal #modal modalHeader="{{'Contributer.ModalHeader'|translate}}">
+      <app-contributer-add-update [contributer]="contributer" (hideModalWithRefreshEvent)="HideModal($event)"></app-contributer-add-update>
+    </app-modal>
+  </div>
+
+</app-list>

@@ -1,0 +1,39 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'Renter.PageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+  <a actions class="nav-link" routerLink="/definitions/renters/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th>{{'NameAR'|translate}}</th>
+        <th>{{'NameEN'|translate}}</th>
+        <th>{{'Renter.Country'|translate}}</th>
+        <th>{{'Renter.City'|translate}}</th>
+        <th>{{'Renter.Nationality'|translate}}</th>
+        <th>{{'Renter.PhoneNumber'|translate}}</th>
+        <th>{{'Renter.MobileNumber'|translate}}</th>
+        <th>{{'Renter.Email'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let renter of renters">
+        <td>{{renter.nameAR}}</td>
+        <td>{{renter.nameEN}}</td>
+        <td>{{renter.country}}</td>
+        <td>{{renter.city}}</td>
+        <td>{{renter.nationality}}</td>
+        <td>{{renter.phone1}}</td>
+        <td>{{renter.mobile1}}</td>
+        <td>{{renter.email}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button type="button" class="btn btn-primary " routerLink="/definitions/renters/edit/{{renter.id}}"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteRenter(renter.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+</app-list>
+

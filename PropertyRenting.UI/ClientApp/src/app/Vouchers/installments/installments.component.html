@@ -1,0 +1,29 @@
+<div class="row">
+  <app-grid-page>
+    <tr tableHeader>
+      <th><input #SelectAll [(ngModel)]="allSelected" type="checkbox" (change)="selectAll()" /></th>
+      <th>{{'Installment.ContractNumber'|translate}}</th>
+      <th>{{'Installment.Type'|translate}}</th>
+      <th>{{'Installment.Amount'|translate}}</th>
+      <th>{{'Installment.Paid'|translate}}</th>
+      <th>{{'Installment.Balance'|translate}}</th>
+      <th>{{'Installment.DueDate'|translate}}</th>
+    </tr>
+    <tr tableBody *ngFor="let installment of installments">
+      <td><input type="checkbox" [(ngModel)]="installment.selected" (change)="selectChange(installment)" /></td>
+      <td>{{installment.contractNumber}}</td>
+      <td>{{installment.contractAddition}}</td>
+      <td>{{installment.amount}}</td>
+      <td>{{installment.paidAmount}}</td>
+      <td>{{installment.balance}}</td>
+      <td>{{installment.dueDate|date:'yyyy-MM-dd'}}</td>
+    </tr>
+  </app-grid-page>
+
+  <div class="row">
+    <div class="form-group col-md-12 d-flex justify-content-end">
+      <button type="button" class="btn btn-outline-primary" (click)="addInstallments()">{{'Submit'|translate}}</button>
+      <button type="button" class="btn btn-outline-info" (click)="cancel()">{{'Cancel'|translate}}</button>
+    </div>
+  </div>
+</div>

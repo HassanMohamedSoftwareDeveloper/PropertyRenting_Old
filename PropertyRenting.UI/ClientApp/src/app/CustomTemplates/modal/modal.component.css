@@ -1,0 +1,11 @@
+.modal-content {
+  border-bottom: 2px solid;
+  border-radius: 0;
+}
+
+.modal-header {
+  border-bottom: 2px solid black;
+  border-radius: 0;
+  color: white;
+  background-color: #007abd;
+}

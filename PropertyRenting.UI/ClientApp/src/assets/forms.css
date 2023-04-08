@@ -1,0 +1,93 @@
+.form-control.ng-invalid.ng-touched:lang(ar), .form-control.ng-invalid.ng-untouched:lang(ar) {
+  border-left: 5px solid red;
+}
+
+.form-control.ng-valid.ng-touched:lang(ar), .form-control.ng-valid.ng-untouched:lang(ar) {
+  border-left: 5px solid #198754 !important;
+}
+
+.ng-select .ng-select-container {
+  border: 1px solid #ced4da;
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+}
+
+.ng-select.ng-invalid.ng-touched:lang(ar) .ng-select-container, .ng-select.ng-invalid.ng-untouched:lang(ar) .ng-select-container {
+  /*border-color: red;*/
+  border-left: 5px solid red;
+}
+
+.ng-select.ng-valid.ng-touched:lang(ar) .ng-select-container, .ng-select.ng-valid.ng-untouched:lang(ar) .ng-select-container {
+  border-left: 5px solid #198754;
+}
+
+
+
+.form-control.ng-invalid.ng-touched:lang(en), .form-control.ng-invalid.ng-untouched:lang(en) {
+  /*border-color: red;*/
+  border-right: 5px solid red;
+}
+
+.form-control.ng-valid.ng-touched:lang(en), .form-control.ng-valid.ng-untouched:lang(en) {
+  /* border-color: #198754;*/
+  border-right: 5px solid #198754;
+}
+
+
+.ng-select.ng-invalid.ng-touched:lang(en) .ng-select-container, .ng-select.ng-invalid.ng-untouched:lang(en) .ng-select-container {
+  /*border-color: red;*/
+  border-right: 5px solid red;
+}
+
+.ng-select.ng-valid.ng-touched:lang(en) .ng-select-container, .ng-select.ng-valid.ng-untouched:lang(en) .ng-select-container {
+  /*border-color: #198754;*/
+  border-right: 5px solid #198754;
+}
+
+
+.pagination li a, .form-control, .btn, .card {
+  border-radius: 0 !important;
+}
+
+.error-block {
+  color: red;
+}
+
+.form-group {
+  margin-top: .5rem !important;
+}
+
+app-list .nav-link {
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+  app-list .nav-link:hover {
+    margin: 2px;
+    border-radius: 5px;
+  }
+
+.nav-link {
+  cursor: pointer;
+}
+
+.form-control {
+  box-shadow: none !important;
+}
+
+.btn-group > .btn {
+  text-align: center !important;
+  border-radius: 0 !important;
+}
+
+.card {
+  margin-bottom: 1rem;
+}
+
+.card-header {
+  cursor: pointer;
+}
+
+  .card-header span, .card-header button {
+    font-weight: 700 !important;
+    font-size: 0.875em !important;
+  }

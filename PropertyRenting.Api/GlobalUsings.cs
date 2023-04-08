@@ -1,0 +1,10 @@
+﻿global using AutoMapper;
+global using AutoMapper.QueryableExtensions;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using PropertyRenting.Api.Constants;
+global using PropertyRenting.Api.DTOs;
+global using PropertyRenting.Api.Enums;
+global using PropertyRenting.Api.Models.Contexts;
+global using PropertyRenting.Api.Models.Entities;
+global using PropertyRenting.Api.ViewModels;

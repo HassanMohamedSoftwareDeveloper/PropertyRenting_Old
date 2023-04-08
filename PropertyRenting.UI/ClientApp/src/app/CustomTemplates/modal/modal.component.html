@@ -1,0 +1,16 @@
+<div bsModal #childModal="bs-modal" class="modal fade mt-5" tabindex="-1" role="dialog" aria-labelledby="dialog-child-name" style="position:page;"
+     [config]="config">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-child-name" class="modal-title pull-left">{{modalHeader}}</h4>
+        <button type="button" class="close pull-right text-light bg-dark fw-bold fs-4" aria-label="Close" (click)="hideModal()">
+          <i class="bi bi-x-circle"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

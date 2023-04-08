@@ -1,0 +1,33 @@
+export interface Unit {
+    id?: any;
+    roomsNumber?: number;
+    status?: boolean;
+    typeId?: number;
+    buildingId?: any;
+    floor?: number;
+    rentStatus?: boolean;
+    receiveDate?: Date;
+    totalArea?: number;
+    rentableArea?: number;
+    annualRentAmount?: number;
+    hasCentralAC?: boolean;
+    hasInternetService?: boolean;
+    districtId?: any;
+    addressAR?: string;
+    addressEN?: string;
+    location?: string;
+    latitude?: string;
+    longitude?: string;
+    notes?: string;
+    district?: string;
+    countryId?: any;
+    country?: string;
+    cityId?: any;
+    city?: string;
+    unitName?: string;
+    unitNumber?: string;
+    pathsNumber?: number;
+    hallNumber?: number;
+    acNumber?: number;
+    kitchenNumber?: number;
+}

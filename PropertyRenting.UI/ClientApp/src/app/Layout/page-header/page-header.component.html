@@ -1,0 +1,14 @@
+<div class="page-header mb-3">
+  <h1 class="page-title mb-10 text-muted fw-bold">{{pageTitle}} </h1>
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item" *ngFor="let breadcrumb of breadcrumbItems"
+            [ngClass]="{'active':breadcrumb.isActive}">
+          <span *ngIf="breadcrumb.isActive">{{breadcrumb.displayName|translate}}</span>
+          <a *ngIf="!breadcrumb.isActive" routerLink="{{breadcrumb.url}}">{{breadcrumb.displayName|translate}}</a>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>

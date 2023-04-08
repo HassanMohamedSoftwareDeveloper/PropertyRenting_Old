@@ -1,0 +1,40 @@
+<app-list title="{{'Report.CurrentUnits'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
+  <div body>
+    <div class="d-flex justify-content-end mt-2">
+      <button type="button" class="btn btn-primary" (click)="exportPDF()">{{'ExportPDF'|translate}}</button>
+      <button type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
+    </div>
+    <div class="row">
+      <app-grid-page>
+        <tr tableHeader>
+          <th class="text-center">{{'#'|translate}}</th>
+          <th class="text-center">{{'Unit.UnitNumber'|translate}}</th>
+          <th class="text-center">{{'Unit.UnitName'|translate}}</th>
+          <th class="text-center">{{'Unit.Building'|translate}}</th>
+          <th class="text-center">{{'Unit.AddressAR'|translate}}</th>
+          <th class="text-center">{{'Unit.AddressEN'|translate}}</th>
+          <th class="text-center">{{'Unit.District'|translate}}</th>
+          <th class="text-center">{{'Unit.City'|translate}}</th>
+          <th class="text-center">{{'Unit.Country'|translate}}</th>
+          <th class="text-center">{{'Unit.AnnualRentAmount'|translate}}</th>
+          <th class="text-center">{{'Unit.TotalArea'|translate}}</th>
+          <th class="text-center">{{'Unit.RentableArea'|translate}}</th>
+        </tr>
+        <tr tableBody *ngFor="let item of data;index as index">
+          <td>{{index+1}}</td>
+          <td>{{item.unitNumber}}</td>
+          <td>{{item.unitName}}</td>
+          <td>{{item.buildingName}}</td>
+          <td>{{item.addressAR}}</td>
+          <td>{{item.addressEN}}</td>
+          <td>{{item.district}}</td>
+          <td>{{item.city}}</td>
+          <td>{{item.country}}</td>
+          <td>{{item.annualRentAmount}}</td>
+          <td>{{item.totalArea}}</td>
+          <td>{{item.rentableArea}}</td>
+        </tr>
+      </app-grid-page>
+    </div>
+  </div>
+</app-list>

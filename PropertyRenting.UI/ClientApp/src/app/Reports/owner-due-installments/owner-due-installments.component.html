@@ -1,0 +1,74 @@
+<app-list title="{{'Report.OwnerDueInstallments'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
+  <div body>
+    <form (ngSubmit)='onSubmit()' [formGroup]="filterForm">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Report.ToDate'|translate}}</label>
+          <div>
+            <input type="text" class="form-control" formControlName="ToDate" bsDatepicker
+                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Report.Owner'|translate}} </label>
+          <div>
+            <ng-select formControlName="OwnerId"
+                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+              <ng-option *ngFor="let owner of owners" [value]="owner.id">{{owner.nameAR}} - {{owner.nameEN}}</ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label class="form-label">{{'Report.Building'|translate}} </label>
+          <div>
+            <ng-select formControlName="BuildingId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+              <ng-option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</ng-option>
+            </ng-select>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end mt-2">
+        <button type="submit" class="btn btn-outline-primary ">{{'Report.DisplayReport'|translate}}</button>
+        <button type="reset" class="btn btn-outline-info">{{'Reset'|translate}}</button>
+        <button *ngIf="showReport" type="button" class="btn btn-primary" (click)="exportPDF()">{{'ExportPDF'|translate}}</button>
+        <button *ngIf="showReport" type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
+      </div>
+    </form>
+    <div class="row mt-3" *ngIf="showReport">
+      <app-grid-page>
+        <tr tableHeader>
+          <th rowspan="2" colspan="2" class="text-center">{{'Contract.ContractNumber'|translate}}</th>
+          <th rowspan="2" class="text-center">{{'Report.Installment'|translate}}</th>
+          <th rowspan="2" class="text-center">{{'Report.PaidAmount'|translate}}</th>
+          <th rowspan="2" class="text-center">{{'Report.Amount'|translate}}</th>
+          <th rowspan="2" class="text-center">{{'Contract.DueDate'|translate}}</th>
+          <th colspan="2" class="text-center">{{'Report.Owner'|translate}}</th>
+          <th rowspan="2" class="text-center">{{'Report.Building'|translate}}</th>
+        </tr>
+        <tr tableHeader>
+          <th>{{'NameAR'|translate}}</th>
+          <th>{{'NameEN'|translate}}</th>
+        </tr>
+        <tr tableBody *ngFor="let item of data">
+          <td>{{item.autoNumber}}</td>
+          <td>{{item.contractNumber}}</td>
+          <td>{{item.amount}}</td>
+          <td>{{item.paidAmount}}</td>
+          <td>{{item.balance}}</td>
+          <td>{{item.dueDate|date:'yyyy-MM-dd'}}</td>
+          <td>{{item.ownerAR}}</td>
+          <td>{{item.ownerEN}}</td>
+          <td>{{item.buildingName}}</td>
+        </tr>
+      </app-grid-page>
+    </div>
+
+
+  </div>
+</app-list>
+

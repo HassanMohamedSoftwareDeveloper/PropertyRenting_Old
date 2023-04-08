@@ -1,0 +1,34 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'Voucher.ExchangePageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+  <a actions class="nav-link" routerLink="/financials/exchange/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th colspan="2">{{'Voucher.SanadNumber'|translate}}</th>
+        <th>{{'Voucher.SanadDate'|translate}}</th>
+        <th>{{'Voucher.Amount'|translate}}</th>
+        <th>{{'Voucher.Description'|translate}}</th>
+        <th>{{'Voucher.State'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let voucher of vouchers">
+        <td>{{voucher.autoNumber}}</td>
+        <td>{{voucher.sanadNumber}}</td>
+        <td>{{voucher.sanadDate|date:'yyyy-MM-dd'}}</td>
+        <td>{{voucher.amount}}</td>
+        <td>{{voucher.description}}</td>
+        <td>{{GetStateById(voucher.stateId||0)|translate}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button *ngIf="voucher.stateId===1" type="button" class="btn btn-primary" routerLink="/financials/exchange/edit/{{voucher.id}}"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-success" routerLink="/financials/exchange/details/{{voucher.id}}"><i class="bi bi-list"></i></button>
+            <button *ngIf="voucher.stateId===1" type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteVoucher(voucher.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+</app-list>

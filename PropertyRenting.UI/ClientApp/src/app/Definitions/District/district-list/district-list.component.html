@@ -1,0 +1,38 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'District.PageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+
+  <a actions class="nav-link" (click)="ShowAddModal()"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th>{{'NameAR'|translate}}</th>
+        <th>{{'NameEN'|translate}}</th>
+        <th>{{'District.Country'|translate}}</th>
+        <th>{{'District.City'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let district of districts">
+        <td>{{district.nameAR}}</td>
+        <td>{{district.nameEN}}</td>
+        <td>{{district.country}}</td>
+        <td>{{district.city}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button type="button" class="btn btn-primary" (click)="ShowEditModal(district)"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteDistrict(district.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+
+
+  <div modal>
+    <app-modal #modal modalHeader="{{'District.ModalHeader'|translate}}">
+      <app-district-add-update [district]="district" (hideModalWithRefreshEvent)="HideModal($event)"></app-district-add-update>
+    </app-modal>
+  </div>
+
+</app-list>

@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand navbar-light bg-light ">
+  <div class="container-fluid">
+    <div [ngClass]="{'brand-container':menuStatus,'brand-container-closed':!menuStatus}" class="d-flex justify-content-center">
+      <a class="navbar-brand p-0" routerLink="/">
+        <img *ngIf="menuStatus" src="../../../assets/QB-logo.png" />
+        <img *ngIf="!menuStatus" src="../../../assets/QBIcon.ico" />
+      </a>
+    </div>
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+      <div class="side-nav-button p-2 text-dark togglesidebar" (click)="SideNavToggle()">
+        <span *ngIf="menuStatus" class="bi bi-arrow-right "></span>
+        <span *ngIf="!menuStatus" class="navbar-toggler-icon"></span>
+      </div>
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      </ul>
+      <div class="ms-3 d-flex justify-content-end">
+        <button mat-flat-button class="nav-link fw-bold" *ngIf="!isLoggedIn" routerLink="/auth/login">
+          <i class="bi bi-box-arrow-in-left fs-5"></i><span class="ms-2 "> {{'Login'|translate}}</span>
+        </button>
+
+
+        <button mat-flat-button [matMenuTriggerFor]="langMenu" class="nav-link fw-bold">
+          <i class="bi bi-chevron-bar-down"></i>
+          <span class="ms-2 me-2">{{displayName|translate}}</span>
+          <i class="bi bi-translate fs-5"></i>
+        </button>
+        <mat-menu #langMenu="matMenu">
+          <div *ngFor="let langItem of langList">
+            <button mat-menu-item class="fw-bold text-muted"
+                    [disabled]="langItem.Value==lang"
+                    (click)="changeLang(langItem.Value)">
+              <i *ngIf="langItem.Value==lang" class="bi bi-check-circle-fill me-2">
+              </i> <span>{{langItem.DisplayName|translate}}</span>
+            </button>
+            <mat-divider></mat-divider>
+          </div>
+        </mat-menu>
+
+        <button mat-flat-button [matMenuTriggerFor]="menu" class="nav-link fw-bold" *ngIf="isLoggedIn">
+          <i class="bi bi-chevron-bar-down"></i>
+          <span class="ms-2 me-2"> {{authService.UserName()}}</span>
+          <i class="bi bi-person-circle fs-5"></i>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item class="fw-bold text-muted" *ngIf="isAdmin" routerLink="/auth/users">
+            <span> {{'ManageUsers'|translate}}</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item class="fw-bold text-muted" routerLink="/auth/change-password" *ngIf="isLoggedIn">
+            <span> {{'ResetPassword'|translate}}</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item class="fw-bold text-muted" (click)="logOut()">
+            <span> {{'Logout'|translate}}</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+</nav>

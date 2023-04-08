@@ -1,0 +1,42 @@
+<app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'Contract.RenterContractPageTitle'|translate}}"
+          [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
+
+  <a actions class="nav-link" routerLink="/contracts/rentercontracts/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+
+
+  <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th colspan="2">{{'Contract.ContractNumber'|translate}}</th>
+        <th>{{'Unit.UnitNumber'|translate}}</th>
+        <th>{{'Unit.UnitName'|translate}}</th>
+        <th>{{'Unit.Building'|translate}}</th>
+        <th>{{'Contract.Renter'|translate}}</th>
+        <th>{{'Contract.ContractAmount'|translate}}</th>
+        <th>{{'Contract.PaymentMethod'|translate}}</th>
+        <th>{{'Contract.ContractState'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let contract of contracts">
+        <td>{{contract.autoNumber}}</td>
+        <td>{{contract.contractNumber}}</td>
+        <td>{{contract.unitNumber}}</td>
+        <td>{{contract.unitName}}</td>
+        <td>{{contract.buildingName}}</td>
+        <td>{{contract.renter}}</td>
+        <td>{{contract.contractAmount}}</td>
+        <td>{{GetPaymentMethod(contract.paymentMethod||0)|translate}}</td>
+        <td>{{GetContractState(contract.contractState||0)|translate}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button *ngIf="contract.contractState===1" type="button" class="btn btn-primary" routerLink="/contracts/rentercontracts/edit/{{contract.id}}"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-success" routerLink="/contracts/rentercontracts/details/{{contract.id}}"><i class="bi bi-list"></i></button>
+            <button *ngIf="contract.contractState===1" type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteContract(contract.id)"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
+  </div>
+</app-list>
+
+
