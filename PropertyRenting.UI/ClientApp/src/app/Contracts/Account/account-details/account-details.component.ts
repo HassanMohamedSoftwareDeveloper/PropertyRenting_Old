@@ -44,7 +44,7 @@ export class AccountDetailsComponent implements OnInit {
         this.accountForm = this.fb.group({
             Code: [null, Validators.required],
             NameAR: [null, Validators.required],
-            NameEN: [null, Validators.required],
+            NameEN: [null],
             AccountTypeId: [null, Validators.required],
             ParentId: [null, Validators.required],
         });

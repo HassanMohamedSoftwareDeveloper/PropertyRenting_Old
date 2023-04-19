@@ -102,7 +102,7 @@ export class ExpenseDetailsComponent implements OnInit {
     createForm() {
         this.expenseForm = this.fb.group({
             NameAR: [null, Validators.required],
-            NameEN: [null, Validators.required],
+            NameEN: [null],
             AccountId: [null, Validators.required],
         });
         this.showForm = true;

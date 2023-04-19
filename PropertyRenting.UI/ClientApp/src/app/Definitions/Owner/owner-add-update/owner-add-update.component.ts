@@ -36,7 +36,7 @@ export class OwnerAddUpdateComponent implements OnInit {
     CreateFrom() {
         this.ownerForm = this.fb.group({
             NameAR: [null, Validators.required],
-            NameEN: [null, Validators.required],
+            NameEN: [null],
         });
     }
 

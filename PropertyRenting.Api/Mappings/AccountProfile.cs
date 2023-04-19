@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using PropertyRenting.Api.DTOs;
-using PropertyRenting.Api.Models.Entities;
-
-namespace PropertyRenting.Api.Mappings;
+﻿namespace PropertyRenting.Api.Mappings;
 
 public class AccountProfile : Profile
 {
@@ -12,5 +8,8 @@ public class AccountProfile : Profile
             .ReverseMap()
             .ForMember(dest => dest.AccountChildren, opt => opt.MapFrom(srsrc => srsrc.AccountChildren.OrderBy(x => x.CreatedOnUtc)));
         CreateMap<AccountSetupDTO, AccountSetupEntity>().ReverseMap();
+
+        CreateMap<AccountEntity, FlatAccountDto>()
+            .ForMember(dest => dest.HasChildren, opt => opt.MapFrom(src => src.AccountChildren != null && src.AccountChildren.Any()));
     }
 }

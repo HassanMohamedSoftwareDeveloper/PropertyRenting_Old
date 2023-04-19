@@ -55,7 +55,7 @@ export class CityAddUpdateComponent implements OnInit {
     CreateFrom() {
         this.cityForm = this.fb.group({
             NameAR: [null, Validators.required],
-            NameEN: [null, Validators.required],
+            NameEN: [null],
             CountryId: [null, [Validators.required, this.validateDropdown]],
         });
     }

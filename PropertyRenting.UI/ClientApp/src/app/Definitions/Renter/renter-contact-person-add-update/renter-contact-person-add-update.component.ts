@@ -60,7 +60,7 @@ export class RenterContactPersonAddUpdateComponent
             Status: ["1", Validators.required],
             Code: [null, Validators.required],
             NameAR: [null, Validators.required],
-            NameEN: [null, Validators.required],
+            NameEN: [null],
             PhoneNumber: [null],
             MobileNumber: [null],
             Email: [null, Validators.email],

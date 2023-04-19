@@ -7,4 +7,5 @@ export interface Account {
     parentId?: any;
     level?: number;
     accountChildren?: Account[];
+    hasChildren?: boolean;
 }

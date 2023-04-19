@@ -12,8 +12,8 @@ using System.Text;
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
-//if (builder.Environment.IsDevelopment())
-//    builder.Configuration.AddUserSecrets("PropertyRenting_Old_Dev");
+if (builder.Environment.IsDevelopment())
+    builder.Configuration.AddUserSecrets("PropertyRenting_Old_Dev");
 //else if (builder.Environment.IsProduction())
 //    builder.Configuration.AddUserSecrets("PropertyRenting_Old_Prod");
 //else if (builder.Environment.IsStaging())

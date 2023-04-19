@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
     register: Register = {};
     registerForm!: FormGroup;
     submitted = false;
-    roles = ["Admin", "User"];
+    roles = ["Admin", "SubAdmin", "User"];
     constructor(
         private authService: AuthService,
         private fb: FormBuilder,

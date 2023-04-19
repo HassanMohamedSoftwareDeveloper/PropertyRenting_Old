@@ -104,7 +104,7 @@ export class ContractAddionsDetailsComponent implements OnInit {
     createForm() {
         this.contractAdditionForm = this.fb.group({
             NameAR: [null, Validators.required],
-            NameEN: [null, Validators.required],
+            NameEN: [null],
             AccountId: [null, Validators.required],
         });
         this.showForm = true;

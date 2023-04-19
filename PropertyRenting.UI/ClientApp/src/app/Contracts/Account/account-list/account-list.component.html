@@ -2,67 +2,30 @@
   <a actions class="nav-link" (click)="ShowAddModal()"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
 
   <div body>
+    <app-grid-page>
+      <tr tableHeader>
+        <th>{{'Account.Code'|translate}}</th>
+        <th>{{'NameAR'|translate}}</th>
+        <th>{{'NameEN'|translate}}</th>
+        <th>{{'Account.Level'|translate}}</th>
+        <th>{{'Account.AccountType'|translate}}</th>
+        <th>{{'Actions'|translate}}</th>
+      </tr>
+      <tr tableBody *ngFor="let account of accounts">
+        <td>{{account.code}}</td>
+        <td>{{account.nameAR}}</td>
+        <td>{{account.nameEN}}</td>
+        <td>{{account.level}}</td>
+        <td>{{getAccountType(account.accountTypeId||0)|translate}}</td>
+        <td>
+          <div class="d-flex justify-content-end ">
+            <button type="button" class="btn btn-primary" (click)="ShowEditModal(account)"><i class="bi bi-pencil-square"></i></button>
+            <button *ngIf="!account.hasChildren&&account.parentId!=null" type="button" class="btn btn-danger" (click)="DeleteAccount(account.id)"><i class="bi bi-trash-fill"></i></button>
+          </div>
+        </td>
+      </tr>
+    </app-grid-page>
 
-    <div class="row">
-      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree col-md-8">
-        <mat-tree-node *matTreeNodeDef="let node">
-          <div class="mat-tree-node d-flex justify-content-between" (click)="selectAccount(node)">
-            <div><label class="me-2 fw-bold">{{'Account.Code'|translate}} </label><label>{{node.code}}</label></div>
-            <div><label class="me-2 fw-bold">{{'NameAR'|translate}} </label> <label>{{node.nameAR}}</label></div>
-            <div><label class="me-2 fw-bold">{{'NameEN'|translate}} </label> <label>{{node.nameEN}}</label></div>
-            <div>
-              <button *ngIf="node.level!=1" type="button" class="btn btn-primary" (click)="ShowEditModal(node)"><i class="bi bi-pencil-square"></i></button>
-              <button *ngIf="node.level!=1" type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteAccount(node.id)"></i></button>
-            </div>
-          </div>
-        </mat-tree-node>
-        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-          <div class="mat-tree-node d-flex justify-content-between" (click)="selectAccount(node)">
-            <div>
-              <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.code">
-                <mat-icon class="mat-icon-rtl-mirror">
-                  {{treeControl.isExpanded(node) ? 'expand_more' : isArabic?'chevron_left': 'chevron_right'}}
-                </mat-icon>
-              </button>
-              <label class="me-2 fw-bold">{{'Account.Code'|translate}}</label><label>{{node.code}}</label>
-            </div>
-            <div><label class="me-2 fw-bold">{{'NameAR'|translate}} </label> <label>{{node.nameAR}}</label></div>
-            <div><label class="me-2 fw-bold">{{'NameEN'|translate}} </label> <label>{{node.nameEN}}</label></div>
-            <div>
-              <button *ngIf="node.level!=1" type="button" class="btn btn-primary" (click)="ShowEditModal(node)"><i class="bi bi-pencil-square"></i></button>
-            </div>
-          </div>
-          <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
-            <ng-container matTreeNodeOutlet></ng-container>
-          </div>
-        </mat-nested-tree-node>
-      </mat-tree>
-
-      <div class="col-md-4" *ngIf="selectedAccount.id!=null">
-        <app-grid-page class="account-details">
-          <tr tableBody>
-            <th>{{'Account.Code'|translate}}</th>
-            <td>{{selectedAccount.code}}</td>
-          </tr>
-          <tr tableBody>
-            <th>{{'NameAR'|translate}}</th>
-            <td>{{selectedAccount.nameAR}}</td>
-          </tr>
-          <tr tableBody>
-            <th>{{'NameEN'|translate}}</th>
-            <td>{{selectedAccount.nameEN}}</td>
-          </tr>
-          <tr tableBody>
-            <th>{{'Account.Level'|translate}}</th>
-            <td>{{selectedAccount.level}}</td>
-          </tr>
-          <tr tableBody>
-            <th>{{'Account.AccountType'|translate}}</th>
-            <td>{{getAccountType(selectedAccount.accountTypeId||0)|translate}}</td>
-          </tr>
-        </app-grid-page>
-      </div>
-    </div>
   </div>
 
   <div modal>

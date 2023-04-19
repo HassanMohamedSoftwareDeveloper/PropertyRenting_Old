@@ -24,6 +24,11 @@ export class AccountService {
             environment.ApiURL + "api/v1/Account/list"
         );
     }
+    GetAllGrid(): Observable<Account[]> {
+        return this.httpClient.get<Account[]>(
+            environment.ApiURL + "api/v1/Account/list-grid"
+        );
+    }
     GetById(id: any): Observable<Account> {
         return this.httpClient.get<Account>(
             environment.ApiURL + "api/v1/Account/byId/" + id

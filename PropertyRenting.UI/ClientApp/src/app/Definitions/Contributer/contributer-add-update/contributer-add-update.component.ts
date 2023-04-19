@@ -36,7 +36,7 @@ export class ContributerAddUpdateComponent implements OnInit {
     CreateFrom() {
         this.contributerForm = this.fb.group({
             NameAR: [null, Validators.required],
-            NameEN: [null, Validators.required],
+            NameEN: [null],
         });
     }
 

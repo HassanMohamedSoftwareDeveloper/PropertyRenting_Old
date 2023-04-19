@@ -1,6 +1,4 @@
-import { NestedTreeControl } from "@angular/cdk/tree";
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatTreeNestedDataSource } from "@angular/material/tree";
 import { ModalComponent } from "../../../CustomTemplates/modal/modal.component";
 import { Account } from "../../../Models/account";
 import { Breadcrumb } from "../../../Models/breadcrumb";
@@ -21,10 +19,7 @@ export class AccountListComponent implements OnInit {
     parentAccounts: Account[] = [];
     @ViewChild("modal", { static: false }) modal?: ModalComponent;
     account: Account = { id: null };
-    selectedAccount: Account = { id: null };
     isArabic = false;
-    //pageNumber = 1;
-    //totalItems = 0;
 
     constructor(
         private accountService: AccountService,
@@ -41,20 +36,12 @@ export class AccountListComponent implements OnInit {
     }
 
     loadAccounts() {
-        this.accountService.GetAll().subscribe(
+        this.accountService.GetAllGrid().subscribe(
             (result) => {
                 this.accounts = result;
                 this.parentAccounts = this.accounts.filter(
                     (x) => x.accountTypeId === 5
                 );
-                this.dataSource.data = this.accounts.filter(
-                    (x) => x.level === 1
-                );
-                if (this.account.id != null) {
-                    this.selectedAccount = this.accounts.find(
-                        (x) => x.id == this.account.id
-                    ) || { id: null };
-                }
             },
             (error) => console.log(error)
         );
@@ -70,9 +57,6 @@ export class AccountListComponent implements OnInit {
                 this.accountService.Delete(id).subscribe(
                     () => {
                         this.loadAccounts();
-                        if (this.selectedAccount.id == id) {
-                            this.selectedAccount = { id: null };
-                        }
                         const successMsg = this.translateService.Translate(
                             "DeletedSuccessfully"
                         );
@@ -104,19 +88,5 @@ export class AccountListComponent implements OnInit {
             this.loadAccounts();
         }
         this.modal?.hideModal();
-    }
-
-    dataSource = new MatTreeNestedDataSource<Account>();
-    treeControl = new NestedTreeControl<Account>(
-        (node) => node?.accountChildren
-    );
-    hasChild(_: number, _nodeData: Account) {
-        return (
-            !!_nodeData.accountChildren && _nodeData.accountChildren.length > 0
-        );
-    }
-
-    selectAccount(acc: Account) {
-        this.selectedAccount = { ...acc };
     }
 }

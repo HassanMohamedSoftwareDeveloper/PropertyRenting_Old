@@ -76,6 +76,9 @@ export class AuthService {
     IsAdmin(): boolean {
         return this.LoggedIn() && this.currentUser.role === "Admin";
     }
+    IsSubAdmin(): boolean {
+        return this.LoggedIn() && this.currentUser.role === "SubAdmin";
+    }
     IsUser(): boolean {
         return this.LoggedIn() && this.currentUser.role === "User";
     }

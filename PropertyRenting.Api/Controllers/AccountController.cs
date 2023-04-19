@@ -1,16 +1,10 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PropertyRenting.Api.DTOs;
-using PropertyRenting.Api.Models.Contexts;
-using PropertyRenting.Api.Models.Entities;
-using PropertyRenting.Api.ViewModels;
+﻿using Microsoft.AspNetCore.Authorization;
 
 namespace PropertyRenting.Api.Controllers;
 
 public class AccountController : BaseController
 {
+
     public AccountController(AppDbContext context, IMapper mapper) : base(context, mapper)
     {
     }
@@ -35,6 +29,48 @@ public class AccountController : BaseController
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
+    [AllowAnonymous]
+    [HttpGet("list-grid")]
+    public async Task<IActionResult> GetAllGridAsync()
+    {
+
+        try
+        {
+            var data = await Context
+                .Accounts
+                .Where(x => x.ParentId == null)
+                .OrderBy(x => x.CreatedOnUtc)
+                .ToListAsync();
+            List<FlatAccountDto> final = new();
+            foreach (var item in data)
+            {
+                final.Add(Mapper.Map<FlatAccountDto>(item));
+                final.AddRange(GetChildrenAccounts(item));
+
+            }
+            return Ok(final);
+        }
+        catch (Exception ex)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+    private List<FlatAccountDto> GetChildrenAccounts(AccountEntity account)
+    {
+        List<FlatAccountDto> final = new();
+        bool hasChildren = account.AccountChildren != null && account.AccountChildren.Any();
+        if (hasChildren)
+        {
+            foreach (var item in account.AccountChildren)
+            {
+                final.Add(Mapper.Map<FlatAccountDto>(item));
+                var c = GetChildrenAccounts(item);
+                final.AddRange(c);
+            }
+        }
+        return final;
+    }
     [HttpGet("list/byPage/{pageNumber}/{pageSize}")]
     public async Task<IActionResult> GetAllAsync(int pageNumber, int pageSize)
     {
@@ -43,9 +79,12 @@ public class AccountController : BaseController
 
         int skipped = (pageNumber - 1) * pageSize;
 
-        var data = await Context.Accounts.AsNoTracking().OrderBy(x => x.CreatedOnUtc).ProjectTo<AccountDTO>(Mapper.ConfigurationProvider)
-          .Skip(skipped).Take(pageSize)
-          .ToListAsync();
+        var data = await Context.Accounts
+            .AsNoTracking()
+            .OrderBy(x => x.CreatedOnUtc)
+            .ProjectTo<AccountDTO>(Mapper.ConfigurationProvider)
+            .Skip(skipped).Take(pageSize)
+            .ToListAsync();
 
         int count = (await Context.Accounts.AsNoTracking().CountAsync());
 
@@ -126,4 +165,5 @@ public class AccountController : BaseController
 
         return Ok();
     }
+
 }

@@ -36,7 +36,7 @@ export class NationalityAddUpdateComponent implements OnInit {
     CreateFrom() {
         this.nationalityForm = this.fb.group({
             NameAR: [null, Validators.required],
-            NameEN: [null, Validators.required],
+            NameEN: [null],
         });
     }
 

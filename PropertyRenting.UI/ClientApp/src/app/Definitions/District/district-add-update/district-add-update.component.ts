@@ -84,7 +84,7 @@ export class DistrictAddUpdateComponent implements OnInit, OnChanges {
     CreateFrom() {
         this.districtForm = this.fb.group({
             NameAR: [null, Validators.required],
-            NameEN: [null, Validators.required],
+            NameEN: [null],
             CountryId: [null, [Validators.required, this.validateDropdown]],
             CityId: [null, [Validators.required, this.validateDropdown]],
         });

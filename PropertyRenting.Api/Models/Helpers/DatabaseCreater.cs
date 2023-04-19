@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using PropertyRenting.Api.Constants;
-using PropertyRenting.Api.Enums;
-using PropertyRenting.Api.Models.Contexts;
-using PropertyRenting.Api.Models.Entities;
 
 namespace PropertyRenting.Api.Models.Helpers;
 
@@ -37,18 +32,28 @@ public static class DatabaseCreater
             {
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
             }
+            if (!await roleManager.RoleExistsAsync("SubAdmin"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("SubAdmin"));
+            }
             if (!await roleManager.RoleExistsAsync("User"))
             {
                 await roleManager.CreateAsync(new IdentityRole("User"));
             }
 
             IdentityUser adminUser = new() { Id = Guid.NewGuid().ToString(), UserName = "admin", Email = "admin@admin.com" };
+            IdentityUser subAdminUser = new() { Id = Guid.NewGuid().ToString(), UserName = "subadmin", Email = "subadmin@subadmin.com" };
             IdentityUser userUser = new() { Id = Guid.NewGuid().ToString(), UserName = "user", Email = "user@user.com" };
             string password = "P@ssw0rd";
             if (await userManager.FindByNameAsync(adminUser.UserName) == null)
             {
                 await userManager.CreateAsync(adminUser, password);
                 await userManager.AddToRoleAsync(adminUser, "Admin");
+            }
+            if (await userManager.FindByNameAsync(subAdminUser.UserName) == null)
+            {
+                await userManager.CreateAsync(subAdminUser, password);
+                await userManager.AddToRoleAsync(subAdminUser, "SubAdmin");
             }
             if (await userManager.FindByNameAsync(userUser.UserName) == null)
             {

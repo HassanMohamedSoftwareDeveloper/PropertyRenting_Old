@@ -36,7 +36,7 @@ export class EmployeeAddUpdateComponent implements OnInit {
     CreateFrom() {
         this.employeeForm = this.fb.group({
             NameAR: [null, Validators.required],
-            NameEN: [null, Validators.required],
+            NameEN: [null],
         });
     }
 

@@ -170,7 +170,7 @@ export class UnitAddUpdateComponent implements OnInit {
                     [Validators.required, this.validateDropdown],
                 ],
                 AddressAR: [null, Validators.required],
-                AddressEN: [null, Validators.required],
+                AddressEN: [null],
                 Longitude: [null],
                 Latitude: [null],
             }),
