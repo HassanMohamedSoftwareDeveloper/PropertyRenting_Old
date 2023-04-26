@@ -1,28 +1,28 @@
 <app-page-header pageTitle="{{title}}" [breadcrumbItems]="breadcrumbItems"></app-page-header>
 
-<div class="pagebody overflow-auto">
-  <nav class="navbar navbar-expand navbar-light bg-light mb-2">
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse justify-content-end">
-        <div class="navbar-nav fw-bold">
-          <ng-content select="[actions]"></ng-content>
+<div class="pagebody <!--overflow-auto-->">
+    <nav class="navbar navbar-expand navbar-light bg-light mb-2">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse justify-content-end">
+                <div class="navbar-nav fw-bold">
+                    <ng-content select="[actions]"></ng-content>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
 
-  <ng-content select="[body]"></ng-content>
+    <ng-content select="[body]"></ng-content>
 
-  <app-pagination *ngIf="hasPagination && totalItems > pageSize" class="d-flex justify-content-end"
-                  [pagePage]="pageNumber"
-                  [totalItems]="totalItems"
-                  (pageChangedEvent)="GetDataByPage($event)"
-                  firstText="{{'Paginagon.First'|translate}}"
-                  lastText="{{'Paginagon.Last'|translate}}"
-                  nextText="{{'Paginagon.Next'|translate}}"
-                  previousText="{{'Paginagon.Previous'|translate}}">
+    <app-pagination *ngIf="hasPagination && totalItems > pageSize" class="d-flex justify-content-end"
+                    [pagePage]="pageNumber"
+                    [totalItems]="totalItems"
+                    (pageChangedEvent)="GetDataByPage($event)"
+                    firstText="{{'Paginagon.First'|translate}}"
+                    lastText="{{'Paginagon.Last'|translate}}"
+                    nextText="{{'Paginagon.Next'|translate}}"
+                    previousText="{{'Paginagon.Previous'|translate}}">
 
-  </app-pagination>
+    </app-pagination>
 </div>
 
 <ng-content select="[modal]"></ng-content>
