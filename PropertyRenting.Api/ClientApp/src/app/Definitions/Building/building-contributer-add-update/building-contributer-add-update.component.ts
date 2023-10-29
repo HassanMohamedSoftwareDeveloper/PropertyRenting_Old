@@ -15,8 +15,8 @@ import {
 } from "@angular/forms";
 import { v4 as uuidv4 } from "uuid";
 import { BuildingContributer } from "../../../Models/building-contributer";
-import { Contributer } from "../../../Models/contributer";
 import { ContributerService } from "../../../Services/contributer.service";
+import { Lookup } from "../../../Models/lookup";
 
 @Component({
     selector: "app-building-contributer-add-update",
@@ -32,7 +32,7 @@ export class BuildingContributerAddUpdateComponent
     @Output() addedContributerEvent = new EventEmitter<BuildingContributer>();
     submitted = false;
 
-    contributers: Contributer[] = [];
+    contributers: Lookup[] = [];
     constructor(
         private fb: FormBuilder,
         private contributerService: ContributerService
@@ -51,12 +51,11 @@ export class BuildingContributerAddUpdateComponent
         }
     }
     loadContributers() {
-        this.contributerService.GetAll().subscribe(
-            (res) => (this.contributers = res),
-            (error) => console.log(error)
-        );
+        this.contributerService.GetLookup().subscribe({
+            next: (res) => (this.contributers = res),
+            error: (error) => console.log(error),
+        });
     }
-
     CreateFrom() {
         this.buildingContributerForm = this.fb.group({
             ContributerId: [null, [Validators.required, this.validateDropdown]],
@@ -85,12 +84,11 @@ export class BuildingContributerAddUpdateComponent
         const contributer = this.contributers.find(
             (x) => x.id === this.buildingContributer.contributerId
         );
-        this.buildingContributer.contributer =
-            contributer?.nameAR + " - " + contributer?.nameEN;
+        this.buildingContributer.contributer = contributer?.description;
 
         if (
-            this.buildingContributer.id == null &&
-            this.buildingContributer.tempId == null
+            this.buildingContributer.id === null &&
+            this.buildingContributer.tempId === null
         ) {
             this.buildingContributer.tempId = uuidv4();
         }
@@ -127,10 +125,10 @@ export class BuildingContributerAddUpdateComponent
     validateDropdown(control: AbstractControl) {
         const thisValue = control.value;
         if (
-            thisValue == undefined ||
-            thisValue == null ||
-            thisValue == "" ||
-            thisValue == "null"
+            thisValue === undefined ||
+            thisValue === null ||
+            thisValue === "" ||
+            thisValue === "null"
         ) {
             return { required: true };
         }

@@ -12,10 +12,6 @@ import { ModalComponent } from "../../../CustomTemplates/modal/modal.component";
 import { Breadcrumb } from "../../../Models/breadcrumb";
 import { Building } from "../../../Models/building";
 import { BuildingContributer } from "../../../Models/building-contributer";
-import { City } from "../../../Models/city";
-import { Country } from "../../../Models/country";
-import { District } from "../../../Models/district";
-import { Employee } from "../../../Models/employee";
 import { Enum } from "../../../Models/enum";
 import { AlertifyService } from "../../../Services/alertify.service";
 import { BreadcrumbService } from "../../../Services/breadcrumb.service";
@@ -26,6 +22,8 @@ import { DialogService } from "../../../Services/dialog.service";
 import { DistrictService } from "../../../Services/district.service";
 import { EmployeeService } from "../../../Services/employee.service";
 import { TranslationService } from "../../../Services/translation.service";
+import { Lookup } from "../../../Models/lookup";
+import { forkJoin } from "rxjs";
 
 @Component({
     selector: "app-building-add-update",
@@ -37,12 +35,10 @@ export class BuildingAddUpdateComponent implements OnInit {
     buildingId: any = null;
     buildingForm!: FormGroup;
     submitted = false;
-    countries: Country[] = [];
-    cities: City[] = [];
-    citiesList: City[] = [];
-    districts: District[] = [];
-    districtsList: District[] = [];
-    employees: Employee[] = [];
+    countries: Lookup[] = [];
+    cities: Lookup[] = [];
+    districts: Lookup[] = [];
+    employees: Lookup[] = [];
 
     building: Building = {
         employeeId: null,
@@ -62,7 +58,7 @@ export class BuildingAddUpdateComponent implements OnInit {
     otherCollapsed = false;
 
     isCollapsed = false;
-
+    showForm = false;
     @ViewChild("modal", { static: false }) modal?: ModalComponent;
     buildingContributer: BuildingContributer = {};
 
@@ -85,73 +81,56 @@ export class BuildingAddUpdateComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.CreateFrom();
-        this.LoadCountries();
-
-        this.LoadEmployees();
-
-        this.LoadCities();
-        this.LoadDistricts();
-
         this.breadcrumbItems = this.breadcrumbService.BuildingDetailsItems;
         const id = this.route.snapshot.paramMap.get("id");
         if (id) {
-            this.getBuildingById(id);
+            this.LoadBuildingWithLokkups(id);
+        } else {
+            this.LoadLookups();
         }
-
-        this.OtherInfo?.get("TotalArea")?.valueChanges.subscribe(() =>
-            this.OtherInfo?.get("RentableArea")?.updateValueAndValidity({
-                onlySelf: true,
-                emitEvent: false,
-            })
-        );
     }
-
-    getBuildingById(id: string) {
-        this.buildingService.GetById(id).subscribe(
-            (result) => {
-                this.building = result;
+    LoadBuildingWithLokkups(id: string) {
+        forkJoin([
+            this.buildingService.GetById(id),
+            this.countryService.GetLookup(),
+            this.employeeService.GetLookup(),
+        ]).subscribe({
+            next: ([buildingRes, countriesRes, employeesRes]) => {
+                this.building = buildingRes;
                 this.status = this.building.status === true ? "1" : "0";
-                this.getCitiesByCountryId(this.building.countryId);
-                this.getDistrictsByCityId(this.building.cityId);
-            },
-            (error) => console.log(error)
-        );
-    }
-    LoadCountries() {
-        this.countryService.GetAllCountries().subscribe(
-            (result) => {
-                this.countries = result;
-            },
-            (error) => console.log(error)
-        );
-    }
-    LoadCities() {
-        this.cityService.GetAllCities().subscribe(
-            (result) => {
-                this.citiesList = result;
-                this.getCitiesByCountryId(this.building.countryId);
-            },
-            (error) => console.log(error)
-        );
-    }
-    LoadDistricts() {
-        this.districtService.GetAllDistricts().subscribe(
-            (result) => {
-                this.districtsList = result;
-                this.getDistrictsByCityId(this.building.cityId);
-            },
-            (error) => console.log(error)
-        );
-    }
-    LoadEmployees() {
-        this.employeeService.GetAllEmployees().subscribe(
-            (res) => (this.employees = res),
-            (error) => console.log(error)
-        );
-    }
+                this.countries = countriesRes;
+                this.employees = employeesRes;
 
-    CreateFrom() {
+                forkJoin([
+                    this.cityService.GetLookup(this.building.countryId),
+                    this.districtService.GetLookup(this.building.cityId),
+                ]).subscribe({
+                    next: ([citiesRes, districtsRes]) => {
+                        this.cities = citiesRes;
+                        this.districts = districtsRes;
+
+                        this.CreateForm();
+                    },
+                    error: (error) => console.log(error),
+                });
+            },
+            error: (error) => console.log(error),
+        });
+    }
+    LoadLookups() {
+        forkJoin([
+            this.countryService.GetLookup(),
+            this.employeeService.GetLookup(),
+        ]).subscribe({
+            next: ([countriesRes, employeesRes]) => {
+                this.countries = countriesRes;
+                this.employees = employeesRes;
+                this.CreateForm();
+            },
+            error: (error) => console.log(error),
+        });
+    }
+    CreateForm() {
         this.buildingForm = this.fb.group({
             BasicInfo: this.fb.group({
                 SymbolNo: [null, Validators.required],
@@ -171,7 +150,7 @@ export class BuildingAddUpdateComponent implements OnInit {
                     null,
                     [Validators.required, this.validateDropdown],
                 ],
-                AddressAR: [null, Validators.required],
+                AddressAR: [null],
                 AddressEN: [null],
                 Longitude: [null],
                 Latitude: [null],
@@ -187,6 +166,13 @@ export class BuildingAddUpdateComponent implements OnInit {
                 Notes: [null],
             }),
         });
+        this.OtherInfo?.get("TotalArea")?.valueChanges.subscribe(() =>
+            this.OtherInfo?.get("RentableArea")?.updateValueAndValidity({
+                onlySelf: true,
+                emitEvent: false,
+            })
+        );
+        this.showForm = true;
     }
 
     //#region Form Controllers
@@ -276,10 +262,8 @@ export class BuildingAddUpdateComponent implements OnInit {
             return;
         }
         this.building.status = this.status === "1" ? true : false;
-        //this.building.typeId = +this.typeId;
-        //this.building.constructionStatusId = +this.constructionStatusId;
 
-        if (this.building.id == null) {
+        if (this.building.id === null) {
             this.Add();
         } else {
             this.Update();
@@ -372,15 +356,6 @@ export class BuildingAddUpdateComponent implements OnInit {
         }
     }
 
-    getCitiesByCountryId(countryId: any) {
-        this.cities = this.citiesList.filter((c) => c.countryId === countryId);
-        this.getDistrictsByCityId(null);
-    }
-
-    getDistrictsByCityId(cityId: any) {
-        this.districts = this.districtsList.filter((c) => c.cityId === cityId);
-    }
-
     deleteBuildingContributer(buildingContributer: BuildingContributer) {
         const deleteMsg = this.translateService.Translate("DeleteMessage");
         this.dialogService.confirm(deleteMsg).subscribe((res) => {
@@ -394,7 +369,30 @@ export class BuildingAddUpdateComponent implements OnInit {
             }
         });
     }
-
+    getCitiesByCountryId(countryId: string) {
+        if (countryId) {
+            this.cityService.GetLookup(countryId).subscribe({
+                next: (cities) => (this.cities = cities),
+                error: (error) => console.log(error),
+            });
+        } else {
+            this.building.cityId = null;
+            this.building.districtId = null;
+            this.cities = [];
+            this.districts = [];
+        }
+    }
+    getDistrictsByCityId(cityId: string) {
+        if (cityId) {
+            this.districtService.GetLookup(cityId).subscribe({
+                next: (districts) => (this.districts = districts),
+                error: (error) => console.log(error),
+            });
+        } else {
+            this.building.districtId = null;
+            this.districts = [];
+        }
+    }
     //#region Validations :
     // Only Integer Numbers
     keyPressNumbers(event: any) {

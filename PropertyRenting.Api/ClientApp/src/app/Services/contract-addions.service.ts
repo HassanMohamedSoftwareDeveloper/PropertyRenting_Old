@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 import { ContractAddions } from "../Models/contract-addions";
 import { Pagination } from "../Models/pagination";
+import { Lookup } from "../Models/lookup";
 
 @Injectable({
     providedIn: "root",
@@ -14,6 +15,11 @@ export class ContractAddionsService {
     GetAll(): Observable<ContractAddions[]> {
         return this.httpClient.get<ContractAddions[]>(
             environment.ApiURL + "api/v1/ContractAdditions/list"
+        );
+    }
+    GetLookup(): Observable<Lookup[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/ContractAdditions/lookup"
         );
     }
     GetById(id: any): Observable<ContractAddions> {

@@ -1,12 +1,3 @@
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PropertyRenting.Api.DTOs;
-using PropertyRenting.Api.Models.Contexts;
-using PropertyRenting.Api.Models.Entities;
-using PropertyRenting.Api.ViewModels;
-
 namespace PropertyRenting.Api.Controllers;
 
 public class RenterController : BaseController
@@ -23,6 +14,25 @@ public class RenterController : BaseController
             .ProjectTo<RenterDTO>(Mapper.ConfigurationProvider)
             .ToListAsync();
         return Ok(data);
+    }
+    [HttpGet("lookup")]
+    public async Task<IActionResult> GetLookupAsync()
+    {
+
+        try
+        {
+            var data = await Context.Renters
+                .AsNoTracking()
+                .OrderBy(x => x.CreatedOnUtc)
+               .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
+               .ToListAsync();
+            return Ok(data);
+        }
+        catch (Exception ex)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
     [HttpGet("list/byPage/{pageNumber}/{pageSize}")]
     public async Task<IActionResult> GetAllAsync(int pageNumber, int pageSize)

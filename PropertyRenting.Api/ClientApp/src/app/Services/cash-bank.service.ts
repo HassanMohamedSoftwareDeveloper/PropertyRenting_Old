@@ -5,6 +5,7 @@ import { environment } from "../../environments/environment";
 import { CashBank } from "../Models/cash-bank";
 import { Enum } from "../Models/enum";
 import { Pagination } from "../Models/pagination";
+import { Lookup } from "../Models/lookup";
 
 @Injectable({
     providedIn: "root",
@@ -19,6 +20,11 @@ export class CashBankService {
     GetAll(): Observable<CashBank[]> {
         return this.httpClient.get<CashBank[]>(
             environment.ApiURL + "api/v1/CashBank/list"
+        );
+    }
+    GetLookup(): Observable<Lookup[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/CashBanks/lookup"
         );
     }
     GetById(id: any): Observable<CashBank> {

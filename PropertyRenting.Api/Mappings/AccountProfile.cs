@@ -1,4 +1,6 @@
-﻿namespace PropertyRenting.Api.Mappings;
+﻿using PropertyRenting.Api.Helpers;
+
+namespace PropertyRenting.Api.Mappings;
 
 public class AccountProfile : Profile
 {
@@ -11,5 +13,8 @@ public class AccountProfile : Profile
 
         CreateMap<AccountEntity, FlatAccountDto>()
             .ForMember(dest => dest.HasChildren, opt => opt.MapFrom(src => src.AccountChildren != null && src.AccountChildren.Any()));
+
+        CreateMap<AccountEntity, LookupDTO>()
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => Localizable.IsArabic ? src.NameAR : src.NameEN));
     }
 }

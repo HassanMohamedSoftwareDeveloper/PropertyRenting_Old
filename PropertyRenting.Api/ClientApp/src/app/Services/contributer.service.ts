@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 import { Contributer } from "../Models/contributer";
 import { Pagination } from "../Models/pagination";
+import { Lookup } from "../Models/lookup";
 
 @Injectable({
     providedIn: "root",
@@ -14,6 +15,11 @@ export class ContributerService {
     GetAll(): Observable<Contributer[]> {
         return this.httpClient.get<Contributer[]>(
             environment.ApiURL + "api/v1/Contributer/list"
+        );
+    }
+    GetLookup(): Observable<Lookup[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/Contributer/lookup"
         );
     }
     GetByPage(

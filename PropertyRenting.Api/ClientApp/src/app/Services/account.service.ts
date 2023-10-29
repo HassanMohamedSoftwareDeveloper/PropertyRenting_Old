@@ -5,6 +5,7 @@ import { environment } from "../../environments/environment";
 import { Account } from "../Models/account";
 import { Enum } from "../Models/enum";
 import { Pagination } from "../Models/pagination";
+import { Lookup } from "../Models/lookup";
 
 @Injectable({
     providedIn: "root",
@@ -22,6 +23,11 @@ export class AccountService {
     GetAll(): Observable<Account[]> {
         return this.httpClient.get<Account[]>(
             environment.ApiURL + "api/v1/Account/list"
+        );
+    }
+    GetLookup(): Observable<Lookup[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/Account/lookup"
         );
     }
     GetAllGrid(): Observable<Account[]> {

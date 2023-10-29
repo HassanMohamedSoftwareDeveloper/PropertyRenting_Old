@@ -5,6 +5,7 @@ import { environment } from "../../environments/environment";
 import { Enum } from "../Models/enum";
 import { Pagination } from "../Models/pagination";
 import { Renter } from "../Models/renter";
+import { Lookup } from "../Models/lookup";
 
 @Injectable({
     providedIn: "root",
@@ -27,6 +28,11 @@ export class RenterService {
     GetAll(): Observable<Renter[]> {
         return this.httpClient.get<Renter[]>(
             environment.ApiURL + "api/v1/renter/list"
+        );
+    }
+    GetLookup(): Observable<Lookup[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/Renter/lookup"
         );
     }
     GetById(id: any): Observable<Renter> {

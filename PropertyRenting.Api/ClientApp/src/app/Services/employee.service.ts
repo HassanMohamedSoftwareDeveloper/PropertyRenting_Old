@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 import { Employee } from "../Models/employee";
 import { Pagination } from "../Models/pagination";
+import { Lookup } from "../Models/lookup";
 
 @Injectable({
     providedIn: "root",
@@ -14,6 +15,11 @@ export class EmployeeService {
     GetAllEmployees(): Observable<Employee[]> {
         return this.httpClient.get<Employee[]>(
             environment.ApiURL + "api/v1/Employee/list"
+        );
+    }
+    GetLookup(): Observable<Lookup[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/Employee/lookup"
         );
     }
     GetByPage(

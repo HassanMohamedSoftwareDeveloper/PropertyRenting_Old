@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 import { Pagination } from "../Models/pagination";
 import { Unit } from "../Models/unit";
+import { Lookup } from "../Models/lookup";
 @Injectable({
     providedIn: "root",
 })
@@ -13,6 +14,11 @@ export class UnitService {
     GetAll(): Observable<Unit[]> {
         return this.httpClient.get<Unit[]>(
             environment.ApiURL + "api/v1/unit/list"
+        );
+    }
+    GetLookup(): Observable<Lookup[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/Unit/lookup"
         );
     }
     GetAvailable(buildingId: any): Observable<Unit[]> {

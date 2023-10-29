@@ -13,15 +13,14 @@ import {
     FormGroup,
     Validators,
 } from "@angular/forms";
-import { City } from "../../../Models/city";
 import { AlertifyService } from "../../../Services/alertify.service";
 import { CityService } from "../../../Services/city.service";
 import { TranslationService } from "../../../Services/translation.service";
 import { v4 as uuidv4 } from "uuid";
 import { CountryService } from "../../../Services/country.service";
-import { Country } from "../../../Models/country";
 import { DistrictService } from "../../../Services/district.service";
 import { District } from "../../../Models/district";
+import { Lookup } from "../../../Models/lookup";
 
 @Component({
     selector: "app-district-add-update",
@@ -41,9 +40,8 @@ export class DistrictAddUpdateComponent implements OnInit, OnChanges {
     };
     @Output() hideModalWithRefreshEvent = new EventEmitter<boolean>();
     submitted = false;
-    countries: Country[] = [];
-    citiesList: City[] = [];
-    cities: City[] = [];
+    countries: Lookup[] = [];
+    cities: Lookup[] = [];
     constructor(
         private fb: FormBuilder,
         private cityService: CityService,
@@ -54,31 +52,24 @@ export class DistrictAddUpdateComponent implements OnInit, OnChanges {
     ) {}
 
     ngOnInit(): void {
-        this.CreateFrom();
         this.LoadCountries();
-        this.LoadCities();
     }
 
     ngOnChanges() {
-        this.getCitiesByCountryId(this.district.countryId);
+        if (this.district.id) {
+            this.getCitiesByCountryId(this.district.countryId);
+        } else {
+            this.cities = [];
+        }
     }
-
     LoadCountries() {
-        this.countryService.GetAllCountries().subscribe(
-            (result) => {
-                this.countries = result;
+        this.countryService.GetLookup().subscribe({
+            next: (countriesRes) => {
+                this.countries = countriesRes;
+                this.CreateFrom();
             },
-            (error) => console.log(error)
-        );
-    }
-
-    LoadCities() {
-        this.cityService.GetAllCities().subscribe(
-            (result) => {
-                this.citiesList = result;
-            },
-            (error) => console.log(error)
-        );
+            error: (error) => console.log(error),
+        });
     }
 
     CreateFrom() {
@@ -147,8 +138,11 @@ export class DistrictAddUpdateComponent implements OnInit, OnChanges {
             );
     }
 
-    getCitiesByCountryId(countryId: any) {
-        this.cities = this.citiesList.filter((c) => c.countryId === countryId);
+    getCitiesByCountryId(countryId: string) {
+        this.cityService.GetLookup(countryId).subscribe({
+            next: (citiesRes) => (this.cities = citiesRes),
+            error: (error) => console.log(error),
+        });
     }
 
     resetFrom() {
@@ -164,10 +158,10 @@ export class DistrictAddUpdateComponent implements OnInit, OnChanges {
     validateDropdown(control: AbstractControl) {
         const thisValue = control.value;
         if (
-            thisValue == undefined ||
-            thisValue == null ||
-            thisValue == "" ||
-            thisValue == "null"
+            thisValue === undefined ||
+            thisValue === null ||
+            thisValue === "" ||
+            thisValue === "null"
         ) {
             return { required: true };
         }

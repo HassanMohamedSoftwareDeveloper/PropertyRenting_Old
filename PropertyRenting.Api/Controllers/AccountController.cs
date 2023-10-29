@@ -29,6 +29,25 @@ public class AccountController : BaseController
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
+    [HttpGet("lookup")]
+    public async Task<IActionResult> GetLookupAsync()
+    {
+
+        try
+        {
+            var data = await Context.Accounts
+                .AsNoTracking()
+                .OrderBy(x => x.CreatedOnUtc)
+               .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
+               .ToListAsync();
+            return Ok(data);
+        }
+        catch (Exception ex)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
     [AllowAnonymous]
     [HttpGet("list-grid")]
     public async Task<IActionResult> GetAllGridAsync()

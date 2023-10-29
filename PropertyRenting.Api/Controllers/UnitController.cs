@@ -1,13 +1,3 @@
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PropertyRenting.Api.DTOs;
-using PropertyRenting.Api.Enums;
-using PropertyRenting.Api.Models.Contexts;
-using PropertyRenting.Api.Models.Entities;
-using PropertyRenting.Api.ViewModels;
-
 namespace PropertyRenting.Api.Controllers;
 
 public class UnitController : BaseController
@@ -23,6 +13,25 @@ public class UnitController : BaseController
             .ProjectTo<UnitDTO>(Mapper.ConfigurationProvider)
             .ToListAsync();
         return Ok(data);
+    }
+    [HttpGet("lookup")]
+    public async Task<IActionResult> GetLookupAsync()
+    {
+
+        try
+        {
+            var data = await Context.Units
+                .AsNoTracking()
+                .OrderBy(x => x.CreatedOnUtc)
+               .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
+               .ToListAsync();
+            return Ok(data);
+        }
+        catch (Exception ex)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
     [HttpGet("list/available/{buidlingId}")]
     public async Task<IActionResult> GetAvailableAsync(Guid buidlingId)

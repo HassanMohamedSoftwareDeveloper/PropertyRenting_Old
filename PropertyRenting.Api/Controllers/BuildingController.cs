@@ -15,6 +15,25 @@ public class BuildingController : BaseController
             .ToListAsync();
         return Ok(data);
     }
+    [HttpGet("lookup")]
+    public async Task<IActionResult> GetLookupAsync()
+    {
+
+        try
+        {
+            var data = await Context.Buildings
+                .AsNoTracking()
+                .OrderBy(x => x.CreatedOnUtc)
+               .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
+               .ToListAsync();
+            return Ok(data);
+        }
+        catch (Exception ex)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
     [HttpGet("list/byPage/{pageNumber}/{pageSize}")]
     public async Task<IActionResult> GetAllAsync(int pageNumber, int pageSize)
     {

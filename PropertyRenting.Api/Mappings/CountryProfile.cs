@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using PropertyRenting.Api.DTOs;
-using PropertyRenting.Api.Models.Entities;
+﻿using PropertyRenting.Api.Helpers;
 
 namespace PropertyRenting.Api.Mappings;
 
@@ -9,5 +7,7 @@ public class CountryProfile : Profile
     public CountryProfile()
     {
         CreateMap<CountryDTO, CountryEntity>().ReverseMap();
+        CreateMap<CountryEntity, LookupDTO>()
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => Localizable.IsArabic ? src.NameAR : src.NameEN));
     }
 }

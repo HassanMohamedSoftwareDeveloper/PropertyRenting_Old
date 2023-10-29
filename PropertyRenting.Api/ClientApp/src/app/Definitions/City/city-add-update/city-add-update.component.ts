@@ -13,6 +13,7 @@ import { TranslationService } from "../../../Services/translation.service";
 import { v4 as uuidv4 } from "uuid";
 import { CountryService } from "../../../Services/country.service";
 import { Country } from "../../../Models/country";
+import { Lookup } from "../../../Models/lookup";
 
 @Component({
     selector: "app-city-add-update",
@@ -30,7 +31,7 @@ export class CityAddUpdateComponent implements OnInit {
     };
     @Output() hideModalWithRefreshEvent = new EventEmitter<boolean>();
     submitted = false;
-    countries: Country[] = [];
+    countries: Lookup[] = [];
     constructor(
         private fb: FormBuilder,
         private cityService: CityService,
@@ -44,12 +45,12 @@ export class CityAddUpdateComponent implements OnInit {
         this.LoadCountries();
     }
     LoadCountries() {
-        this.countryService.GetAllCountries().subscribe(
-            (result) => {
+        this.countryService.GetLookup().subscribe({
+            next: (result) => {
                 this.countries = result;
             },
-            (error) => console.log(error)
-        );
+            error: (error) => console.log(error),
+        });
     }
 
     CreateFrom() {
@@ -124,10 +125,10 @@ export class CityAddUpdateComponent implements OnInit {
     validateDropdown(control: AbstractControl) {
         const thisValue = control.value;
         if (
-            thisValue == undefined ||
-            thisValue == null ||
-            thisValue == "" ||
-            thisValue == "null"
+            thisValue === undefined ||
+            thisValue === null ||
+            thisValue === "" ||
+            thisValue === "null"
         ) {
             return { required: true };
         }

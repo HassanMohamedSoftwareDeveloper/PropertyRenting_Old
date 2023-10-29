@@ -16,5 +16,8 @@ public class RenterProfile : Profile
                    .ForMember(dest => dest.Country, opt => opt.MapFrom(src => Localizable.IsArabic ? src.City.Country.NameAR : src.City.Country.NameEN))
                    .ForMember(dest => dest.CountryId, opt => opt.MapFrom(src => src.City.CountryId))
                    .ForMember(dest => dest.Nationality, opt => opt.MapFrom(src => Localizable.IsArabic ? src.Nationality.NameAR : src.Nationality.NameEN));
+
+        CreateMap<RenterEntity, LookupDTO>()
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => Localizable.IsArabic ? src.NameAR : src.NameEN));
     }
 }

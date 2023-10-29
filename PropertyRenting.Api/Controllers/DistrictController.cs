@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PropertyRenting.Api.DTOs;
-using PropertyRenting.Api.Models.Contexts;
-using PropertyRenting.Api.Models.Entities;
-using PropertyRenting.Api.ViewModels;
+﻿using PropertyRenting.Api.Extensions;
 
 namespace PropertyRenting.Api.Controllers;
 
@@ -22,6 +15,27 @@ public class DistrictController : BaseController
             .ProjectTo<DistrictDTO>(Mapper.ConfigurationProvider)
             .ToListAsync();
         return Ok(data);
+    }
+    [HttpGet("lookup/{cityId}")]
+    public async Task<IActionResult> GetLookupAsync(string cityId)
+    {
+
+        try
+        {
+            var validValue = Guid.TryParse(cityId, out Guid convertedCityId);
+            var data = await Context.Districts
+                .AsNoTracking()
+                 .WhereIf(validValue, x => x.CityId == convertedCityId)
+                .OrderBy(x => x.CreatedOnUtc)
+               .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
+               .ToListAsync();
+            return Ok(data);
+        }
+        catch (Exception ex)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
     [HttpGet("list/byPage/{pageNumber}/{pageSize}")]
     public async Task<IActionResult> GetAllAsync(int pageNumber, int pageSize)

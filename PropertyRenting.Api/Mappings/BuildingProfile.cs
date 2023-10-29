@@ -25,7 +25,9 @@ public class BuildingProfile : Profile
             .ForMember(dest => dest.ConstructionStatus, opt => opt.MapFrom(src => ((ConstructionStatus)src.ConstructionStatusId).ToString()))
             .ForMember(dest => dest.UnitsNo, opt => opt.MapFrom(src => src.Units.Count))
             .ForMember(dest => dest.CityId, opt => opt.MapFrom(src => src.District.CityId))
-            .ForMember(dest => dest.CountryId, opt => opt.MapFrom(src => src.District.City.CountryId))
-            ;
+            .ForMember(dest => dest.CountryId, opt => opt.MapFrom(src => src.District.City.CountryId));
+
+        CreateMap<BuildingEntity, LookupDTO>()
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Name));
     }
 }

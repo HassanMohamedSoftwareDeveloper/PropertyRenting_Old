@@ -13,7 +13,9 @@ public class UnitProfile : Profile
             .ForMember(dest => dest.City, opt => opt.MapFrom(src => Localizable.IsArabic ? src.District.City.NameAR : src.District.City.NameEN))
             .ForMember(dest => dest.Country, opt => opt.MapFrom(src => Localizable.IsArabic ? src.District.City.Country.NameAR : src.District.City.Country.NameEN))
             .ForMember(dest => dest.CityId, opt => opt.MapFrom(src => src.District.CityId))
-            .ForMember(dest => dest.CountryId, opt => opt.MapFrom(src => src.District.City.CountryId))
-            ;
+            .ForMember(dest => dest.CountryId, opt => opt.MapFrom(src => src.District.City.CountryId));
+
+        CreateMap<UnitEntity, LookupDTO>()
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.UnitNumber));
     }
 }

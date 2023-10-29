@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 import { Owner } from "../Models/owner";
 import { Pagination } from "../Models/pagination";
+import { Lookup } from "../Models/lookup";
 
 @Injectable({
     providedIn: "root",
@@ -14,6 +15,11 @@ export class OwnerService {
     GetAllOwners(): Observable<Owner[]> {
         return this.httpClient.get<Owner[]>(
             environment.ApiURL + "api/v1/Owner/list"
+        );
+    }
+    GetLookup(): Observable<Lookup[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/Owner/lookup"
         );
     }
     GetByPage(

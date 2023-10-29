@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 import { Nationality } from "../Models/nationality";
 import { Pagination } from "../Models/pagination";
+import { Lookup } from "../Models/lookup";
 
 @Injectable({
     providedIn: "root",
@@ -14,6 +15,11 @@ export class NationalityService {
     GetAll(): Observable<Nationality[]> {
         return this.httpClient.get<Nationality[]>(
             environment.ApiURL + "api/v1/nationality/list"
+        );
+    }
+    GetLookup(): Observable<Lookup[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/Nationality/lookup"
         );
     }
     GetById(id: any): Observable<Nationality> {

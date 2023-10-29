@@ -1,48 +1,48 @@
 <div class="row">
-  <div class="col-12">
-    <form (ngSubmit)='onSubmit()' [formGroup]="districtForm">
-      <div class="form-group col-12">
-        <label>{{'NameAR'|translate}}</label>
-        <input type="text" class="form-control" formControlName="NameAR" [(ngModel)]="district.nameAR">
-        <div class="error-block" *ngIf="NameAR.invalid && (submitted||NameAR.touched)">
-          {{'NameARRequiredMsg'|translate}}
-        </div>
-      </div>
+    <div class="col-12">
+        <form (ngSubmit)='onSubmit()' [formGroup]="districtForm">
+            <div class="form-group col-12">
+                <label>{{'NameAR'|translate}}</label>
+                <input type="text" class="form-control" formControlName="NameAR" [(ngModel)]="district.nameAR">
+                <div class="error-block" *ngIf="NameAR.invalid && (submitted||NameAR.touched)">
+                    {{'NameARRequiredMsg'|translate}}
+                </div>
+            </div>
 
-      <div class="form-group col-12">
-        <label>{{'NameEN'|translate}}</label>
-        <input type="text" class="form-control" formControlName="NameEN" [(ngModel)]="district.nameEN">
-        <div class="error-block" *ngIf="NameEN.invalid && (submitted||NameEN.touched)">
-          {{'NameENRequiredMsg'|translate}}
-        </div>
-      </div>
+            <div class="form-group col-12">
+                <label>{{'NameEN'|translate}}</label>
+                <input type="text" class="form-control" formControlName="NameEN" [(ngModel)]="district.nameEN">
+                <div class="error-block" *ngIf="NameEN.invalid && (submitted||NameEN.touched)">
+                    {{'NameENRequiredMsg'|translate}}
+                </div>
+            </div>
 
-      <div class="form-group col-12">
-        <label>{{'District.Country'|translate}}</label>
-        <ng-select formControlName="CountryId" [(ngModel)]="district.countryId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
-                   (change)="getCitiesByCountryId(district.countryId)">
-          <ng-option *ngFor="let country of countries" [value]="country.id">{{country.nameAR}} - {{country.nameEN}}</ng-option>
-        </ng-select>
-        <div class="error-block" *ngIf="CountryId.invalid && (submitted||CountryId.touched)">
-          {{'District.CountryRequiredMsg'|translate}}
-        </div>
-      </div>
+            <div class="form-group col-12">
+                <label>{{'District.Country'|translate}}</label>
+                <ng-select formControlName="CountryId" [(ngModel)]="district.countryId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
+                           (change)="getCitiesByCountryId(district.countryId)">
+                    <ng-option *ngFor="let country of countries" [value]="country.id">{{country.description}}</ng-option>
+                </ng-select>
+                <div class="error-block" *ngIf="CountryId.invalid && (submitted||CountryId.touched)">
+                    {{'District.CountryRequiredMsg'|translate}}
+                </div>
+            </div>
 
-      <div class="form-group col-12">
-        <label>{{'District.City'|translate}}</label>
-        <ng-select formControlName="CityId" [(ngModel)]="district.cityId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-          <ng-option *ngFor="let city of cities" [value]="city.id">{{city.nameAR}} - {{city.nameEN}}</ng-option>
-        </ng-select>
-        <div class="error-block" *ngIf="CityId.invalid && (submitted||CityId.touched)">
-          {{'District.CityRequiredMsg'|translate}}
-        </div>
-      </div>
+            <div class="form-group col-12">
+                <label>{{'District.City'|translate}}</label>
+                <ng-select formControlName="CityId" [(ngModel)]="district.cityId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                    <ng-option *ngFor="let city of cities" [value]="city.id">{{city.description}}</ng-option>
+                </ng-select>
+                <div class="error-block" *ngIf="CityId.invalid && (submitted||CityId.touched)">
+                    {{'District.CityRequiredMsg'|translate}}
+                </div>
+            </div>
 
-      <div class="form-group col-12 d-flex justify-content-end">
-        <button type="submit" class="btn btn-outline-primary">{{'Submit'|translate}}</button>
-        <button type="button" (click)="resetFrom()" class="btn btn-outline-dark">{{'Reset'|translate}}</button>
-        <button type="button" class="btn btn-outline-info" (click)="cancel(false)">{{'Cancel'|translate}}</button>
-      </div>
-    </form>
-  </div>
+            <div class="form-group col-12 d-flex justify-content-end">
+                <button type="submit" class="btn btn-outline-primary">{{'Submit'|translate}}</button>
+                <button type="button" (click)="resetFrom()" class="btn btn-outline-dark">{{'Reset'|translate}}</button>
+                <button type="button" class="btn btn-outline-info" (click)="cancel(false)">{{'Cancel'|translate}}</button>
+            </div>
+        </form>
+    </div>
 </div>

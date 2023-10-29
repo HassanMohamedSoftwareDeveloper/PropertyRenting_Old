@@ -1,322 +1,316 @@
 <app-list title="{{'Unit.AddEditPageTitle'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
-  <div body>
-    <form (ngSubmit)='onSubmit()' [formGroup]="buildingForm">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="card" formGroupName="BasicInfo" [ngClass]="{'ng-touched ng-invalid': BasicInfo.invalid && submitted}">
-            <div class="card-header d-flex justify-content-between" (click)="basicInfoCollapsed=!basicInfoCollapsed">
-              <span>{{'Building.BasicInfo'|translate}}</span>
-              <app-collapse-button [isCollapsed]="basicInfoCollapsed"></app-collapse-button>
-            </div>
-            <app-custom-collapse [isCollapsed]="basicInfoCollapsed">
-              <div class="card-body">
-                <div class="row">
-                  <div class="form-group col-lg-6">
-                    <label class="form-label">{{'Building.SymbolNo'|translate}}</label>
-                    <div>
-                      <input class="form-control" formControlName="SymbolNo" [(ngModel)]="building.symbolNo" (keypress)="keyPressNumbers($event)">
-                      <div class="error-block" *ngIf="SymbolNo.invalid && (submitted||SymbolNo.touched)">
-                        {{'RequiredField'|translate}}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-lg-4"></div>
-
-                  <div class="form-group col-lg-2">
-                    <!--<mat-slide-toggle formControlName="Status" [(ngModel)]="building.status" color="primary">
-                      {{'Building.BuildingStatus'|translate}}
-                    </mat-slide-toggle>-->
-                    <label class="form-label">{{'Building.BuildingStatus'|translate}}</label>
-                    <div class="btn-group d-block d-flex justify-content-between" btnRadioGroup formControlName="Status" [(ngModel)]="status">
-                      <label btnRadio="1" class="btn btn-outline-primary mb-0">{{'Building.ActiveStatus'|translate}}</label>
-                      <label btnRadio="0" class="btn btn-outline-primary mb-0">{{'Building.NotActiveStatus'|translate}}</label>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-lg-12">
-                    <label class="form-label">{{'Building.Name'|translate}}</label>
-                    <div>
-                      <input type="text" class="form-control" formControlName="Name" [(ngModel)]="building.name">
-                      <div class="error-block" *ngIf="Name.invalid && (submitted||Name.touched)">
-                        {{'RequiredField'|translate}}
-                      </div>
-                    </div>
-
-
-                  </div>
-
-
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-lg-4">
-                    <label class="form-label">{{'Building.Employee'|translate}} </label>
-                    <div>
-                      <ng-select formControlName="EmployeeId" [(ngModel)]="building.employeeId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                        <ng-option *ngFor="let employee of employees" [value]="employee.id">{{employee.nameAR}} - {{employee.nameEN}}</ng-option>
-                      </ng-select>
-                      <div class="error-block" *ngIf="EmployeeId.invalid && (submitted||EmployeeId.touched)">
-                        {{'RequiredField'|translate}}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group col-lg-4">
-                    <label class="form-label">{{'Building.BuildingType'|translate}}</label>
-                    <ng-select formControlName="BuildingTypeId" [(ngModel)]="building.typeId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                      <ng-option *ngFor="let type of buildingTypes" [value]="type.id">{{type.description|translate}}</ng-option>
-                    </ng-select>
-                    <div class="error-block" *ngIf="BuildingTypeId.invalid && (submitted||BuildingTypeId.touched)">
-                      {{'RequiredField'|translate}}
-                    </div>
-                  </div>
-
-                  <div class="form-group col-lg-4">
-                    <label class="form-label">{{'Building.ConstructionStatus'|translate}}</label>
-                    <ng-select formControlName="BuildingConstructionStatusId" [(ngModel)]="building.constructionStatusId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                      <ng-option *ngFor="let type of buildingConstructionTypes" [value]="type.id">{{type.description|translate}}</ng-option>
-                    </ng-select>
-                    <div class="error-block" *ngIf="BuildingConstructionStatusId.invalid && (submitted||BuildingConstructionStatusId.touched)">
-                      {{'RequiredField'|translate}}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </app-custom-collapse>
-          </div>
-
-          <div class="card" formGroupName="AddressInfo" [ngClass]="{'ng-touched ng-invalid': AddressInfo.invalid && submitted}">
-            <div class="card-header d-flex justify-content-between" (click)="addressCollapsed=!addressCollapsed">
-              <span>{{'Building.AddressInfo'|translate}}</span>
-              <app-collapse-button [isCollapsed]="addressCollapsed"></app-collapse-button>
-            </div>
-            <app-custom-collapse [isCollapsed]="addressCollapsed">
-              <div class="card-body">
-                <div class="row">
-                  <div class="form-group col-lg-4">
-                    <label class="form-label">{{'Building.Country'|translate}} </label>
-                    <div>
-                      <ng-select formControlName="CountryId" [(ngModel)]="building.countryId" (change)="getCitiesByCountryId(building.countryId)"
-                                 notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                        <ng-option *ngFor="let country of countries" [value]="country.id">{{country.nameAR}} - {{country.nameEN}}</ng-option>
-                      </ng-select>
-                      <div class="error-block" *ngIf="CountryId.invalid && (submitted||CountryId.touched)">
-                        {{'RequiredField'|translate}}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group col-lg-4">
-                    <label class="form-label">{{'Building.City'|translate}} </label>
-                    <div>
-                      <ng-select formControlName="CityId" [(ngModel)]="building.cityId" (change)="getDistrictsByCityId(building.cityId)"
-                                 notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                        <ng-option *ngFor="let city of cities" [value]="city.id">{{city.nameAR}} - {{city.nameEN}}</ng-option>
-                      </ng-select>
-                      <div class="error-block" *ngIf="CityId.invalid && (submitted||CityId.touched)">
-                        {{'RequiredField'|translate}}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group col-lg-4">
-                    <label class="form-label">{{'Building.District'|translate}} </label>
-                    <div>
-                      <ng-select formControlName="DistrictId" [(ngModel)]="building.districtId"
-                                 notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                        <ng-option *ngFor="let district of districts" [value]="district.id">{{district.nameAR}} - {{district.nameEN}}</ng-option>
-                      </ng-select>
-                      <div class="error-block" *ngIf="DistrictId.invalid && (submitted||DistrictId.touched)">
-                        {{'RequiredField'|translate}}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-lg-12">
-                    <label class="form-label">{{'Building.AddressAR'|translate}} </label>
-                    <div>
-                      <input type="text" class="form-control" formControlName="AddressAR" [(ngModel)]="building.addressAR"
-                             [ngClass]="{'ng-invalid is-invalid' : AddressAR.invalid && (submitted||AddressAR.touched),'ng-valid is-valid': AddressAR.valid}" />
-                      <div class="error-block" *ngIf="AddressAR.invalid && (submitted||AddressAR.touched)">
-                        {{'RequiredField'|translate}}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group col-lg-12">
-                    <label class="form-label">{{'Building.AddressEN'|translate}}</label>
-                    <div>
-                      <input type="text" class="form-control" formControlName="AddressEN" [(ngModel)]="building.addressEN" />
-                      <div class="error-block" *ngIf="AddressEN.invalid && (submitted||AddressEN.touched)">
-                        {{'RequiredField'|translate}}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row" *ngIf="false">
-                  <div class="form-group col-lg-5">
-                    <label class="form-label">{{'Building.Longitude'|translate}} </label>
-                    <div>
-                      <input type="text" class="form-control" formControlName="Longitude" [(ngModel)]="building.longtude" />
-                    </div>
-                  </div>
-
-                  <div class="form-group col-lg-5">
-                    <label class="form-label">{{'Building.Latitude'|translate}} </label>
-                    <div>
-                      <input type="text" class="form-control" formControlName="Latitude" [(ngModel)]="building.latitude" />
-                    </div>
-                  </div>
-
-                  <div class="form-group col-lg-2 d-flex align-items-end">
-                    <div>
-                      <button type="button" class="btn btn-outline-dark">
-                        <i class="bi bi-geo-alt-fill text-primary"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </app-custom-collapse>
-          </div>
-
-          <div class="card" [ngClass]="{'ng-touched ng-invalid': !hasContributers && submitted}">
-            <div class="card-header d-flex justify-content-between" (click)="contributersCollapsed=!contributersCollapsed">
-              <span>{{'Building.ContributersInfo'|translate}}</span>
-              <app-collapse-button [isCollapsed]="contributersCollapsed"></app-collapse-button>
-            </div>
-            <app-custom-collapse [isCollapsed]="contributersCollapsed">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-lg-12 d-flex justify-content-end mb-3">
-                    <button type="button" class="btn btn-outline-primary fw-bold" (click)="addBuildingContributer()">
-                      <i class="bi bi-plus-circle-fill me-2 "></i>
-                      {{'Building.AddContributer'|translate}}
-                    </button>
-                  </div>
-                </div>
-                <div class="row">
-                  <app-grid-page>
-                    <tr tableHeader>
-                      <th>{{'Building.Contributer'|translate}}</th>
-                      <th>{{'Building.Percentage'|translate}}</th>
-                      <th>{{'Actions'|translate}}</th>
-                    </tr>
-                    <tr tableBody *ngIf="!hasContributers">
-                      <th colspan="3" class="text-danger text-center fw-bold fs-4">{{'NoData'|translate}}</th>
-                    </tr>
-                    <tr tableBody *ngFor="let contributer of building?.contributers">
-                      <td>{{contributer.contributer}}</td>
-                      <td>{{contributer.percentage}}</td>
-                      <td>
-                        <div class="d-flex justify-content-end ">
-                          <button type="button" class="btn btn-primary" (click)="editBuildingContributer(contributer)"><i class="bi bi-pencil-square"></i></button>
-                          <button type="button" class="btn btn-danger" (click)="deleteBuildingContributer(contributer)"><i class="bi bi-trash-fill"></i></button>
+    <div body>
+        <form *ngIf="showForm" (ngSubmit)='onSubmit()' [formGroup]="buildingForm">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card" formGroupName="BasicInfo" [ngClass]="{'ng-touched ng-invalid': BasicInfo.invalid && submitted}">
+                        <div class="card-header d-flex justify-content-between" (click)="basicInfoCollapsed=!basicInfoCollapsed">
+                            <span>{{'Building.BasicInfo'|translate}}</span>
+                            <app-collapse-button [isCollapsed]="basicInfoCollapsed"></app-collapse-button>
                         </div>
-                      </td>
-                    </tr>
-                  </app-grid-page>
-                </div>
-              </div>
-            </app-custom-collapse>
-          </div>
+                        <app-custom-collapse [isCollapsed]="basicInfoCollapsed">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-lg-6">
+                                        <label class="form-label">{{'Building.SymbolNo'|translate}}</label>
+                                        <div>
+                                            <input class="form-control" formControlName="SymbolNo" [(ngModel)]="building.symbolNo" (keypress)="keyPressNumbers($event)">
+                                            <div class="error-block" *ngIf="SymbolNo.invalid && (submitted||SymbolNo.touched)">
+                                                {{'RequiredField'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
 
-          <div class="card" formGroupName="OtherInfo">
-            <div class="card-header d-flex justify-content-between" (click)="otherCollapsed=!otherCollapsed">
-              <span>{{'Building.OtherInfo'|translate}}</span>
-              <app-collapse-button [isCollapsed]="otherCollapsed"></app-collapse-button>
+                                    <div class="col-lg-4"></div>
+
+                                    <div class="form-group col-lg-2">
+
+                                        <label class="form-label">{{'Building.BuildingStatus'|translate}}</label>
+                                        <div class="btn-group d-block d-flex justify-content-between" btnRadioGroup formControlName="Status" [(ngModel)]="status">
+                                            <label btnRadio="1" class="btn btn-outline-primary mb-0">{{'Building.ActiveStatus'|translate}}</label>
+                                            <label btnRadio="0" class="btn btn-outline-primary mb-0">{{'Building.NotActiveStatus'|translate}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-lg-12">
+                                        <label class="form-label">{{'Building.Name'|translate}}</label>
+                                        <div>
+                                            <input type="text" class="form-control" formControlName="Name" [(ngModel)]="building.name">
+                                            <div class="error-block" *ngIf="Name.invalid && (submitted||Name.touched)">
+                                                {{'RequiredField'|translate}}
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label">{{'Building.Employee'|translate}} </label>
+                                        <div>
+                                            <ng-select formControlName="EmployeeId" [(ngModel)]="building.employeeId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                                                <ng-option *ngFor="let employee of employees" [value]="employee.id">{{employee.description}} </ng-option>
+                                            </ng-select>
+                                            <div class="error-block" *ngIf="EmployeeId.invalid && (submitted||EmployeeId.touched)">
+                                                {{'RequiredField'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label">{{'Building.BuildingType'|translate}}</label>
+                                        <ng-select formControlName="BuildingTypeId" [(ngModel)]="building.typeId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                                            <ng-option *ngFor="let type of buildingTypes" [value]="type.id">{{type.description|translate}}</ng-option>
+                                        </ng-select>
+                                        <div class="error-block" *ngIf="BuildingTypeId.invalid && (submitted||BuildingTypeId.touched)">
+                                            {{'RequiredField'|translate}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label">{{'Building.ConstructionStatus'|translate}}</label>
+                                        <ng-select formControlName="BuildingConstructionStatusId" [(ngModel)]="building.constructionStatusId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                                            <ng-option *ngFor="let type of buildingConstructionTypes" [value]="type.id">{{type.description|translate}}</ng-option>
+                                        </ng-select>
+                                        <div class="error-block" *ngIf="BuildingConstructionStatusId.invalid && (submitted||BuildingConstructionStatusId.touched)">
+                                            {{'RequiredField'|translate}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </app-custom-collapse>
+                    </div>
+
+                    <div class="card" formGroupName="AddressInfo" [ngClass]="{'ng-touched ng-invalid': AddressInfo.invalid && submitted}">
+                        <div class="card-header d-flex justify-content-between" (click)="addressCollapsed=!addressCollapsed">
+                            <span>{{'Building.AddressInfo'|translate}}</span>
+                            <app-collapse-button [isCollapsed]="addressCollapsed"></app-collapse-button>
+                        </div>
+                        <app-custom-collapse [isCollapsed]="addressCollapsed">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label">{{'Building.Country'|translate}} </label>
+                                        <div>
+                                            <ng-select formControlName="CountryId" [(ngModel)]="building.countryId" (change)="getCitiesByCountryId(building.countryId)"
+                                                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                                                <ng-option *ngFor="let country of countries" [value]="country.id">{{country.description}}</ng-option>
+                                            </ng-select>
+                                            <div class="error-block" *ngIf="CountryId.invalid && (submitted||CountryId.touched)">
+                                                {{'RequiredField'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label">{{'Building.City'|translate}} </label>
+                                        <div>
+                                            <ng-select formControlName="CityId" [(ngModel)]="building.cityId" (change)="getDistrictsByCityId(building.cityId)"
+                                                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                                                <ng-option *ngFor="let city of cities" [value]="city.id">{{city.description}}</ng-option>
+                                            </ng-select>
+                                            <div class="error-block" *ngIf="CityId.invalid && (submitted||CityId.touched)">
+                                                {{'RequiredField'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label">{{'Building.District'|translate}} </label>
+                                        <div>
+                                            <ng-select formControlName="DistrictId" [(ngModel)]="building.districtId"
+                                                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                                                <ng-option *ngFor="let district of districts" [value]="district.id">{{district.description}}</ng-option>
+                                            </ng-select>
+                                            <div class="error-block" *ngIf="DistrictId.invalid && (submitted||DistrictId.touched)">
+                                                {{'RequiredField'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-lg-12">
+                                        <label class="form-label">{{'Building.AddressAR'|translate}} </label>
+                                        <div>
+                                            <input type="text" class="form-control" formControlName="AddressAR" [(ngModel)]="building.addressAR"
+                                                   [ngClass]="{'ng-invalid is-invalid' : AddressAR.invalid && (submitted||AddressAR.touched),'ng-valid is-valid': AddressAR.valid}" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-lg-12">
+                                        <label class="form-label">{{'Building.AddressEN'|translate}}</label>
+                                        <div>
+                                            <input type="text" class="form-control" formControlName="AddressEN" [(ngModel)]="building.addressEN" />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" *ngIf="false">
+                                    <div class="form-group col-lg-5">
+                                        <label class="form-label">{{'Building.Longitude'|translate}} </label>
+                                        <div>
+                                            <input type="text" class="form-control" formControlName="Longitude" [(ngModel)]="building.longtude" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-lg-5">
+                                        <label class="form-label">{{'Building.Latitude'|translate}} </label>
+                                        <div>
+                                            <input type="text" class="form-control" formControlName="Latitude" [(ngModel)]="building.latitude" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-lg-2 d-flex align-items-end">
+                                        <div>
+                                            <button type="button" class="btn btn-outline-dark">
+                                                <i class="bi bi-geo-alt-fill text-primary"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </app-custom-collapse>
+                    </div>
+
+                    <div class="card" [ngClass]="{'ng-touched ng-invalid': !hasContributers && submitted}">
+                        <div class="card-header d-flex justify-content-between" (click)="contributersCollapsed=!contributersCollapsed">
+                            <span>{{'Building.ContributersInfo'|translate}}</span>
+                            <app-collapse-button [isCollapsed]="contributersCollapsed"></app-collapse-button>
+                        </div>
+                        <app-custom-collapse [isCollapsed]="contributersCollapsed">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12 d-flex justify-content-end mb-3">
+                                        <button type="button" class="btn btn-outline-primary fw-bold" (click)="addBuildingContributer()">
+                                            <i class="bi bi-plus-circle-fill me-2 "></i>
+                                            {{'Building.AddContributer'|translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <app-grid-page>
+                                        <tr tableHeader>
+                                            <th>{{'Building.Contributer'|translate}}</th>
+                                            <th>{{'Building.Percentage'|translate}}</th>
+                                            <th>{{'Actions'|translate}}</th>
+                                        </tr>
+                                        <tr tableBody *ngIf="!hasContributers">
+                                            <th colspan="3" class="text-danger text-center fw-bold fs-4">{{'NoData'|translate}}</th>
+                                        </tr>
+                                        <tr tableBody *ngFor="let contributer of building?.contributers">
+                                            <td>{{contributer.contributer}}</td>
+                                            <td>{{contributer.percentage}}</td>
+                                            <td>
+                                                <div class="d-flex justify-content-end ">
+                                                    <button type="button" class="btn btn-primary" (click)="editBuildingContributer(contributer)"><i class="bi bi-pencil-square"></i></button>
+                                                    <button type="button" class="btn btn-danger" (click)="deleteBuildingContributer(contributer)"><i class="bi bi-trash-fill"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </app-grid-page>
+                                </div>
+                            </div>
+                        </app-custom-collapse>
+                    </div>
+
+                    <div class="card" formGroupName="OtherInfo">
+                        <div class="card-header d-flex justify-content-between" (click)="otherCollapsed=!otherCollapsed">
+                            <span>{{'Building.OtherInfo'|translate}}</span>
+                            <app-collapse-button [isCollapsed]="otherCollapsed"></app-collapse-button>
+                        </div>
+                        <app-custom-collapse [isCollapsed]="otherCollapsed">
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label">{{'Building.EstablishYear'|translate}}</label>
+                                        <div>
+                                            <input class="form-control" formControlName="EstablishYear" [(ngModel)]="building.establisYear" (keypress)="keyPressNumbers($event)" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label">{{'Building.ReceiveDate'|translate}}</label>
+                                        <div>
+
+                                            <input type="text" class="form-control" formControlName="ReceiveDate"
+                                                   [(ngModel)]="building.receiveDate" bsDatepicker
+                                                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label">{{'Building.LevelNo'|translate}}</label>
+                                        <div>
+                                            <input class="form-control" formControlName="LevelNo" [(ngModel)]="building.levelNo" (keypress)="keyPressNumbers($event)" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="form-group col-lg-6">
+                                        <label class="form-label">{{'Building.TotalArea'|translate}}</label>
+                                        <div>
+                                            <input class="form-control" formControlName="TotalArea" [(ngModel)]="building.totalArea" (keypress)="keyPressNumbers($event)" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label class="form-label">{{'Building.RentableArea'|translate}}</label>
+                                        <div>
+                                            <input class="form-control" formControlName="RentableArea" [(ngModel)]="building.rentableArea" (keypress)="keyPressNumbers($event)">
+                                            <div class="error-block" *ngIf="RentableArea.invalid && (submitted||RentableArea.touched)">
+                                                invalid value
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-lg-6">
+                                        <label class="form-label">{{'Building.YearRentAmount'|translate}}</label>
+                                        <div>
+                                            <input class="form-control" formControlName="YearRentAmount" [(ngModel)]="building.yearRentAmount" (keypress)="keyPressNumbersWithDecimal($event,building.yearRentAmount)" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label class="form-label">{{'Building.YearReRentAmount'|translate}}</label>
+                                        <div>
+                                            <input class="form-control" formControlName="YearReRentAmount" [(ngModel)]="building.yearReRentAmount" (keypress)="keyPressNumbersWithDecimal($event,building.yearReRentAmount)" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-lg-12">
+                                        <label class="form-label">{{'Building.Notes'|translate}}</label>
+                                        <div>
+                                            <textarea class="form-control" formControlName="Notes" [(ngModel)]="building.notes"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </app-custom-collapse>
+                    </div>
+                </div>
             </div>
-            <app-custom-collapse [isCollapsed]="otherCollapsed">
-              <div class="card-body">
-
-                <div class="row">
-                  <div class="form-group col-lg-4">
-                    <label class="form-label">{{'Building.EstablishYear'|translate}}</label>
-                    <div>
-                      <input class="form-control" formControlName="EstablishYear" [(ngModel)]="building.establisYear" (keypress)="keyPressNumbers($event)" />
-                    </div>
-                  </div>
-                  <div class="form-group col-lg-4">
-                    <label class="form-label">{{'Building.ReceiveDate'|translate}}</label>
-                    <div>
-
-                      <input type="text" class="form-control" formControlName="ReceiveDate"
-                             [(ngModel)]="building.receiveDate" bsDatepicker
-                             [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}" />
-                    </div>
-                  </div>
-                  <div class="form-group col-lg-4">
-                    <label class="form-label">{{'Building.LevelNo'|translate}}</label>
-                    <div>
-                      <input class="form-control" formControlName="LevelNo" [(ngModel)]="building.levelNo" (keypress)="keyPressNumbers($event)" />
-                    </div>
-                  </div>
-                </div>
 
 
-                <div class="row">
-                  <div class="form-group col-lg-6">
-                    <label class="form-label">{{'Building.TotalArea'|translate}}</label>
-                    <div>
-                      <input class="form-control" formControlName="TotalArea" [(ngModel)]="building.totalArea" (keypress)="keyPressNumbers($event)" />
-                    </div>
-                  </div>
-                  <div class="form-group col-lg-6">
-                    <label class="form-label">{{'Building.RentableArea'|translate}}</label>
-                    <div>
-                      <input class="form-control" formControlName="RentableArea" [(ngModel)]="building.rentableArea" (keypress)="keyPressNumbers($event)">
-                      <div class="error-block" *ngIf="RentableArea.invalid && (submitted||RentableArea.touched)">
-                        invalid value
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div class="d-flex justify-content-end mt-2">
+                <button type="submit" class="btn btn-outline-primary">{{'Submit'|translate}}</button>
+                <button type="button" (click)="resetFrom()" class="btn btn-outline-dark">{{'Reset'|translate}}</button>
+                <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
+            </div>
+        </form>
 
-                <div class="row">
-                  <div class="form-group col-lg-6">
-                    <label class="form-label">{{'Building.YearRentAmount'|translate}}</label>
-                    <div>
-                      <input class="form-control" formControlName="YearRentAmount" [(ngModel)]="building.yearRentAmount" (keypress)="keyPressNumbersWithDecimal($event,building.yearRentAmount)" />
-                    </div>
-                  </div>
-                  <div class="form-group col-lg-6">
-                    <label class="form-label">{{'Building.YearReRentAmount'|translate}}</label>
-                    <div>
-                      <input class="form-control" formControlName="YearReRentAmount" [(ngModel)]="building.yearReRentAmount" (keypress)="keyPressNumbersWithDecimal($event,building.yearReRentAmount)" />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-lg-12">
-                    <label class="form-label">{{'Building.Notes'|translate}}</label>
-                    <div>
-                      <textarea class="form-control" formControlName="Notes" [(ngModel)]="building.notes"></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </app-custom-collapse>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="d-flex justify-content-end mt-2">
-        <button type="submit" class="btn btn-outline-primary">{{'Submit'|translate}}</button>
-        <button type="button" (click)="resetFrom()" class="btn btn-outline-dark">{{'Reset'|translate}}</button>
-        <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
-      </div>
-    </form>
-
-  </div>
+    </div>
 </app-list>
 <app-modal #modal modalHeader="{{'Building.BuildingContributerModalHeader'|translate}}">
-  <app-building-contributer-add-update [buildingContributer]="buildingContributer" (hideModalEvent)="HideModal()" (addedContributerEvent)="addUpdateContributer($event)"></app-building-contributer-add-update>
+    <app-building-contributer-add-update [buildingContributer]="buildingContributer" (hideModalEvent)="HideModal()" (addedContributerEvent)="addUpdateContributer($event)"></app-building-contributer-add-update>
 </app-modal>
