@@ -261,6 +261,7 @@ public class VoucherController : BaseController
             var data = await Context.ReceiptVouchers.Where(x => x.Id == id)
                 .Select(x => new SanadDTO
                 {
+                    SanadNumber = $"{x.AutoNumber}-{x.SanadNumber}",
                     Amount = x.Amount,
                     Description = x.Description,
                     SanadDate = x.SanadDate.ToString("dd/MM/yyyy"),
@@ -268,7 +269,8 @@ public class VoucherController : BaseController
                     x.SanadTypeId == (int)SanadType.Owner ? x.Owner.NameAR :
                      x.SanadTypeId == (int)SanadType.Contributer ? x.Contributer.NameAR :
                      "",
-                    Bank = x.CashBank.Name
+                    Bank = x.CashBank.Name,
+
                 }).ToListAsync().ConfigureAwait(false);
             Stream reportDefinition;
             var path = Path.Combine(_env.WebRootPath, "Reports", "Receipt.rdlc");
@@ -276,9 +278,8 @@ public class VoucherController : BaseController
             reportDefinition = fs;
             LocalReport report = new();
             report.LoadReportDefinition(reportDefinition);
-            //report.DataSources.Clear();
             report.DataSources.Add(new ReportDataSource("DataSet", data));
-            report.SetParameters(new[] { new ReportParameter("ID", id.ToString()) });
+            report.SetParameters(new[] { new ReportParameter("ID", data?[0]?.SanadNumber ?? "") });
             byte[] pdf = report.Render("PDF");
             fs.Dispose();
 
@@ -538,6 +539,7 @@ public class VoucherController : BaseController
             var data = await Context.ExchangeVouchers.Where(x => x.Id == id)
                 .Select(x => new SanadDTO
                 {
+                    SanadNumber = $"{x.AutoNumber}-{x.SanadNumber}",
                     Amount = x.Amount,
                     Description = x.Description,
                     SanadDate = x.SanadDate.ToString("dd/MM/yyyy"),
@@ -554,7 +556,7 @@ public class VoucherController : BaseController
             LocalReport report = new();
             report.LoadReportDefinition(reportDefinition);
             report.DataSources.Add(new ReportDataSource("DataSet", data));
-            report.SetParameters(new[] { new ReportParameter("ID", id.ToString()) });
+            report.SetParameters(new[] { new ReportParameter("ID", data?[0]?.SanadNumber ?? "") });
             byte[] pdf = report.Render("PDF");
             fs.Dispose();
 

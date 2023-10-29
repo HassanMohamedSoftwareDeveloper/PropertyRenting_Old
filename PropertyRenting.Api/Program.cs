@@ -12,12 +12,7 @@ using System.Text;
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
-if (builder.Environment.IsDevelopment())
-    builder.Configuration.AddUserSecrets("PropertyRenting_Old_Dev");
-//else if (builder.Environment.IsProduction())
-//    builder.Configuration.AddUserSecrets("PropertyRenting_Old_Prod");
-//else if (builder.Environment.IsStaging())
-//    builder.Configuration.AddUserSecrets("PropertyRenting_Old_Stg");
+
 builder.Services.AddSingleton<AutidableInterceptor>();
 builder.Services.AddSingleton<ActionsInterceptor>();
 builder.Services.AddDbContext<AppDbContext>((sp, options) =>
@@ -111,19 +106,7 @@ builder.Services.AddAuthentication(cfg =>
 });
 
 builder.Services.AddAuthorization();
-//options =>
-//{
-//    options.AddPolicy("AdminDev", md =>
-//    {
-//        md.RequireClaim("JobTitle", "Dev");
-//        md.RequireRole("Admin");
-//    });
-//    options.AddPolicy("ManagerDev", md =>
-//    {
-//        md.RequireClaim("JobTitle", "Dev");
-//        md.RequireRole("Manager");
-//    });
-//}
+
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
