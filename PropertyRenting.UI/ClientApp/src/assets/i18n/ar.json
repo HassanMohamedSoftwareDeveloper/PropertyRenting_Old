@@ -95,6 +95,7 @@
   "Actions": "الإجراءات",
   "#": "م",
   "NotFound": "غير موجود",
+  "PageSize": "عدد العناصر",
   "Country": {
     "ModalHeader": "بيانات الدولة",
     "PageTitle": "الدول"

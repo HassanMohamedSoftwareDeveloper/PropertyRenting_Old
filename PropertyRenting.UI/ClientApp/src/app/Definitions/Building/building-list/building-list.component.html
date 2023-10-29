@@ -1,34 +1,34 @@
 <app-list [pageNumber]="pageNumber" [totalItems]="totalItems" (pageChangedEvent)="GetDataByPage($event)" title="{{'Building.PageTitle'|translate}}"
           [hasPagination]=true [breadcrumbItems]="breadcrumbItems">
 
-  <a actions class="nav-link" routerLink="/definitions/buildings/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+    <a actions class="nav-link" routerLink="/definitions/buildings/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
 
 
-  <div body>
-    <app-grid-page>
-      <tr tableHeader>
-        <th>{{'Building.SymbolNo'|translate}}</th>
-        <th>{{'Building.Name'|translate}}</th>
-        <th>{{'Building.Country'|translate}}</th>
-        <th>{{'Building.City'|translate}}</th>
-        <th>{{'Building.District'|translate}}</th>
-        <th>{{'Actions'|translate}}</th>
-      </tr>
-      <tr tableBody *ngFor="let building of buildings">
-        <td>{{building.symbolNo}}</td>
-        <td>{{building.name}}</td>
-        <td>{{building.country}}</td>
-        <td>{{building.city}}</td>
-        <td>{{building.district}}</td>
-        <td>
-          <div class="d-flex justify-content-end ">
-            <button type="button" class="btn btn-primary" routerLink="/definitions/buildings/edit/{{building.id}}"><i class="bi bi-pencil-square"></i></button>
-            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteBuilding(building.id)"></i></button>
-          </div>
-        </td>
-      </tr>
-    </app-grid-page>
-  </div>
+    <div body>
+        <app-grid-page>
+            <tr tableHeader>
+                <th>{{'Building.SymbolNo'|translate}}</th>
+                <th>{{'Building.Name'|translate}}</th>
+                <th>{{'Building.Country'|translate}}</th>
+                <th>{{'Building.City'|translate}}</th>
+                <th>{{'Building.District'|translate}}</th>
+                <th>{{'Actions'|translate}}</th>
+            </tr>
+            <tr tableBody *ngFor="let building of buildings">
+                <td>{{building.symbolNo}}</td>
+                <td>{{building.name}}</td>
+                <td>{{building.country}}</td>
+                <td>{{building.city}}</td>
+                <td>{{building.district}}</td>
+                <td>
+                    <div class="d-flex justify-content-end ">
+                        <button type="button" class="btn btn-primary" routerLink="/definitions/buildings/edit/{{building.id}}"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill" (click)="DeleteBuilding(building.id)"></i></button>
+                    </div>
+                </td>
+            </tr>
+        </app-grid-page>
+    </div>
 </app-list>
 
 

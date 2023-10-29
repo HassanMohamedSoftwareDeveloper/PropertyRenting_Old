@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PropertyRenting.Api.Helpers;
@@ -7,6 +8,7 @@ using PropertyRenting.Api.Interceptors;
 using PropertyRenting.Api.Models.Helpers;
 using PropertyRenting.Api.Repositories;
 using PropertyRenting.Api.Services.Token;
+using System.Globalization;
 using System.Text;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -17,17 +19,19 @@ builder.Services.AddSingleton<AutidableInterceptor>();
 builder.Services.AddSingleton<ActionsInterceptor>();
 builder.Services.AddDbContext<AppDbContext>((sp, options) =>
 {
-    var autidableInterceptor = sp.GetService<AutidableInterceptor>();
+    var auditableInterceptor = sp.GetService<AutidableInterceptor>();
     var actionLogInterceptor = sp.GetService<ActionsInterceptor>();
 
     options.UseLazyLoadingProxies()
     .UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"))
     .EnableSensitiveDataLogging()
-    .AddInterceptors(autidableInterceptor, actionLogInterceptor);
+    .AddInterceptors(auditableInterceptor, actionLogInterceptor);
 });
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddSingleton<QueryHepler>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
+
+
 
 builder.Services
     .AddIdentity<IdentityUser, IdentityRole>(opt =>
@@ -108,7 +112,31 @@ builder.Services.AddAuthentication(cfg =>
 builder.Services.AddAuthorization();
 
 
+builder.Services.AddLocalization(options =>
+{
+    options.ResourcesPath = "Resources";
+});
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new List<CultureInfo>
+            {
+                new (Constants.Language.ArabicLanguageCode)
+                {
+                     DateTimeFormat = CultureInfo.CreateSpecificCulture(Constants.Language.EnglishLanguageCode).DateTimeFormat ,
+                     NumberFormat = CultureInfo.CreateSpecificCulture(Constants.Language.EnglishLanguageCode).NumberFormat
+                 },
+                new (Constants.Language.EnglishLanguageCode)
+            };
+
+    options.SupportedCultures = supportedCultures;
+    options.DefaultRequestCulture = new RequestCulture(culture: supportedCultures[0]);
+
+
+});
+
 var app = builder.Build();
+
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     app.UseSwagger();
@@ -117,6 +145,10 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 
 app.UseStaticFiles();
 app.UseHttpsRedirection();
+
+app.UseRequestLocalization();
+
+
 app.UseRouting();
 
 app.UseCors(MyAllowSpecificOrigins);

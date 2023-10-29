@@ -96,6 +96,7 @@
   "Actions": "Actions",
   "#": "#",
   "NotFound": "Not found",
+  "PageSize": "Page Size",
   "Country": {
     "ModalHeader": "Country Details",
     "PageTitle": "Countries"

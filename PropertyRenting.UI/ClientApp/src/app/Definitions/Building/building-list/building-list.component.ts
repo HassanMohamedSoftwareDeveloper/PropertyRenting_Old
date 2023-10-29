@@ -19,7 +19,6 @@ export class BuildingListComponent implements OnInit {
 
     pageNumber = 1;
     totalItems = 0;
-
     constructor(
         private buildingService: BuildingService,
         private alertify: AlertifyService,
@@ -36,13 +35,13 @@ export class BuildingListComponent implements OnInit {
     LoadBuildings() {
         this.buildingService
             .GetByPage(this.pageNumber, environment.PageSize)
-            .subscribe(
-                (result) => {
+            .subscribe({
+                next: (result) => {
                     this.buildings = result.data;
                     this.totalItems = result.totalCount;
                 },
-                (error) => console.log(error)
-            );
+                error: (error) => console.log(error),
+            });
     }
 
     DeleteBuilding(id: any) {
