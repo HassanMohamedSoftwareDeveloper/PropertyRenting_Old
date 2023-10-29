@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using PropertyRenting.Api.DTOs;
-using PropertyRenting.Api.Models.Entities;
+﻿using PropertyRenting.Api.Helpers;
 
 namespace PropertyRenting.Api.Mappings;
 
@@ -24,17 +22,17 @@ public class ReceiptVoucherProfile : Profile
             .ForMember(dest => dest.Renter, opt =>
             {
                 opt.Condition(src => src.Renter != null);
-                opt.MapFrom(src => string.Join(" - ", src.Renter.NameAR, src.Renter.NameEN));
+                opt.MapFrom(src => Localizable.IsArabic ? src.Renter.NameAR : src.Renter.NameEN);
             })
             .ForMember(dest => dest.Owner, opt =>
              {
                  opt.Condition(src => src.Owner != null);
-                 opt.MapFrom(src => string.Join(" - ", src.Owner.NameAR, src.Owner.NameEN));
+                 opt.MapFrom(src => Localizable.IsArabic ? src.Owner.NameAR : src.Owner.NameEN);
              })
             .ForMember(dest => dest.Contributer, opt =>
               {
                   opt.Condition(src => src.Contributer != null);
-                  opt.MapFrom(src => string.Join(" - ", src.Contributer.NameAR, src.Contributer.NameEN));
+                  opt.MapFrom(src => Localizable.IsArabic ? src.Contributer.NameAR : src.Contributer.NameEN);
               })
             ;
 
@@ -47,7 +45,7 @@ public class ReceiptVoucherProfile : Profile
             .ForMember(dest => dest.Expense, opt =>
             {
                 opt.Condition(src => src.Expense != null);
-                opt.MapFrom(src => string.Join(" - ", src.Expense.NameAR, src.Expense.NameEN));
+                opt.MapFrom(src => Localizable.IsArabic ? src.Expense.NameAR : src.Expense.NameEN);
             })
             .ForMember(dest => dest.Building, opt =>
             {
@@ -57,7 +55,7 @@ public class ReceiptVoucherProfile : Profile
             .ForMember(dest => dest.Unit, opt =>
             {
                 opt.Condition(src => src.Unit != null);
-                opt.MapFrom(src => string.Join(" - ", src.Unit.UnitNumber, src.Unit.UnitName));
+                opt.MapFrom(src => Localizable.IsArabic ? src.Unit.UnitNumber : src.Unit.UnitName);
             })
             ;
     }

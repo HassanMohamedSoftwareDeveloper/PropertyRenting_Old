@@ -1,116 +1,116 @@
 <app-list title="{{'AccountSetup.AddEditPageTitle'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
-  <div body>
+    <div body>
 
-    <form (ngSubmit)='onSubmit()' [formGroup]="accountSetupForm" *ngIf="showForm">
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'AccountSetup.RevenueAccount'|translate}} </label>
-          <div>
-            <ng-select formControlName="RevenueAccountId" [(ngModel)]="accountSetup.revenueAccountId"
-                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
-            </ng-select>
-            <div class="error-block" *ngIf="RevenueAccountId.invalid && (submitted||RevenueAccountId.touched)">
-              {{'RequiredField'|translate}}
+        <form (ngSubmit)='onSubmit()' [formGroup]="accountSetupForm" *ngIf="showForm">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'AccountSetup.RevenueAccount'|translate}} </label>
+                    <div>
+                        <ng-select formControlName="RevenueAccountId" [(ngModel)]="accountSetup.revenueAccountId"
+                                   notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{ account.nameAR}} - {{account.nameEN}}</ng-option>
+                        </ng-select>
+                        <div class="error-block" *ngIf="RevenueAccountId.invalid && (submitted||RevenueAccountId.touched)">
+                            {{'RequiredField'|translate}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'AccountSetup.ExpenseAccount'|translate}} </label>
+                    <div>
+                        <ng-select formControlName="ExpenseAccountId" [(ngModel)]="accountSetup.expenseAccountId"
+                                   notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                        </ng-select>
+                        <div class="error-block" *ngIf="ExpenseAccountId.invalid && (submitted||ExpenseAccountId.touched)">
+                            {{'RequiredField'|translate}}
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'AccountSetup.ExpenseAccount'|translate}} </label>
-          <div>
-            <ng-select formControlName="ExpenseAccountId" [(ngModel)]="accountSetup.expenseAccountId"
-                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
-            </ng-select>
-            <div class="error-block" *ngIf="ExpenseAccountId.invalid && (submitted||ExpenseAccountId.touched)">
-              {{'RequiredField'|translate}}
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'AccountSetup.AccruedRevenueAccount'|translate}} </label>
+                    <div>
+                        <ng-select formControlName="AccruedRevenueAccountId" [(ngModel)]="accountSetup.accruedRevenueAccountId"
+                                   notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                        </ng-select>
+                        <div class="error-block" *ngIf="AccruedRevenueAccountId.invalid && (submitted||AccruedRevenueAccountId.touched)">
+                            {{'RequiredField'|translate}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'AccountSetup.AccruedExpenseAccount'|translate}} </label>
+                    <div>
+                        <ng-select formControlName="AccruedExpenseAccountId" [(ngModel)]="accountSetup.accruedExpenseAccountId"
+                                   notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                        </ng-select>
+                        <div class="error-block" *ngIf="AccruedExpenseAccountId.invalid && (submitted||AccruedExpenseAccountId.touched)">
+                            {{'RequiredField'|translate}}
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'AccountSetup.ContributerAccount'|translate}} </label>
+                    <div>
+                        <ng-select formControlName="ContributerAccountId" [(ngModel)]="accountSetup.contributerAccountId"
+                                   notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                        </ng-select>
+                        <div class="error-block" *ngIf="ContributerAccountId.invalid && (submitted||ContributerAccountId.touched)">
+                            {{'RequiredField'|translate}}
+                        </div>
+                    </div>
+                </div>
 
 
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'AccountSetup.AccruedRevenueAccount'|translate}} </label>
-          <div>
-            <ng-select formControlName="AccruedRevenueAccountId" [(ngModel)]="accountSetup.accruedRevenueAccountId"
-                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
-            </ng-select>
-            <div class="error-block" *ngIf="AccruedRevenueAccountId.invalid && (submitted||AccruedRevenueAccountId.touched)">
-              {{'RequiredField'|translate}}
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'AccountSetup.RenterAccount'|translate}} </label>
+                    <div>
+                        <ng-select formControlName="RenterAccountId" [(ngModel)]="accountSetup.renterAccountId"
+                                   notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                        </ng-select>
+                        <div class="error-block" *ngIf="RenterAccountId.invalid && (submitted||RenterAccountId.touched)">
+                            {{'RequiredField'|translate}}
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
-        </div>
 
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'AccountSetup.AccruedExpenseAccount'|translate}} </label>
-          <div>
-            <ng-select formControlName="AccruedExpenseAccountId" [(ngModel)]="accountSetup.accruedExpenseAccountId"
-                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
-            </ng-select>
-            <div class="error-block" *ngIf="AccruedExpenseAccountId.invalid && (submitted||AccruedExpenseAccountId.touched)">
-              {{'RequiredField'|translate}}
+
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'AccountSetup.OwnerAccount'|translate}} </label>
+                    <div>
+                        <ng-select formControlName="OwnerAccountId" [(ngModel)]="accountSetup.ownerAccountId"
+                                   notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                        </ng-select>
+                        <div class="error-block" *ngIf="OwnerAccountId.invalid && (submitted||OwnerAccountId.touched)">
+                            {{'RequiredField'|translate}}
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'AccountSetup.ContributerAccount'|translate}} </label>
-          <div>
-            <ng-select formControlName="ContributerAccountId" [(ngModel)]="accountSetup.contributerAccountId"
-                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
-            </ng-select>
-            <div class="error-block" *ngIf="ContributerAccountId.invalid && (submitted||ContributerAccountId.touched)">
-              {{'RequiredField'|translate}}
+            <div class="d-flex justify-content-end mt-2">
+                <button type="submit" class="btn btn-outline-primary">{{'Submit'|translate}}</button>
             </div>
-          </div>
-        </div>
-
-
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'AccountSetup.RenterAccount'|translate}} </label>
-          <div>
-            <ng-select formControlName="RenterAccountId" [(ngModel)]="accountSetup.renterAccountId"
-                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
-            </ng-select>
-            <div class="error-block" *ngIf="RenterAccountId.invalid && (submitted||RenterAccountId.touched)">
-              {{'RequiredField'|translate}}
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-
-
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'AccountSetup.OwnerAccount'|translate}} </label>
-          <div>
-            <ng-select formControlName="OwnerAccountId" [(ngModel)]="accountSetup.ownerAccountId"
-                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
-            </ng-select>
-            <div class="error-block" *ngIf="OwnerAccountId.invalid && (submitted||OwnerAccountId.touched)">
-              {{'RequiredField'|translate}}
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-
-      <div class="d-flex justify-content-end mt-2">
-        <button type="submit" class="btn btn-outline-primary">{{'Submit'|translate}}</button>
-      </div>
-    </form>
-  </div>
+        </form>
+    </div>
 </app-list>

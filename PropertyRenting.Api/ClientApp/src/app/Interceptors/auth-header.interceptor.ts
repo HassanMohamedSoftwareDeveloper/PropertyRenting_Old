@@ -4,22 +4,23 @@ import {
     HttpHandler,
     HttpEvent,
     HttpInterceptor,
+    HttpHeaders,
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 @Injectable()
 export class AuthHeaderInterceptor implements HttpInterceptor {
-    constructor() {}
-
     intercept(
         request: HttpRequest<unknown>,
         next: HttpHandler
     ): Observable<HttpEvent<unknown>> {
         request = request.clone({
-            setHeaders: {
+            headers: new HttpHeaders({
                 Authorization: "Bearer " + localStorage.getItem("token"),
-            },
+                "Accept-Language": localStorage.getItem("lang") || "",
+            }),
         });
+
         return next.handle(request);
     }
 }

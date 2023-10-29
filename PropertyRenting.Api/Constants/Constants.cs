@@ -6,6 +6,6 @@ public static class Constants
     {
         public const string LanguageHeaderKey = "x-lang";
         public const string ArabicLanguageCode = "ar";
-        public const string EnglishLanguageCode = "en-us";
+        public const string EnglishLanguageCode = "en";
     }
 }
