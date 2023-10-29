@@ -117,8 +117,8 @@ export class RenterAddUpdateComponent implements OnInit {
             AddressInfo: this.fb.group({
                 CountryId: [null, [Validators.required, this.validateDropdown]],
                 CityId: [null, [Validators.required, this.validateDropdown]],
-                RegionCode: [null, Validators.required],
-                PostalCode: [null, Validators.required],
+                RegionCode: [null],
+                PostalCode: [null],
             }),
             PersonInfo: this.fb.group({
                 Email: [null, [Validators.email]],
@@ -232,12 +232,6 @@ export class RenterAddUpdateComponent implements OnInit {
     }
     get CityId() {
         return this.AddressInfo.controls["CityId"] as FormControl;
-    }
-    get RegionCode() {
-        return this.AddressInfo.controls["RegionCode"] as FormControl;
-    }
-    get PostalCode() {
-        return this.AddressInfo.controls["PostalCode"] as FormControl;
     }
 
     get Email() {

@@ -4,6 +4,8 @@ export interface Sanad {
     id?: any;
     autoNumber?: number;
     sanadNumber?: string;
+    to?: string;
+    from?: string;
     sanadDate?: Date;
     description?: string;
     amount?: number;

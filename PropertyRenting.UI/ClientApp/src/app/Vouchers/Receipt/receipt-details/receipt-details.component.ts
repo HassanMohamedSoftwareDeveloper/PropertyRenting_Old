@@ -175,6 +175,7 @@ export class ReceiptDetailsComponent implements OnInit {
                     this.voucher.autoNumber,
                     this.voucher.sanadTypeId,
                     this.voucher.sanadNumber,
+                    this.voucher.from,
                     this.voucher.sanadDate,
                     this.voucher.amount,
                     this.voucher.description,
@@ -229,6 +230,7 @@ export class ReceiptDetailsComponent implements OnInit {
                     null,
                     null,
                     null,
+                    null,
                     []
                 );
             },
@@ -244,6 +246,7 @@ export class ReceiptDetailsComponent implements OnInit {
         autoNumber: any,
         sanadTypeId: any,
         sanadNumber: any,
+        from: any,
         sanadDate: any,
         amount: any,
         description: any,
@@ -257,7 +260,8 @@ export class ReceiptDetailsComponent implements OnInit {
             {
                 AutoNumber: [autoNumber],
                 SandadTypeId: [sanadTypeId, Validators.required],
-                SanadNumber: [sanadNumber, Validators.required],
+                SanadNumber: [sanadNumber],
+                From: [from],
                 SanadDate: [sanadDate, Validators.required],
                 Amount: [
                     amount,
@@ -293,9 +297,6 @@ export class ReceiptDetailsComponent implements OnInit {
     }
     get SandadTypeId() {
         return this.voucherForm.controls["SandadTypeId"] as FormControl;
-    }
-    get SanadNumber() {
-        return this.voucherForm.controls["SanadNumber"] as FormControl;
     }
     get SanadDate() {
         return this.voucherForm.controls["SanadDate"] as FormControl;

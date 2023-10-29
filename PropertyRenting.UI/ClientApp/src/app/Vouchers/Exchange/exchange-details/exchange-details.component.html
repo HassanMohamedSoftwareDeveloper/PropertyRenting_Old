@@ -28,9 +28,7 @@
                         </div>
                         <div class="col-md-10 " [ngClass]="{'ps-0':voucher.id!=null}">
                             <input class="form-control" type="text" formControlName="SanadNumber" [(ngModel)]="voucher.sanadNumber">
-                            <div class="error-block" *ngIf="SanadNumber.invalid && (submitted||SanadNumber.touched)">
-                                {{'RequiredField'|translate}}
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -48,6 +46,8 @@
             </div>
 
             <div class="row">
+
+
                 <div class="form-group col-md-6">
                     <label class="form-label">{{'Voucher.CashORBank'|translate}} </label>
                     <div>
@@ -58,6 +58,13 @@
                         <div class="error-block" *ngIf="CashBankId.invalid && (submitted||CashBankId.touched)">
                             {{'RequiredField'|translate}}
                         </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6" *ngIf="voucher.sanadTypeId==1">
+                    <label class="form-label">{{'Voucher.To'|translate}}</label>
+                    <div>
+                        <input class="form-control" formControlName="To" [(ngModel)]="voucher.to" />
                     </div>
                 </div>
 

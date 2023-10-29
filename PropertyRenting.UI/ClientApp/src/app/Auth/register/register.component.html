@@ -1,54 +1,54 @@
 <app-list>
-  <div class="row d-flex justify-content-center" body>
-    <form (ngSubmit)="onSubmit()" [formGroup]="registerForm" class="d-flex justify-content-center align-items-center form">
-      <div class="row">
-        <div class="d-flex justify-content-center mb-4 text-muted fw-bold">
-          <div>
-            <div class="d-block mb-2">
-              الرجاء ادخال بيانات المُستخدم
+    <div class="row d-flex justify-content-center" body>
+        <form (ngSubmit)="onSubmit()" [formGroup]="registerForm" class="d-flex justify-content-center align-items-center form">
+            <div class="row">
+                <div class="d-flex justify-content-center mb-4 text-muted fw-bold">
+                    <div>
+                        <div class="d-block mb-2">
+                            الرجاء ادخال بيانات المُستخدم
+                        </div>
+                        <div class="d-block mb-2">
+                            Please enter the user information
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="username"><i class="bi bi-person-bounding-box"></i></span>
+                    <input type="text" class="form-control" placeholder="Username - إسم المستخدم" aria-label="Username" aria-describedby="username"
+                           formControlName="Username" [(ngModel)]="register.username">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="email"><i class="bi bi-person-bounding-box"></i></span>
+                    <input type="text" class="form-control" placeholder="Email - البريد الإلكترونى" aria-label="Email" aria-describedby="email"
+                           formControlName="Email" [(ngModel)]="register.email">
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="pass"><i class="bi bi-key-fill"></i></span>
+                    <input type="password" class="form-control" placeholder="Password - كلمة المرور" aria-label="Password" aria-describedby="pass"
+                           formControlName="Password" [(ngModel)]="register.password">
+                </div>
+
+                <div class="form-group mb-3">
+                    <ng-select formControlName="Role" [(ngModel)]="register.role" notFoundText="{{'NotFound'|translate}}" placeholder="Role - الصلاحية">
+                        <ng-option *ngFor="let role of roles" [value]="role">{{role}}</ng-option>
+                    </ng-select>
+                </div>
+                <div class="d-flex justify-content-center mb-4 fw-bold error-block">
+                    <div>
+                        <div class="d-block mb-2" *ngFor="let error of errors">
+                            {{error.description}}
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary fw-bold"><span class="me-2">Register - تسجيل</span> <i class="bi bi-box-arrow-in-right"></i></button>
+                    <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
+                </div>
             </div>
-            <div class="d-block mb-2">
-              Please enter the user information
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="username"><i class="bi bi-person-bounding-box"></i></span>
-          <input type="text" class="form-control" placeholder="Username - إسم المستخدم" aria-label="Username" aria-describedby="username"
-                 formControlName="Username" [(ngModel)]="register.username">
-        </div>
+        </form>
 
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="email"><i class="bi bi-person-bounding-box"></i></span>
-          <input type="text" class="form-control" placeholder="Email - البريد الإلكترونى" aria-label="Email" aria-describedby="email"
-                 formControlName="Email" [(ngModel)]="register.email">
-        </div>
-
-
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="pass"><i class="bi bi-key-fill"></i></span>
-          <input type="password" class="form-control" placeholder="Password - كلمة المرور" aria-label="Password" aria-describedby="pass"
-                 formControlName="Password" [(ngModel)]="register.password">
-        </div>
-
-        <div class="form-group mb-3">
-          <ng-select formControlName="Role" [(ngModel)]="register.role" notFoundText="{{'NotFound'|translate}}" placeholder="Role - الصلاحية">
-            <ng-option *ngFor="let role of roles" [value]="role">{{role}}</ng-option>
-          </ng-select>
-        </div>
-        <div class="d-flex justify-content-center mb-4 fw-bold error-block">
-          <div>
-            <div class="d-block mb-2" *ngFor="let error of errors">
-              {{error.description}}
-            </div>
-          </div>
-        </div>
-        <div class="d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary fw-bold"><span class="me-2">Register - تسجيل</span> <i class="bi bi-box-arrow-in-right"></i></button>
-          <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
-        </div>
-      </div>
-    </form>
-
-  </div>
+    </div>
 </app-list>

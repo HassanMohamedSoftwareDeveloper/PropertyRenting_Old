@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using PropertyRenting.Api.Models.Contexts.Configs;
-using PropertyRenting.Api.Models.Entities;
 
 namespace PropertyRenting.Api.Models.Contexts;
 

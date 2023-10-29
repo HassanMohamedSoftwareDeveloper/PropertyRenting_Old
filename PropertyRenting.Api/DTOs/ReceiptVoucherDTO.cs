@@ -6,6 +6,7 @@ public class ReceiptVoucherDTO
     public int SanadTypeId { get; set; }
     public long AutoNumber { get; set; }
     public string SanadNumber { get; set; }
+    public string From { get; set; }
     public DateTime SanadDate { get; set; }
     public Guid CashBankId { get; set; }
     public Guid? RenterId { get; set; }

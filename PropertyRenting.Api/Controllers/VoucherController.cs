@@ -268,7 +268,7 @@ public class VoucherController : BaseController
                     Name = x.SanadTypeId == (int)SanadType.Renter ? x.Renter.NameAR :
                     x.SanadTypeId == (int)SanadType.Owner ? x.Owner.NameAR :
                      x.SanadTypeId == (int)SanadType.Contributer ? x.Contributer.NameAR :
-                     "",
+                     x.From,
                     Bank = x.CashBank.Name,
 
                 }).ToListAsync().ConfigureAwait(false);
@@ -546,7 +546,7 @@ public class VoucherController : BaseController
                     Name = x.SanadTypeId == (int)SanadType.Renter ? x.Renter.NameAR :
                     x.SanadTypeId == (int)SanadType.Owner ? x.Owner.NameAR :
                      x.SanadTypeId == (int)SanadType.Contributer ? x.Contributer.NameAR :
-                     "",
+                     x.To,
                     Bank = x.CashBank.Name
                 }).ToListAsync().ConfigureAwait(false);
             Stream reportDefinition;

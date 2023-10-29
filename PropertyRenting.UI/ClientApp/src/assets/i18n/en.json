@@ -398,7 +398,9 @@
     "Notbalanced": "Voucher not balanced!",
     "NoLines": "No lines, you must add voucher lines!",
     "CashBank": "Cash / Bank",
-    "Print": "Print"
+    "Print": "Print",
+    "To": "To",
+    "From": "From"
   },
   "VoucherState": {
     "Open": "Open",

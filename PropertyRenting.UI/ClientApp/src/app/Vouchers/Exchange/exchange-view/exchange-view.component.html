@@ -1,75 +1,77 @@
 <app-list title="{{'Voucher.ExchangeDetailsPageTitle'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
-  <button actions class="nav-link" (click)="Print(voucher.id)">{{'Voucher.Print'|translate}}</button>
+    <button actions class="nav-link" (click)="Print(voucher.id)">{{'Voucher.Print'|translate}}</button>
 
-  <div body>
-    <div class="row">
-      <app-grid-page class="voucher-details">
-        <tr tableBody>
-          <th>{{'Voucher.TypeTo'|translate}}</th>
-          <td>{{GetTypeById(voucher.sanadTypeId||0)|translate}}</td>
-          <th>{{'Voucher.SanadNumber'|translate}}</th>
-          <td>{{voucher.autoNumber}} - {{voucher.sanadNumber}}</td>
-          <th>{{'Voucher.State'|translate}}</th>
-          <td>{{GetStateById(voucher.stateId||0)|translate}}</td>
-        </tr>
-        <tr tableBody>
-          <th>{{'Voucher.SanadDate'|translate}}</th>
-          <td>{{voucher.sanadDate|date:'yyyy-MM-dd'}}</td>
-          <th>{{'Voucher.CashORBank'|translate}}</th>
-          <td>{{voucher.cashBank}}</td>
-          <th>{{'Voucher.Amount'|translate}}</th>
-          <td>{{voucher.amount}}</td>
-        </tr>
-        <tr tableBody>
-          <th *ngIf="voucher.sanadTypeId==2">{{'Voucher.Renter'|translate}}</th>
-          <td *ngIf="voucher.sanadTypeId==2">{{voucher.renter}}</td>
-          <th *ngIf="voucher.sanadTypeId==3">{{'Voucher.Owner'|translate}}</th>
-          <td *ngIf="voucher.sanadTypeId==3">{{voucher.owner}}</td>
-          <th *ngIf="voucher.sanadTypeId==4">{{'Voucher.Contributer'|translate}}</th>
-          <td *ngIf="voucher.sanadTypeId==4">{{voucher.contributer}}</td>
+    <div body>
+        <div class="row">
+            <app-grid-page class="voucher-details">
+                <tr tableBody>
+                    <th>{{'Voucher.TypeTo'|translate}}</th>
+                    <td>{{GetTypeById(voucher.sanadTypeId||0)|translate}}</td>
+                    <th>{{'Voucher.SanadNumber'|translate}}</th>
+                    <td>{{voucher.autoNumber}} - {{voucher.sanadNumber}}</td>
+                    <th>{{'Voucher.State'|translate}}</th>
+                    <td>{{GetStateById(voucher.stateId||0)|translate}}</td>
+                </tr>
+                <tr tableBody>
+                    <th>{{'Voucher.SanadDate'|translate}}</th>
+                    <td>{{voucher.sanadDate|date:'yyyy-MM-dd'}}</td>
+                    <th>{{'Voucher.CashORBank'|translate}}</th>
+                    <td>{{voucher.cashBank}}</td>
+                    <th>{{'Voucher.Amount'|translate}}</th>
+                    <td>{{voucher.amount}}</td>
+                </tr>
+                <tr tableBody>
+                    <th *ngIf="voucher.sanadTypeId==1">{{'Voucher.To'|translate}}</th>
+                    <td *ngIf="voucher.sanadTypeId==1">{{voucher.to}}</td>
+                    <th *ngIf="voucher.sanadTypeId==2">{{'Voucher.Renter'|translate}}</th>
+                    <td *ngIf="voucher.sanadTypeId==2">{{voucher.renter}}</td>
+                    <th *ngIf="voucher.sanadTypeId==3">{{'Voucher.Owner'|translate}}</th>
+                    <td *ngIf="voucher.sanadTypeId==3">{{voucher.owner}}</td>
+                    <th *ngIf="voucher.sanadTypeId==4">{{'Voucher.Contributer'|translate}}</th>
+                    <td *ngIf="voucher.sanadTypeId==4">{{voucher.contributer}}</td>
 
-        </tr>
+                </tr>
 
-        <tr tableBody>
-          <th>{{'Voucher.Description'|translate}}</th>
-          <td colspan="5">{{voucher.description}}</td>
-        </tr>
-        <tr tableBody *ngIf="(voucher.sanadDetails||[]).length>0">
-          <td colspan="7">
-            <app-grid-page>
-              <tr *ngIf="voucher.sanadTypeId==1 || voucher.sanadTypeId==2" tableHeader><th colspan="5" class="text-center">{{'Voucher.SanadDetails'|translate}}</th></tr>
-              <tr *ngIf="voucher.sanadTypeId==3" tableHeader><th colspan="6" class="text-center">{{'Voucher.SanadDetails'|translate}}</th></tr>
-              <tr *ngIf="voucher.sanadTypeId==4" tableHeader><th colspan="4" class="text-center">{{'Voucher.SanadDetails'|translate}}</th></tr>
-              <tr tableBody>
-                <th>{{'#'|translate}}</th>
-                <th *ngIf="voucher.sanadTypeId==2">{{'Voucher.Type'|translate}}</th>
-                <th *ngIf="voucher.sanadTypeId==1">{{'Voucher.Expense'|translate}}</th>
-                <th *ngIf="voucher.sanadTypeId==3">{{'Voucher.Installment'|translate}}</th>
-                <th *ngIf="voucher.sanadTypeId==3">{{'Voucher.DueDate'|translate}}</th>
-                <th>{{'Voucher.Building'|translate}}</th>
-                <th>{{'Voucher.Unit'|translate}}</th>
-                <th>{{'Voucher.ReceivedAmount'|translate}}</th>
-              </tr>
+                <tr tableBody>
+                    <th>{{'Voucher.Description'|translate}}</th>
+                    <td colspan="5">{{voucher.description}}</td>
+                </tr>
+                <tr tableBody *ngIf="(voucher.sanadDetails||[]).length>0">
+                    <td colspan="7">
+                        <app-grid-page>
+                            <tr *ngIf="voucher.sanadTypeId==1 || voucher.sanadTypeId==2" tableHeader><th colspan="5" class="text-center">{{'Voucher.SanadDetails'|translate}}</th></tr>
+                            <tr *ngIf="voucher.sanadTypeId==3" tableHeader><th colspan="6" class="text-center">{{'Voucher.SanadDetails'|translate}}</th></tr>
+                            <tr *ngIf="voucher.sanadTypeId==4" tableHeader><th colspan="4" class="text-center">{{'Voucher.SanadDetails'|translate}}</th></tr>
+                            <tr tableBody>
+                                <th>{{'#'|translate}}</th>
+                                <th *ngIf="voucher.sanadTypeId==2">{{'Voucher.Type'|translate}}</th>
+                                <th *ngIf="voucher.sanadTypeId==1">{{'Voucher.Expense'|translate}}</th>
+                                <th *ngIf="voucher.sanadTypeId==3">{{'Voucher.Installment'|translate}}</th>
+                                <th *ngIf="voucher.sanadTypeId==3">{{'Voucher.DueDate'|translate}}</th>
+                                <th>{{'Voucher.Building'|translate}}</th>
+                                <th>{{'Voucher.Unit'|translate}}</th>
+                                <th>{{'Voucher.ReceivedAmount'|translate}}</th>
+                            </tr>
 
-              <tr tableBody *ngFor="let trans of voucher.sanadDetails||[];index as index">
-                <td>{{index+1}}</td>
-                <td *ngIf="voucher.sanadTypeId==2">{{trans.addition}}</td>
-                <td *ngIf="voucher.sanadTypeId==1">{{trans.expense}}</td>
-                <td *ngIf="voucher.sanadTypeId==3">{{trans.installment}}</td>
-                <td *ngIf="voucher.sanadTypeId==3">{{trans.dueDate|date:'yyyy-MM-dd'}}</td>
-                <td>{{trans.building}}</td>
-                <td>{{trans.unit}}</td>
-                <td>{{trans.amount}}</td>
-              </tr>
+                            <tr tableBody *ngFor="let trans of voucher.sanadDetails||[];index as index">
+                                <td>{{index+1}}</td>
+                                <td *ngIf="voucher.sanadTypeId==2">{{trans.addition}}</td>
+                                <td *ngIf="voucher.sanadTypeId==1">{{trans.expense}}</td>
+                                <td *ngIf="voucher.sanadTypeId==3">{{trans.installment}}</td>
+                                <td *ngIf="voucher.sanadTypeId==3">{{trans.dueDate|date:'yyyy-MM-dd'}}</td>
+                                <td>{{trans.building}}</td>
+                                <td>{{trans.unit}}</td>
+                                <td>{{trans.amount}}</td>
+                            </tr>
+                        </app-grid-page>
+                    </td>
+                </tr>
             </app-grid-page>
-          </td>
-        </tr>
-      </app-grid-page>
-    </div>
+        </div>
 
 
-    <div class="d-flex justify-content-end mt-2">
-      <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
+        <div class="d-flex justify-content-end mt-2">
+            <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
+        </div>
     </div>
-  </div>
 </app-list>

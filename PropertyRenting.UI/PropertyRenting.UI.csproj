@@ -67,11 +67,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\PropertyRenting.Infrastructure.Persistence\PropertyRenting.Infrastructure.Persistence.csproj" />
-		<ProjectReference Include="..\PropertyRenting.Infrastructure\PropertyRenting.Infrastructure.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Compile Update="Resources\LayoutRes.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>

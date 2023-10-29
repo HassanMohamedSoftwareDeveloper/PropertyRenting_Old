@@ -9,6 +9,7 @@ public class ExchangeVoucherEntity : BaseEntity
     public int SanadTypeId { get; set; }
     public long AutoNumber { get; set; }
     public string SanadNumber { get; set; }
+    public string To { get; set; }
     public DateTime SanadDate { get; set; }
     public Guid CashBankId { get; set; }
     public Guid? OwnerId { get; set; }
