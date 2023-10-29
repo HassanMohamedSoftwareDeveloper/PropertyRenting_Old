@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FB9C392B-1B2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{8196C979-D8B9-4122-8677-7A6F458F3E06}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyRenting.UI", "PropertyRenting.UI\PropertyRenting.UI.csproj", "{A9C03F8A-7093-4957-B2F0-D8C057D58D92}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyRenting.Api", "PropertyRenting.Api\PropertyRenting.Api.csproj", "{EEC8C147-8563-4AD2-8C0F-5C5818A28C4B}"
 EndProject
 Global
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A9C03F8A-7093-4957-B2F0-D8C057D58D92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9C03F8A-7093-4957-B2F0-D8C057D58D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9C03F8A-7093-4957-B2F0-D8C057D58D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9C03F8A-7093-4957-B2F0-D8C057D58D92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EEC8C147-8563-4AD2-8C0F-5C5818A28C4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EEC8C147-8563-4AD2-8C0F-5C5818A28C4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEC8C147-8563-4AD2-8C0F-5C5818A28C4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -31,7 +25,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8196C979-D8B9-4122-8677-7A6F458F3E06} = {FB9C392B-1B2D-4113-BE75-8D5D29E09040}
-		{A9C03F8A-7093-4957-B2F0-D8C057D58D92} = {8196C979-D8B9-4122-8677-7A6F458F3E06}
 		{EEC8C147-8563-4AD2-8C0F-5C5818A28C4B} = {8196C979-D8B9-4122-8677-7A6F458F3E06}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

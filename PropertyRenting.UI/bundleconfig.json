@@ -1,8 +1,0 @@
-[
-  {
-    "outputFileName": "ClientApp/src/app/Auth/login/login.component.min.html",
-    "inputFiles": [
-      "ClientApp/src/app/Auth/login/login.component.html"
-    ]
-  }
-]
