@@ -4,13 +4,14 @@ namespace PropertyRenting.Api.Controllers;
 
 public class ContractAdditionsController : BaseController
 {
-    private readonly ICacheService _cacheService;
 
-    public ContractAdditionsController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
+    #region CTORS :
+    public ContractAdditionsController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper, cacheService)
     {
-        _cacheService = cacheService;
     }
+    #endregion
 
+    #region Actions :
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
     {
@@ -24,7 +25,7 @@ public class ContractAdditionsController : BaseController
     {
         try
         {
-            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.ContractAdditions.Lookup,
+            var data = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.ContractAdditions.Lookup,
                 () => Context.ContractAdditions
                 .AsNoTracking()
                 .OrderBy(x => x.CreatedOnUtc)
@@ -84,7 +85,8 @@ public class ContractAdditionsController : BaseController
         await Context.ContractAdditions.AddAsync(mappedEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.ContractAdditions.Prefix);
 
         return Created($"~/byId/{entityDTO.Id}", entityDTO);
     }
@@ -99,7 +101,8 @@ public class ContractAdditionsController : BaseController
         Context.ContractAdditions.Update(currentEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.ContractAdditions.Prefix);
 
         return Ok();
     }
@@ -112,8 +115,10 @@ public class ContractAdditionsController : BaseController
         Context.ContractAdditions.Remove(currentEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.ContractAdditions.Prefix);
 
         return Ok();
     }
+    #endregion
 }

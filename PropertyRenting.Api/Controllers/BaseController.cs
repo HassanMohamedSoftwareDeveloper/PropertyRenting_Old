@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using PropertyRenting.Api.Models.Contexts;
+﻿using Microsoft.AspNetCore.Authorization;
+using PropertyRenting.Api.Services;
 
 namespace PropertyRenting.Api.Controllers;
 
@@ -11,11 +9,19 @@ namespace PropertyRenting.Api.Controllers;
 public class BaseController : ControllerBase
 {
 
-    public BaseController(AppDbContext context, IMapper mapper)
+    #region CTORS :
+    public BaseController(AppDbContext context, IMapper mapper, ICacheService cacheService = default)
     {
         Context = context;
         Mapper = mapper;
+        CacheService = cacheService;
     }
+    #endregion
+
+    #region PROPS :
     protected AppDbContext Context { get; }
     protected IMapper Mapper { get; }
+    public ICacheService CacheService { get; }
+    #endregion
+
 }

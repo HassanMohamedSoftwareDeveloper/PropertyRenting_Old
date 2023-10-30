@@ -4,5 +4,6 @@ namespace PropertyRenting.Api.Helpers;
 
 public static class Localizable
 {
-    public static bool IsArabic => Thread.CurrentThread.CurrentCulture.Name == Constants.Constants.Language.ArabicLanguageCode;
+    public static string CurrentCultureName => Thread.CurrentThread.CurrentCulture.Name;
+    public static bool IsArabic => CurrentCultureName == Constants.Constants.Language.ArabicLanguageCode;
 }

@@ -2,9 +2,13 @@
 
 public class AccountSetupController : BaseController
 {
+    #region CTORS :
     public AccountSetupController(AppDbContext context, IMapper mapper) : base(context, mapper)
     {
     }
+    #endregion
+
+    #region Actions :
     [HttpGet]
     public async Task<IActionResult> GetAsync()
     {
@@ -21,7 +25,7 @@ public class AccountSetupController : BaseController
         await Context.AccountSetups.AddAsync(mappedEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
 
         return Created($"~/byId/{entityDTO.Id}", entityDTO);
     }
@@ -36,8 +40,9 @@ public class AccountSetupController : BaseController
         Context.AccountSetups.Update(currentEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
 
         return Ok();
     }
+    #endregion
 }

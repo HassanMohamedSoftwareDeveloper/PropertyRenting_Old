@@ -5,13 +5,13 @@ namespace PropertyRenting.Api.Controllers;
 
 public class DistrictController : BaseController
 {
-    private readonly ICacheService _cacheService;
-
-    public DistrictController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
+    #region CTORS :
+    public DistrictController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper, cacheService)
     {
-        _cacheService = cacheService;
     }
+    #endregion
 
+    #region Actions :
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
     {
@@ -31,7 +31,7 @@ public class DistrictController : BaseController
               ? string.Format(Constants.Constants.CacheKeys.District.LookupByCity, convertedCityId)
               : Constants.Constants.CacheKeys.District.Lookup;
 
-            var data = await _cacheService.GetOrCreateAsync(key,
+            var data = await CacheService.GetOrCreateAsync(key,
                 () => Context.Districts
                 .AsNoTracking()
                 .WhereIf(validValue, x => x.CityId == convertedCityId)
@@ -92,7 +92,8 @@ public class DistrictController : BaseController
         await Context.Districts.AddAsync(mappedEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.District.Prefix);
 
         return Created($"~/byId/{district.Id}", district);
     }
@@ -107,7 +108,8 @@ public class DistrictController : BaseController
         Context.Districts.Update(currentDistrict);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.District.Prefix);
 
         return Ok();
     }
@@ -120,8 +122,10 @@ public class DistrictController : BaseController
         Context.Districts.Remove(currentDistrict);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.District.Prefix);
 
         return Ok();
     }
+    #endregion
 }

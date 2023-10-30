@@ -5,17 +5,15 @@ namespace PropertyRenting.Api.Controllers;
 
 public class AccountController : BaseController
 {
-    #region Fields :
-    private readonly ICacheService _cacheService;
-    #endregion
 
     #region CTORS :
-    public AccountController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
+    public AccountController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper, cacheService)
     {
-        _cacheService = cacheService;
+
     }
     #endregion
 
+    #region Actions :
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
     {
@@ -39,7 +37,7 @@ public class AccountController : BaseController
 
         try
         {
-            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Account.Lookup,
+            var data = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Account.Lookup,
                 () => Context.Accounts
                     .AsNoTracking()
                     .OrderBy(x => x.CreatedOnUtc)
@@ -150,7 +148,8 @@ public class AccountController : BaseController
         await Context.Accounts.AddAsync(mappedEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Account.Prefix);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
 
         return Created($"~/byId/{entityDTO.Id}", entityDTO);
     }
@@ -173,8 +172,8 @@ public class AccountController : BaseController
         Context.Accounts.Update(currentEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
-
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Account.Prefix);
         return Ok();
     }
     [HttpDelete("delete/{id}")]
@@ -185,9 +184,10 @@ public class AccountController : BaseController
         Context.Accounts.Remove(currentEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
-
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Account.Prefix);
         return Ok();
     }
+    #endregion
 
 }

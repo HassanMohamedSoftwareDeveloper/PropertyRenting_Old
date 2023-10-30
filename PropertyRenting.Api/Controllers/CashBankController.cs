@@ -4,12 +4,14 @@ namespace PropertyRenting.Api.Controllers;
 
 public class CashBankController : BaseController
 {
-    private readonly ICacheService _cacheService;
 
-    public CashBankController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
+    #region CTORS :
+    public CashBankController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper, cacheService)
     {
-        _cacheService = cacheService;
     }
+    #endregion
+
+    #region Actions :
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
     {
@@ -26,7 +28,7 @@ public class CashBankController : BaseController
 
         try
         {
-            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.CashBank.Lookup,
+            var data = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.CashBank.Lookup,
             () => Context.CashBanks
                 .AsNoTracking()
                 .OrderBy(x => x.CreatedOnUtc)
@@ -87,8 +89,8 @@ public class CashBankController : BaseController
         await Context.CashBanks.AddAsync(mappedEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
-
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.CashBank.Prefix);
         return Created($"~/byId/{entityDTO.Id}", entityDTO);
     }
     [HttpPut("update/{id}")]
@@ -102,8 +104,8 @@ public class CashBankController : BaseController
         Context.CashBanks.Update(currentEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
-
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.CashBank.Prefix);
         return Ok();
     }
     [HttpDelete("delete/{id}")]
@@ -115,8 +117,9 @@ public class CashBankController : BaseController
         Context.CashBanks.Remove(currentEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
-
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.CashBank.Prefix);
         return Ok();
     }
+    #endregion
 }

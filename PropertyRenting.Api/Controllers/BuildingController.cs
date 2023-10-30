@@ -4,13 +4,15 @@ namespace PropertyRenting.Api.Controllers;
 
 public class BuildingController : BaseController
 {
-    private readonly ICacheService _cacheService;
 
-    public BuildingController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
+    #region CTORS :
+    public BuildingController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper, cacheService)
     {
-        _cacheService = cacheService;
-    }
 
+    }
+    #endregion
+
+    #region Actions :
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
     {
@@ -25,7 +27,7 @@ public class BuildingController : BaseController
     {
         try
         {
-            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Building.Lookup,
+            var data = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Building.Lookup,
               () => Context.Buildings
                 .AsNoTracking()
                 .OrderBy(x => x.CreatedOnUtc)
@@ -81,18 +83,18 @@ public class BuildingController : BaseController
         var mappedEntity = Mapper.Map<BuildingEntity>(building);
         await Context.Buildings.AddAsync(mappedEntity);
 
-        var contributers = Mapper.Map<List<BuildingContributerEntity>>(building.Contributers);
-        contributers.ForEach(contributer =>
+        var contributors = Mapper.Map<List<BuildingContributerEntity>>(building.Contributers);
+        contributors.ForEach(contributor =>
         {
-            contributer.Id = Guid.NewGuid();
-            contributer.BuildingId = mappedEntity.Id;
+            contributor.Id = Guid.NewGuid();
+            contributor.BuildingId = mappedEntity.Id;
         });
 
-        Context.BuildingContributers.AddRange(contributers);
+        Context.BuildingContributers.AddRange(contributors);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
-
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Building.Prefix);
         return Created($"~/byId/{building.Id}", building);
     }
     [HttpPut("update/{id}")]
@@ -106,18 +108,18 @@ public class BuildingController : BaseController
         currentBuilding.Contributers.Clear();
         Context.Buildings.Update(currentBuilding);
 
-        var contributers = Mapper.Map<List<BuildingContributerEntity>>(building.Contributers);
-        contributers.ForEach(contributer =>
+        var contributors = Mapper.Map<List<BuildingContributerEntity>>(building.Contributers);
+        contributors.ForEach(contributor =>
         {
-            contributer.Id = Guid.NewGuid();
-            contributer.BuildingId = currentBuilding.Id;
+            contributor.Id = Guid.NewGuid();
+            contributor.BuildingId = currentBuilding.Id;
         });
 
-        Context.BuildingContributers.AddRange(contributers);
+        Context.BuildingContributers.AddRange(contributors);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
-
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Building.Prefix);
         return Ok();
     }
     [HttpDelete("delete/{id}")]
@@ -129,8 +131,9 @@ public class BuildingController : BaseController
         Context.Buildings.Remove(currentBuilding);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
-
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Building.Prefix);
         return Ok();
     }
 }
+#endregion

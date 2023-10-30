@@ -4,13 +4,13 @@ namespace PropertyRenting.Api.Controllers;
 
 public class UnitController : BaseController
 {
-    private readonly ICacheService _cacheService;
-
-    public UnitController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
+    #region CTORS :
+    public UnitController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper, cacheService)
     {
-        _cacheService = cacheService;
     }
+    #endregion
 
+    #region Actions :
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
     {
@@ -25,7 +25,7 @@ public class UnitController : BaseController
 
         try
         {
-            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Unit.Lookup,
+            var data = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Unit.Lookup,
           () => Context.Units
           .AsNoTracking()
           .OrderBy(x => x.CreatedOnUtc)
@@ -100,7 +100,8 @@ public class UnitController : BaseController
         await Context.Units.AddAsync(mappedEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Unit.Prefix);
 
         return Created($"~/byId/{unit.Id}", unit);
     }
@@ -115,7 +116,8 @@ public class UnitController : BaseController
         Context.Units.Update(currentUnit);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Unit.Prefix);
 
         return Ok();
     }
@@ -128,9 +130,11 @@ public class UnitController : BaseController
         Context.Units.Remove(currentUnit);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Unit.Prefix);
 
         return Ok();
     }
+    #endregion
 }
 

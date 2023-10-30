@@ -4,13 +4,13 @@ namespace PropertyRenting.Api.Controllers;
 
 public class ExpenseController : BaseController
 {
-    private readonly ICacheService _cacheService;
-
-    public ExpenseController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
+    #region CTORS :
+    public ExpenseController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper, cacheService)
     {
-        _cacheService = cacheService;
     }
+    #endregion
 
+    #region Actions :
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
     {
@@ -25,7 +25,7 @@ public class ExpenseController : BaseController
 
         try
         {
-            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Expense.Lookup,
+            var data = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Expense.Lookup,
              () => Context.Expenses
              .AsNoTracking()
              .OrderBy(x => x.CreatedOnUtc)
@@ -84,7 +84,8 @@ public class ExpenseController : BaseController
         await Context.Expenses.AddAsync(mappedEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Expense.Prefix);
 
         return Created($"~/byId/{entityDTO.Id}", entityDTO);
     }
@@ -99,7 +100,8 @@ public class ExpenseController : BaseController
         Context.Expenses.Update(currentEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Expense.Prefix);
 
         return Ok();
     }
@@ -112,8 +114,10 @@ public class ExpenseController : BaseController
         Context.Expenses.Remove(currentEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Expense.Prefix);
 
         return Ok();
     }
+    #endregion
 }

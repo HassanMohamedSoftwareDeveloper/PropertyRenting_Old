@@ -1,4 +1,6 @@
-﻿using Dapper;
+﻿// Ignore Spelling: Auth Accessor
+
+using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using PropertyRenting.Api.Helpers;
@@ -9,28 +11,30 @@ namespace PropertyRenting.Api.Controllers;
 [Route("api/v1/[Controller]")]
 public class AuthController : ControllerBase
 {
+    #region Fields :
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly IJWTTokenGenerator _tokenGenerator;
-    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly DapperContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    #endregion
 
+    #region CTORS :
     public AuthController(UserManager<IdentityUser> userManager,
-                          SignInManager<IdentityUser> signInManager,
-                          IJWTTokenGenerator tokenGenerator,
-                          RoleManager<IdentityRole> roleManager,
-                          DapperContext context,
-                          IHttpContextAccessor httpContextAccessor)
+                  SignInManager<IdentityUser> signInManager,
+                  IJWTTokenGenerator tokenGenerator,
+                  DapperContext context,
+                  IHttpContextAccessor httpContextAccessor)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _tokenGenerator = tokenGenerator;
-        _roleManager = roleManager;
         _context = context;
         _httpContextAccessor = httpContextAccessor;
     }
+    #endregion
 
+    #region Actions :
     [HttpPost("login")]
     public async Task<IActionResult> LoginAsync(LoginVM model)
     {
@@ -93,17 +97,11 @@ public class AuthController : ControllerBase
         var user = await _userManager.FindByIdAsync(userId);
         if (user is null)
             return NotFound();
-        var isValid = await _userManager.CheckPasswordAsync(user, request.CurrentPassword);
 
         var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
         if (result.Succeeded) return Ok();
         return BadRequest(result.Errors.Select(x => x.Description).ToList());
 
     }
-    //[HttpPost("confirm-email")]
-    //public async Task<IActionResult> ConfirmEmailAsync(ConfirmEmailVM model)
-    //{
-
-    //    return Ok();
-    //}
+    #endregion
 }

@@ -14,12 +14,12 @@ export class ContributerService {
 
     GetAll(): Observable<Contributer[]> {
         return this.httpClient.get<Contributer[]>(
-            environment.ApiURL + "api/v1/Contributer/list"
+            environment.ApiURL + "api/v1/Contributor/list"
         );
     }
     GetLookup(): Observable<Lookup[]> {
         return this.httpClient.get<Lookup[]>(
-            environment.ApiURL + "api/v1/Contributer/lookup"
+            environment.ApiURL + "api/v1/Contributor/lookup"
         );
     }
     GetByPage(
@@ -28,7 +28,7 @@ export class ContributerService {
     ): Observable<Pagination<Contributer>> {
         return this.httpClient.get<Pagination<Contributer>>(
             environment.ApiURL +
-                "api/v1/Contributer/list/byPage/" +
+                "api/v1/Contributor/list/byPage/" +
                 pageNumber +
                 "/" +
                 pagesize
@@ -36,19 +36,19 @@ export class ContributerService {
     }
     Create(contributer: Contributer) {
         return this.httpClient.post(
-            environment.ApiURL + "api/v1/Contributer/create",
+            environment.ApiURL + "api/v1/Contributor/create",
             contributer
         );
     }
     Edit(id: any, contributer: Contributer) {
         return this.httpClient.put(
-            environment.ApiURL + "api/v1/Contributer/update/" + id,
+            environment.ApiURL + "api/v1/Contributor/update/" + id,
             contributer
         );
     }
     Delete(id: any) {
         return this.httpClient.delete(
-            environment.ApiURL + "api/v1/Contributer/delete/" + id
+            environment.ApiURL + "api/v1/Contributor/delete/" + id
         );
     }
 }

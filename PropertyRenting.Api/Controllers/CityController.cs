@@ -5,12 +5,14 @@ namespace PropertyRenting.Api.Controllers;
 
 public class CityController : BaseController
 {
-    private readonly ICacheService _cacheService;
 
-    public CityController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
+    #region CTORS :
+    public CityController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper, cacheService)
     {
-        _cacheService = cacheService;
     }
+    #endregion
+
+    #region Actions :
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
     {
@@ -31,7 +33,7 @@ public class CityController : BaseController
                 ? string.Format(Constants.Constants.CacheKeys.City.LookupByBuilding, convertedCountryId)
                 : Constants.Constants.CacheKeys.City.Lookup;
 
-            var data = await _cacheService.GetOrCreateAsync(key,
+            var data = await CacheService.GetOrCreateAsync(key,
                 () => Context.Cities
                 .AsNoTracking()
                 .WhereIf(validValue, x => x.CountryId == convertedCountryId)
@@ -91,8 +93,8 @@ public class CityController : BaseController
         await Context.Cities.AddAsync(mappedEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
-
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.City.Prefix);
         return Created($"~/byId/{city.Id}", city);
     }
     [HttpPut("update/{id}")]
@@ -106,7 +108,8 @@ public class CityController : BaseController
         Context.Cities.Update(currentCity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.City.Prefix);
 
         return Ok();
     }
@@ -119,8 +122,10 @@ public class CityController : BaseController
         Context.Cities.Remove(currentCity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.City.Prefix);
 
         return Ok();
     }
 }
+#endregion

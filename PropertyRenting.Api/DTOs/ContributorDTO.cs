@@ -1,6 +1,6 @@
 ﻿namespace PropertyRenting.Api.DTOs;
 
-public class ContributerDTO
+public class ContributorDTO
 {
     public Guid Id { get; set; }
     public string NameAR { get; set; }

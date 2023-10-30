@@ -2,20 +2,21 @@
 
 namespace PropertyRenting.Api.Controllers
 {
-    public class ContributerController : BaseController
+    public class ContributorController : BaseController
     {
-        private readonly ICacheService _cacheService;
 
-        public ContributerController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
+        #region CTORS :
+        public ContributorController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper, cacheService)
         {
-            _cacheService = cacheService;
         }
+        #endregion
 
+        #region Actions :
         [HttpGet("list")]
         public async Task<IActionResult> GetAllAsync()
         {
             var data = await Context.Contributers.AsNoTracking().OrderBy(x => x.CreatedOnUtc)
-                .ProjectTo<ContributerDTO>(Mapper.ConfigurationProvider)
+                .ProjectTo<ContributorDTO>(Mapper.ConfigurationProvider)
                 .ToListAsync();
             return Ok(data);
         }
@@ -25,7 +26,7 @@ namespace PropertyRenting.Api.Controllers
 
             try
             {
-                var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Contributor.Lookup,
+                var data = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Contributor.Lookup,
                 () => Context.Contributers
                 .AsNoTracking()
                 .OrderBy(x => x.CreatedOnUtc)
@@ -49,11 +50,11 @@ namespace PropertyRenting.Api.Controllers
 
             int skipped = (pageNumber - 1) * pageSize;
 
-            var data = await Context.Contributers.AsNoTracking().OrderBy(x => x.CreatedOnUtc).ProjectTo<ContributerDTO>(Mapper.ConfigurationProvider)
+            var data = await Context.Contributers.AsNoTracking().OrderBy(x => x.CreatedOnUtc).ProjectTo<ContributorDTO>(Mapper.ConfigurationProvider)
               .Skip(skipped).Take(pageSize)
               .ToListAsync();
             int count = (await Context.Contributers.AsNoTracking().CountAsync());
-            var result = new Pagination<ContributerDTO>
+            var result = new Pagination<ContributorDTO>
             {
                 Data = data,
                 PageNumber = pageNumber,
@@ -67,52 +68,56 @@ namespace PropertyRenting.Api.Controllers
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var owner = await Context.Contributers.AsNoTracking()
-                .ProjectTo<ContributerDTO>(Mapper.ConfigurationProvider)
+                .ProjectTo<ContributorDTO>(Mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (owner == null) return NotFound();
             return Ok(owner);
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateAsync(ContributerDTO contributer)
+        public async Task<IActionResult> CreateAsync(ContributorDTO contributor)
         {
-            if (contributer == null) return BadRequest();
-            contributer.Id = Guid.NewGuid();
-            var mappedEntity = Mapper.Map<ContributerEntity>(contributer);
+            if (contributor == null) return BadRequest();
+            contributor.Id = Guid.NewGuid();
+            var mappedEntity = Mapper.Map<ContributerEntity>(contributor);
             await Context.Contributers.AddAsync(mappedEntity);
 
             bool saved = (await Context.SaveChangesAsync()) > 0;
-            if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+            if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+            await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Contributor.Prefix);
 
-            return Created($"~/byId/{contributer.Id}", contributer);
+            return Created($"~/byId/{contributor.Id}", contributor);
         }
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, ContributerDTO contributer)
+        public async Task<IActionResult> UpdateAsync(Guid id, ContributorDTO contributor)
         {
-            if (contributer == null) return BadRequest();
-            var currentContributer = (await Context.Contributers.FirstOrDefaultAsync(x => x.Id == id));
-            if (currentContributer == null) return NotFound();
-            currentContributer = Mapper.Map(contributer, currentContributer);
+            if (contributor == null) return BadRequest();
+            var currentContributor = (await Context.Contributers.FirstOrDefaultAsync(x => x.Id == id));
+            if (currentContributor == null) return NotFound();
+            currentContributor = Mapper.Map(contributor, currentContributor);
 
-            Context.Contributers.Update(currentContributer);
+            Context.Contributers.Update(currentContributor);
 
             bool saved = (await Context.SaveChangesAsync()) > 0;
-            if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+            if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+            await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Contributor.Prefix);
 
             return Ok();
         }
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var currentContributer = (await Context.Contributers.FirstOrDefaultAsync(x => x.Id == id));
-            if (currentContributer == null) return NotFound();
+            var currentContributor = (await Context.Contributers.FirstOrDefaultAsync(x => x.Id == id));
+            if (currentContributor == null) return NotFound();
 
-            Context.Contributers.Remove(currentContributer);
+            Context.Contributers.Remove(currentContributor);
 
             bool saved = (await Context.SaveChangesAsync()) > 0;
-            if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+            if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+            await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Contributor.Prefix);
 
             return Ok();
         }
+        #endregion
     }
 }

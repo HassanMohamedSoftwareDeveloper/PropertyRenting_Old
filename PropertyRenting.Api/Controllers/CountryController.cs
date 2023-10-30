@@ -4,13 +4,14 @@ namespace PropertyRenting.Api.Controllers;
 
 public class CountryController : BaseController
 {
-    private readonly ICacheService _cacheService;
 
-    public CountryController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
+    #region CTORS :
+    public CountryController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper, cacheService)
     {
-        _cacheService = cacheService;
     }
+    #endregion
 
+    #region Actions :
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
     {
@@ -27,7 +28,7 @@ public class CountryController : BaseController
 
         try
         {
-            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Country.Lookup,
+            var data = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Country.Lookup,
                 () => Context.Countries
                 .AsNoTracking()
                 .OrderBy(x => x.CreatedOnUtc)
@@ -89,7 +90,8 @@ public class CountryController : BaseController
         await Context.Countries.AddAsync(mappedEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Country.Prefix);
 
         return Created($"~/byId/{country.Id}", country);
     }
@@ -105,7 +107,8 @@ public class CountryController : BaseController
         Context.Countries.Update(currentCountry);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Country.Prefix);
 
         return Ok();
     }
@@ -118,8 +121,10 @@ public class CountryController : BaseController
         Context.Countries.Remove(currentCountry);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
+        await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Country.Prefix);
 
         return Ok();
     }
+    #endregion
 }
