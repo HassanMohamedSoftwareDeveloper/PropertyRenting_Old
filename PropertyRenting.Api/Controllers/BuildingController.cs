@@ -1,4 +1,5 @@
-﻿using PropertyRenting.Api.Services;
+﻿using PropertyRenting.Api.Helpers;
+using PropertyRenting.Api.Services;
 
 namespace PropertyRenting.Api.Controllers;
 
@@ -134,6 +135,66 @@ public class BuildingController : BaseController
         if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
         await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Building.Prefix);
         return Ok();
+    }
+    [HttpGet("count-by-construction-status")]
+    public async Task<IActionResult> GetCountByConstructionStatus()
+    {
+        var result = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Building.CountByConstructionStatus,
+                async () =>
+                {
+                    var groupedData = await Context.Buildings
+                    .GroupBy(x => x.ConstructionStatusId)
+                    .Select(x => new { ConstructionStatusId = x.Key, Count = x.Count() })
+                    .ToListAsync();
+                    var data = groupedData.Select(x => new BuildingCountDTO
+                    {
+                        Description = Resources.ConstructionStatus.ResourceManager.GetResourceValue(((ConstructionStatus)x.ConstructionStatusId).ToEnumString()),
+                        Count = x.Count
+                    });
+                    return data;
+                },
+                60);
+
+
+        return Ok(result);
+    }
+    [HttpGet("count-by-building-type")]
+    public async Task<IActionResult> GetCountByBuildingType()
+    {
+        var result = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Building.CountByBuildingType,
+                async () =>
+                {
+                    var groupedData = await Context.Buildings
+                    .GroupBy(x => x.TypeId)
+                    .Select(x => new { TypeId = x.Key, Count = x.Count() })
+                    .ToListAsync();
+                    var data = groupedData.Select(x => new BuildingCountDTO
+                    {
+                        Description = Resources.BuildingType.ResourceManager.GetResourceValue(((BuildingType)x.TypeId).ToEnumString()),
+                        Count = x.Count
+                    });
+                    return data;
+                },
+                60);
+
+
+        return Ok(result);
+    }
+    [HttpGet("count-by-city")]
+    public async Task<IActionResult> GetCountByCity()
+    {
+        var result = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Building.CountByCity,
+                 () =>
+                {
+                    return Context.Buildings
+                     .GroupBy(x => Localizable.IsArabic ? x.District.City.NameAR : x.District.City.NameEN)
+                     .Select(x => new BuildingCountDTO { Description = x.Key, Count = x.Count() })
+                     .ToListAsync();
+                },
+                60);
+
+
+        return Ok(result);
     }
 }
 #endregion

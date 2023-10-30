@@ -102,6 +102,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatCardModule } from "@angular/material/card";
 
 import { RenterDueInstallmentsComponent } from "./Reports/renter-due-installments/renter-due-installments.component";
 import { OwnerDueInstallmentsComponent } from "./Reports/owner-due-installments/owner-due-installments.component";
@@ -136,7 +137,10 @@ import { CashBankTransactionComponent } from "./Reports/cash-bank-transaction/ca
 import { UnitCurrentComponent } from "./Reports/unit-current/unit-current.component";
 import { UnitAvailableComponent } from "./Reports/unit-available/unit-available.component";
 import { UserListComponent } from "./Auth/user-list/user-list.component";
-import { ChangePasswordComponent } from './Auth/change-password/change-password.component';
+import { ChangePasswordComponent } from "./Auth/change-password/change-password.component";
+import { BuildingCountByConstructionStatusComponent } from "./Components/Home/building-count-by-construction-status/building-count-by-construction-status.component";
+import { BuildingCountByBuildingTypeComponent } from "./Components/Home/building-count-by-building-type/building-count-by-building-type.component";
+import { BuildingCountByCityComponent } from './Components/Home/building-count-by-city/building-count-by-city.component';
 
 @NgModule({
     declarations: [
@@ -229,6 +233,9 @@ import { ChangePasswordComponent } from './Auth/change-password/change-password.
         UnitAvailableComponent,
         UserListComponent,
         ChangePasswordComponent,
+        BuildingCountByConstructionStatusComponent,
+        BuildingCountByBuildingTypeComponent,
+        BuildingCountByCityComponent,
     ],
     imports: [
         BrowserModule,
@@ -271,6 +278,7 @@ import { ChangePasswordComponent } from './Auth/change-password/change-password.
         MatTableModule,
         MatCheckboxModule,
         MatRadioModule,
+        MatCardModule,
     ],
     providers: [
         AlertifyService,

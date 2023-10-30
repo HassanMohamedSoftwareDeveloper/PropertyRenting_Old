@@ -46,6 +46,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Resources\BuildingType.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>BuildingType.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ConstructionStatus.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>ConstructionStatus.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Resources\Resource.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -54,6 +64,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Update="Resources\BuildingType.ar.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\BuildingType.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>BuildingType.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ConstructionStatus.ar.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ConstructionStatus.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>ConstructionStatus.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Resources\Resource.ar.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
@@ -61,6 +85,11 @@
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resource.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ClientApp\src\app\Components\Home\" />
+	  <Folder Include="ClientApp\src\app\Pages\" />
 	</ItemGroup>
 
 </Project>

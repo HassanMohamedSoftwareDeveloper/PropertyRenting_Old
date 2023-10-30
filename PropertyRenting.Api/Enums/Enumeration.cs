@@ -4,12 +4,10 @@ namespace PropertyRenting.Api.Enums;
 
 public enum BuildingType
 {
-    Type1 = 1,
-    Type2 = 2,
-    Type3 = 3,
-    Type4 = 4,
-    Type5 = 5,
-    Type6 = 6,
+    Building = 1,
+    Mall = 2,
+    Housing = 3,
+    Managerial = 4
 }
 public enum ConstructionStatus
 {

@@ -1,6 +1,18 @@
 <app-list title="{{'HomePage'|translate}}"
           [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
-  <div body>
+    <div body>
+        <div class="row">
+            <div class="col-4">
+                <app-building-count-by-construction-status></app-building-count-by-construction-status>
+            </div>
+            <div class="col-4">
+                <app-building-count-by-building-type></app-building-count-by-building-type>
+            </div>
+            <div class="col-4">
+                <app-building-count-by-city></app-building-count-by-city>
+            </div>
 
-  </div>
+        </div>
+
+    </div>
 </app-list>

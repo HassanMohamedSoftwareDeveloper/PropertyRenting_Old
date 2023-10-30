@@ -6,6 +6,7 @@ import { Building } from "../Models/building";
 import { Enum } from "../Models/enum";
 import { Pagination } from "../Models/pagination";
 import { Lookup } from "../Models/lookup";
+import { BuildingCount } from "../Models/building-count";
 
 @Injectable({
     providedIn: "root",
@@ -68,6 +69,21 @@ export class BuildingService {
     DeleteBuilding(id: any) {
         return this.httpClient.delete(
             environment.ApiURL + "api/v1/building/delete/" + id
+        );
+    }
+    GetCountByConstructionStatus(): Observable<BuildingCount[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/building/count-by-construction-status"
+        );
+    }
+    GetCountByBuildingType(): Observable<BuildingCount[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/building/count-by-building-type"
+        );
+    }
+    GetCountByCity(): Observable<BuildingCount[]> {
+        return this.httpClient.get<Lookup[]>(
+            environment.ApiURL + "api/v1/building/count-by-city"
         );
     }
 }

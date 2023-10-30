@@ -19,6 +19,9 @@ public static class Constants
         {
             public const string Prefix = "building";
             public const string Lookup = $"{Prefix}-lookup";
+            public const string CountByConstructionStatus = $"{Prefix}-CountByConstructionStatus";
+            public const string CountByBuildingType = $"{Prefix}-CountByBuildingType";
+            public const string CountByCity = $"{Prefix}-CountByCity";
         }
         public static class CashBank
         {
