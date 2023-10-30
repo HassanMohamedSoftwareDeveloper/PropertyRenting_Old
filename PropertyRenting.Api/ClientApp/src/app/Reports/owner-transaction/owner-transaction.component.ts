@@ -7,13 +7,13 @@ import {
     Validators,
 } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { Owner } from "../../Models/owner";
 import { OwnerTransaction } from "../../Models/Reports/owner-transaction";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { OwnerService } from "../../Services/owner.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { Lookup } from "../../Models/lookup";
 
 @Component({
     selector: "app-owner-transaction",
@@ -22,7 +22,7 @@ import { TranslationService } from "../../Services/translation.service";
 })
 export class OwnerTransactionComponent implements OnInit {
     data: OwnerTransaction[] = [];
-    owners: Owner[] = [];
+    owners: Lookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -51,7 +51,7 @@ export class OwnerTransactionComponent implements OnInit {
     }
 
     loadOwners() {
-        this.ownerService.GetAllOwners().subscribe(
+        this.ownerService.GetLookup().subscribe(
             (res) => {
                 this.owners = res;
             },
@@ -108,7 +108,8 @@ export class OwnerTransactionComponent implements OnInit {
 
     exportPDF() {
         const name =
-            this.owners.find((x) => x.id == this.OwnerId.value)?.nameAR || "";
+            this.owners.find((x) => x.id == this.OwnerId.value)?.description ||
+            "";
         this.reportService
             .ExportOwnerTransactions(
                 "PDF",
@@ -140,7 +141,8 @@ export class OwnerTransactionComponent implements OnInit {
     }
     exportExcel() {
         const name =
-            this.owners.find((x) => x.id == this.OwnerId.value)?.nameAR || "";
+            this.owners.find((x) => x.id == this.OwnerId.value)?.description ||
+            "";
         this.reportService
             .ExportOwnerTransactions(
                 "EXCEL",

@@ -1,13 +1,20 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using PropertyRenting.Api.Services;
 
 namespace PropertyRenting.Api.Controllers;
 
 public class AccountController : BaseController
 {
+    #region Fields :
+    private readonly ICacheService _cacheService;
+    #endregion
 
-    public AccountController(AppDbContext context, IMapper mapper) : base(context, mapper)
+    #region CTORS :
+    public AccountController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
     {
+        _cacheService = cacheService;
     }
+    #endregion
 
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
@@ -15,11 +22,8 @@ public class AccountController : BaseController
 
         try
         {
-            var data = await Context.Accounts//.AsNoTracking()
-                                             //.Include(x => x.ParentAccount)
-                                             //.Include(x => x.AccountChildren)
+            var data = await Context.Accounts
                 .OrderBy(x => x.CreatedOnUtc)
-               //.ProjectTo<AccountDTO>(Mapper.ConfigurationProvider)
                .ToListAsync();
             return Ok(Mapper.Map<List<AccountDTO>>(data));
         }
@@ -35,11 +39,12 @@ public class AccountController : BaseController
 
         try
         {
-            var data = await Context.Accounts
-                .AsNoTracking()
-                .OrderBy(x => x.CreatedOnUtc)
-               .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
-               .ToListAsync();
+            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Account.Lookup,
+                () => Context.Accounts
+                    .AsNoTracking()
+                    .OrderBy(x => x.CreatedOnUtc)
+                   .ProjectTo<AccountLookupDTO>(Mapper.ConfigurationProvider)
+                   .ToListAsync(), 60);
             return Ok(data);
         }
         catch (Exception ex)

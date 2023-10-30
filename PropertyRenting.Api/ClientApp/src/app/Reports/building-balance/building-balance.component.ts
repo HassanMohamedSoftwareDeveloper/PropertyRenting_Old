@@ -2,13 +2,13 @@ import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { Building } from "../../Models/building";
 import { BuildingBalance } from "../../Models/Reports/building-balance";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { BuildingService } from "../../Services/building.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { Lookup } from "../../Models/lookup";
 
 @Component({
     selector: "app-building-balance",
@@ -17,7 +17,7 @@ import { TranslationService } from "../../Services/translation.service";
 })
 export class BuildingBalanceComponent implements OnInit {
     data: BuildingBalance[] = [];
-    buildings: Building[] = [];
+    buildings: Lookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -47,7 +47,7 @@ export class BuildingBalanceComponent implements OnInit {
     }
 
     loadBuildings() {
-        this.buildingService.GetAllBuildings().subscribe(
+        this.buildingService.GetLookup().subscribe(
             (res) => {
                 this.buildings = res;
             },

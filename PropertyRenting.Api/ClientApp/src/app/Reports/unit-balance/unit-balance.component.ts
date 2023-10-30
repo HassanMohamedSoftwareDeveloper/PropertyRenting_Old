@@ -3,12 +3,12 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
 import { UnitBalance } from "../../Models/Reports/unit-balance";
-import { Unit } from "../../Models/unit";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
 import { UnitService } from "../../Services/unit.service";
+import { UnitLookup } from "../../Models/unit-lookup";
 
 @Component({
     selector: "app-unit-balance",
@@ -17,7 +17,7 @@ import { UnitService } from "../../Services/unit.service";
 })
 export class UnitBalanceComponent implements OnInit {
     data: UnitBalance[] = [];
-    units: Unit[] = [];
+    units: UnitLookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -46,7 +46,7 @@ export class UnitBalanceComponent implements OnInit {
     }
 
     loadUnits() {
-        this.unitService.GetAll().subscribe(
+        this.unitService.GetLookup().subscribe(
             (res) => {
                 this.units = res;
             },

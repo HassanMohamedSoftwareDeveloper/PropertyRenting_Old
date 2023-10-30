@@ -8,7 +8,6 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 import { forkJoin } from "rxjs";
 import { v4 as uuidv4 } from "uuid";
-import { Account } from "../../../Models/account";
 import { Breadcrumb } from "../../../Models/breadcrumb";
 import { CashBank } from "../../../Models/cash-bank";
 import { Enum } from "../../../Models/enum";
@@ -17,6 +16,7 @@ import { AlertifyService } from "../../../Services/alertify.service";
 import { BreadcrumbService } from "../../../Services/breadcrumb.service";
 import { CashBankService } from "../../../Services/cash-bank.service";
 import { TranslationService } from "../../../Services/translation.service";
+import { AccountLookup } from "../../../Models/account-lookup";
 
 @Component({
     selector: "app-cash-bank-details",
@@ -31,7 +31,7 @@ export class CashBankDetailsComponent implements OnInit {
     submitted = false;
     cashBankForm!: FormGroup;
     cashBankTypes: Enum[] = [];
-    accounts: Account[] = [];
+    accounts: AccountLookup[] = [];
     showForm = false;
     constructor(
         private fb: FormBuilder,
@@ -57,38 +57,38 @@ export class CashBankDetailsComponent implements OnInit {
         this.createForm();
     }
     loadDataWithId(id: any) {
-        forkJoin(
-            this.accountService.GetAll(),
-            this.cashBankService.GetById(id)
-        ).subscribe(
-            ([accountRes, cashBankRes]) => {
+        forkJoin([
+            this.accountService.GetLookup(),
+            this.cashBankService.GetById(id),
+        ]).subscribe({
+            next: ([accountRes, cashBankRes]) => {
                 this.accounts = accountRes.filter(
-                    (x) => (x.accountTypeId || 0) != 5
+                    (x) => (x.accountTypeId || 0) !== 5
                 );
                 this.cashBank = cashBankRes;
                 this.createForm();
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
     loadData() {
-        this.accountService.GetAll().subscribe(
-            (accountRes) => {
+        this.accountService.GetLookup().subscribe({
+            next: (accountRes) => {
                 this.accounts = accountRes.filter(
-                    (x) => (x.accountTypeId || 0) != 5
+                    (x) => (x.accountTypeId || 0) !== 5
                 );
                 this.createForm();
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
     get Name() {
         return this.cashBankForm.controls["Name"] as FormControl;

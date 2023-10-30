@@ -42,28 +42,28 @@ export class ContractViewComponent implements OnInit {
         return this.contractService.GetPaymentMethodById(id);
     }
     getContractById(id: string) {
-        this.renterContractService.GetById(id).subscribe(
-            (result) => {
+        this.renterContractService.GetById(id).subscribe({
+            next: (result) => {
                 this.contract = result;
             },
-            (error) => console.log(error)
-        );
+            error: (error) => console.log(error),
+        });
     }
     CancelContract(id: any) {
-        this.renterContractService.Cancel(id).subscribe(
-            () => {
+        this.renterContractService.Cancel(id).subscribe({
+            next: () => {
                 const successMsg = this.translateService.Translate(
                     "CanceledSuccessfully"
                 );
                 this.alertify.success(successMsg);
                 this.getContractById(id);
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
     backToList() {
         this.router.navigate(["/contracts/rentercontracts"]);

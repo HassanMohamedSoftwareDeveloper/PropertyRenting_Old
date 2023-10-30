@@ -7,13 +7,13 @@ import {
     Validators,
 } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { Building } from "../../Models/building";
 import { BuildingTransaction } from "../../Models/Reports/building-transaction";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { BuildingService } from "../../Services/building.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { Lookup } from "../../Models/lookup";
 
 @Component({
     selector: "app-building-transaction",
@@ -22,7 +22,7 @@ import { TranslationService } from "../../Services/translation.service";
 })
 export class BuildingTransactionComponent implements OnInit {
     data: BuildingTransaction[] = [];
-    buildings: Building[] = [];
+    buildings: Lookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -51,7 +51,7 @@ export class BuildingTransactionComponent implements OnInit {
     }
 
     loadBuildings() {
-        this.buildingService.GetAllBuildings().subscribe(
+        this.buildingService.GetLookup().subscribe(
             (res) => {
                 this.buildings = res;
             },
@@ -107,8 +107,8 @@ export class BuildingTransactionComponent implements OnInit {
     }
     exportPDF() {
         const name =
-            this.buildings.find((x) => x.id == this.BuildingId.value)?.name ||
-            "";
+            this.buildings.find((x) => x.id == this.BuildingId.value)
+                ?.description || "";
         this.reportService
             .ExportBuildingTransactions(
                 "PDF",
@@ -141,8 +141,8 @@ export class BuildingTransactionComponent implements OnInit {
     }
     exportExcel() {
         const name =
-            this.buildings.find((x) => x.id == this.BuildingId.value)?.name ||
-            "";
+            this.buildings.find((x) => x.id == this.BuildingId.value)
+                ?.description || "";
         this.reportService
             .ExportBuildingTransactions(
                 "EXCEL",

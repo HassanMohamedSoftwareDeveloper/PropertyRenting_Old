@@ -17,5 +17,7 @@ public class UnitProfile : Profile
 
         CreateMap<UnitEntity, LookupDTO>()
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.UnitNumber));
+        CreateMap<UnitEntity, UnitLookupDTO>()
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.UnitNumber));
     }
 }

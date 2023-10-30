@@ -1,68 +1,68 @@
 <app-list title="{{'Report.OwnerBalance'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
-  <div body>
-    <form (ngSubmit)='onSubmit()' [formGroup]="filterForm">
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'Report.Owner'|translate}} </label>
-          <div>
-            <ng-select formControlName="OwnerId"
-                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let owner of owners" [value]="owner.id">{{owner.nameAR}} - {{owner.nameEN}}</ng-option>
-            </ng-select>
-          </div>
+    <div body>
+        <form (ngSubmit)='onSubmit()' [formGroup]="filterForm">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'Report.Owner'|translate}} </label>
+                    <div>
+                        <ng-select formControlName="OwnerId"
+                                   notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let owner of owners" [value]="owner.id">{{owner.description}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'Report.FromDate'|translate}}</label>
+                    <div>
+                        <input type="text" class="form-control" formControlName="FromDate" bsDatepicker
+                               [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}"
+                               (bsValueChange)="EmptyToDate($event)">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'Report.ToDate'|translate}}</label>
+                    <div>
+                        <input type="text" class="form-control" formControlName="ToDate" bsDatepicker
+                               [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-2">
+                <button type="submit" class="btn btn-outline-primary ">{{'Report.DisplayReport'|translate}}</button>
+                <button type="reset" class="btn btn-outline-info">{{'Reset'|translate}}</button>
+                <button *ngIf="showReport" type="button" class="btn btn-primary" (click)="exportPDF()">{{'ExportPDF'|translate}}</button>
+                <button *ngIf="showReport" type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
+            </div>
+        </form>
+
+        <div class="row mt-3" *ngIf="showReport">
+            <app-grid-page>
+                <tr tableHeader>
+                    <th colspan="2" class="text-center">{{'Report.Owner'|translate}}</th>
+                    <th rowspan="2" class="text-center">{{'Report.BeginPeriodBalance'|translate}}</th>
+                    <th rowspan="2" class="text-center">{{'Report.Debit'|translate}}</th>
+                    <th rowspan="2" class="text-center">{{'Report.Credit'|translate}}</th>
+                    <th rowspan="2" class="text-center">{{'Report.EndPeriodBalance'|translate}}</th>
+                </tr>
+                <tr tableHeader>
+                    <th>{{'NameAR'|translate}}</th>
+                    <th>{{'NameEN'|translate}}</th>
+                </tr>
+                <tr tableBody *ngFor="let item of data">
+                    <td>{{item.ownerNameAR}}</td>
+                    <td>{{item.ownerNameEN}}</td>
+                    <td>{{item.beginPeriodBalance}} {{(item.beginPeriodBalance > 0 ? 'Report.Debit': item.beginPeriodBalance < 0? 'Report.Credit':'')|translate}}</td>
+                    <td>{{item.debit}}</td>
+                    <td>{{item.credit}}</td>
+                    <td>{{item.endPeriodBalance}} {{(item.endPeriodBalance > 0 ? 'Report.Debit': item.endPeriodBalance < 0? 'Report.Credit':'')|translate}} </td>
+                </tr>
+
+            </app-grid-page>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'Report.FromDate'|translate}}</label>
-          <div>
-            <input type="text" class="form-control" formControlName="FromDate" bsDatepicker
-                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}"
-                   (bsValueChange)="EmptyToDate($event)">
-          </div>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'Report.ToDate'|translate}}</label>
-          <div>
-            <input type="text" class="form-control" formControlName="ToDate" bsDatepicker
-                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}">
-          </div>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-end mt-2">
-        <button type="submit" class="btn btn-outline-primary ">{{'Report.DisplayReport'|translate}}</button>
-        <button type="reset" class="btn btn-outline-info">{{'Reset'|translate}}</button>
-        <button *ngIf="showReport" type="button" class="btn btn-primary" (click)="exportPDF()">{{'ExportPDF'|translate}}</button>
-        <button *ngIf="showReport" type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
-      </div>
-    </form>
-
-    <div class="row mt-3" *ngIf="showReport">
-      <app-grid-page>
-        <tr tableHeader>
-          <th colspan="2" class="text-center">{{'Report.Owner'|translate}}</th>
-          <th rowspan="2" class="text-center">{{'Report.BeginPeriodBalance'|translate}}</th>
-          <th rowspan="2" class="text-center">{{'Report.Debit'|translate}}</th>
-          <th rowspan="2" class="text-center">{{'Report.Credit'|translate}}</th>
-          <th rowspan="2" class="text-center">{{'Report.EndPeriodBalance'|translate}}</th>
-        </tr>
-        <tr tableHeader>
-          <th>{{'NameAR'|translate}}</th>
-          <th>{{'NameEN'|translate}}</th>
-        </tr>
-        <tr tableBody *ngFor="let item of data">
-          <td>{{item.ownerNameAR}}</td>
-          <td>{{item.ownerNameEN}}</td>
-          <td>{{item.beginPeriodBalance}} {{(item.beginPeriodBalance > 0 ? 'Report.Debit': item.beginPeriodBalance < 0? 'Report.Credit':'')|translate}}</td>
-          <td>{{item.debit}}</td>
-          <td>{{item.credit}}</td>
-          <td>{{item.endPeriodBalance}} {{(item.endPeriodBalance > 0 ? 'Report.Debit': item.endPeriodBalance < 0? 'Report.Credit':'')|translate}} </td>
-        </tr>
-
-      </app-grid-page>
     </div>
-  </div>
 </app-list>

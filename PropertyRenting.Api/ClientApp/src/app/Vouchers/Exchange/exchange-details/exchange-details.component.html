@@ -53,7 +53,7 @@
                     <div>
                         <ng-select formControlName="CashBankId" [(ngModel)]="voucher.cashBankId"
                                    notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                            <ng-option *ngFor="let cash of cashOrBanks" [value]="cash.id">{{cash.name}}</ng-option>
+                            <ng-option *ngFor="let cash of cashOrBanks" [value]="cash.id">{{cash.description}}</ng-option>
                         </ng-select>
                         <div class="error-block" *ngIf="CashBankId.invalid && (submitted||CashBankId.touched)">
                             {{'RequiredField'|translate}}
@@ -73,7 +73,7 @@
                     <div>
                         <ng-select formControlName="RenterId" [(ngModel)]="voucher.renterId"
                                    notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                            <ng-option *ngFor="let renter of renters" [value]="renter.id">{{renter.nameAR}} - {{renter.nameEN}}</ng-option>
+                            <ng-option *ngFor="let renter of renters" [value]="renter.id">{{renter.description}}</ng-option>
                         </ng-select>
                         <div class="error-block" *ngIf="RenterId.invalid && (submitted||RenterId.touched)">
                             {{'RequiredField'|translate}}
@@ -86,7 +86,7 @@
                     <div>
                         <ng-select #owner formControlName="OwnerId" [(ngModel)]="voucher.ownerId" (change)="ownerChange(owner)"
                                    notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                            <ng-option *ngFor="let owner of owners" [value]="owner.id">{{owner.nameAR}} - {{owner.nameEN}}</ng-option>
+                            <ng-option *ngFor="let owner of owners" [value]="owner.id">{{owner.description}}</ng-option>
                         </ng-select>
                         <div class="error-block" *ngIf="OwnerId.invalid && (submitted||OwnerId.touched)">
                             {{'RequiredField'|translate}}
@@ -101,7 +101,7 @@
                     <div>
                         <ng-select formControlName="ContributerId" [(ngModel)]="voucher.contributerId"
                                    notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                            <ng-option *ngFor="let contributer of contributers" [value]="contributer.id">{{contributer.nameAR}} - {{contributer.nameEN}}</ng-option>
+                            <ng-option *ngFor="let contributer of contributers" [value]="contributer.id">{{contributer.description}}</ng-option>
                         </ng-select>
                         <div class="error-block" *ngIf="ContributerId.invalid && (submitted||ContributerId.touched)">
                             {{'RequiredField'|translate}}
@@ -161,12 +161,12 @@
                                 <td class="text-center align-middle">{{index+1}}</td>
                                 <td *ngIf="voucher.sanadTypeId==1">
                                     <ng-select formControlName="ExpenseId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                                        <ng-option *ngFor="let expense of expenses" [value]="expense.id">{{expense.nameAR}} - {{expense.nameEN}}</ng-option>
+                                        <ng-option *ngFor="let expense of expenses" [value]="expense.id">{{expense.description}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td *ngIf="voucher.sanadTypeId==2">
                                     <ng-select formControlName="AditionId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                                        <ng-option *ngFor="let addition of additions" [value]="addition.id">{{addition.nameAR}} - {{addition.nameEN}}</ng-option>
+                                        <ng-option *ngFor="let addition of additions" [value]="addition.id">{{addition.description}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td *ngIf="false">
@@ -181,13 +181,13 @@
                                 <td>
                                     <ng-select #buildingCTR formControlName="BuildingId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
                                                [readonly]="getControlByName(fg,'UnitId').value || getControlByName(fg,'InstallmentId').value || voucher.sanadTypeId==2" (change)="onBuildingChange(unitCTR,buildingCTR)">
-                                        <ng-option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</ng-option>
+                                        <ng-option *ngFor="let building of buildings" [value]="building.id">{{building.description}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>
                                     <ng-select #unitCTR formControlName="UnitId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
                                                (change)="onUnitChange(unitCTR,buildingCTR)" [readonly]="voucher.sanadTypeId==3">
-                                        <ng-option *ngFor="let unit of units" [value]="unit.id">{{unit.unitNumber}} - {{unit.unitName}}</ng-option>
+                                        <ng-option *ngFor="let unit of units" [value]="unit.id">{{unit.description}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>

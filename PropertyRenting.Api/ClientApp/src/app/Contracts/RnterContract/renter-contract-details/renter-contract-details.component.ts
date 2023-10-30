@@ -9,9 +9,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Enum } from "../../../Models/enum";
-import { Renter } from "../../../Models/renter";
 import { RenterContract } from "../../../Models/renter-contract";
-import { Unit } from "../../../Models/unit";
 import { ContractService } from "../../../Services/contract.service";
 import { RenterService } from "../../../Services/renter.service";
 import { UnitService } from "../../../Services/unit.service";
@@ -23,9 +21,9 @@ import { BreadcrumbService } from "../../../Services/breadcrumb.service";
 import { ContractFinancialTransaction } from "../../../Models/contract-financial-transaction";
 import { ModalComponent } from "../../../CustomTemplates/modal/modal.component";
 import { BuildingService } from "../../../Services/building.service";
-import { Building } from "../../../Models/building";
 import { DialogService } from "../../../Services/dialog.service";
 import { forkJoin } from "rxjs";
+import { Lookup } from "../../../Models/lookup";
 
 @Component({
     selector: "app-renter-contract-details",
@@ -35,9 +33,9 @@ import { forkJoin } from "rxjs";
 export class RenterContractDetailsComponent implements OnInit {
     breadcrumbItems: Breadcrumb[] = [];
     contractForm!: FormGroup;
-    units: Unit[] = [];
-    buildings: Building[] = [];
-    renters: Renter[] = [];
+    units: Lookup[] = [];
+    buildings: Lookup[] = [];
+    renters: Lookup[] = [];
     submitted = false;
     increasing = "0";
     contract: RenterContract = { id: null, unitId: null, renterId: null };
@@ -76,19 +74,19 @@ export class RenterContractDetailsComponent implements OnInit {
         }
     }
     loadDataWithContractId(contractId: any) {
-        forkJoin(
-            this.buildingservice.GetAllBuildings(),
-            this.renterService.GetAll(),
-            this.renterContractService.GetById(contractId)
-        ).subscribe(
-            ([buildingRes, renterRes, contractRes]) => {
+        forkJoin([
+            this.buildingservice.GetLookup(),
+            this.renterService.GetLookup(),
+            this.renterContractService.GetById(contractId),
+        ]).subscribe({
+            next: ([buildingRes, renterRes, contractRes]) => {
                 this.buildings = buildingRes;
                 this.renters = renterRes;
                 this.contract = contractRes;
 
                 if (
-                    this.contract.contractState == 2 ||
-                    this.contract.contractState == 3
+                    this.contract.contractState === 2 ||
+                    this.contract.contractState === 3
                 ) {
                     this.router.navigate([
                         "/contracts/rentercontracts/details/" +
@@ -96,49 +94,49 @@ export class RenterContractDetailsComponent implements OnInit {
                     ]);
                 } else {
                     this.increasing =
-                        this.contract.increasing == true ? "1" : "0";
+                        this.contract.increasing === true ? "1" : "0";
                     this.unitService
                         .GetAvailable(this.contract.buildingId)
-                        .subscribe(
-                            (res) => {
+                        .subscribe({
+                            next: (res) => {
                                 this.units = res;
                                 this.createForm();
                             },
-                            (error) => {
+                            error: (error) => {
                                 const msg =
                                     this.translateService.Translate(
                                         "ErrorOccurred"
                                     );
                                 this.alertify.error(msg);
                                 console.log(error);
-                            }
-                        );
+                            },
+                        });
                 }
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     loadData() {
-        forkJoin(
-            this.buildingservice.GetAllBuildings(),
-            this.renterService.GetAll()
-        ).subscribe(
-            ([buildingRes, renterRes]) => {
+        forkJoin([
+            this.buildingservice.GetLookup(),
+            this.renterService.GetLookup(),
+        ]).subscribe({
+            next: ([buildingRes, renterRes]) => {
                 this.buildings = buildingRes;
                 this.renters = renterRes;
                 this.createForm();
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     createForm() {
@@ -173,14 +171,14 @@ export class RenterContractDetailsComponent implements OnInit {
     }
 
     loadUnits(buildingId: any) {
-        this.unitService.GetAvailable(buildingId).subscribe(
-            (res) => {
+        this.unitService.GetAvailable(buildingId).subscribe({
+            next: (res) => {
                 this.units = res;
             },
-            (error) => {
+            error: (error) => {
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     get ContractNumber() {
@@ -245,7 +243,7 @@ export class RenterContractDetailsComponent implements OnInit {
             return;
         }
         this.contract.increasing = this.increasing === "1" ? true : false;
-        if (this.contract.id == null) {
+        if (this.contract.id === null) {
             this.Add();
         } else {
             this.Update();
@@ -258,20 +256,20 @@ export class RenterContractDetailsComponent implements OnInit {
         for (const extra of this.contract.renterFinancialTransactions || []) {
             extra.id = uuidv4();
         }
-        this.renterContractService.Create(this.contract).subscribe(
-            () => {
+        this.renterContractService.Create(this.contract).subscribe({
+            next: () => {
                 const successMsg =
                     this.translateService.Translate("AddedSuccessfully");
                 this.alertify.success(successMsg);
                 this.backToList();
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
                 this.contract.id = null;
-            }
-        );
+            },
+        });
     }
     private Update() {
         for (const extra of this.contract.renterFinancialTransactions || []) {
@@ -282,29 +280,29 @@ export class RenterContractDetailsComponent implements OnInit {
 
         this.renterContractService
             .Edit(this.contract.id, this.contract)
-            .subscribe(
-                () => {
+            .subscribe({
+                next: () => {
                     const successMsg = this.translateService.Translate(
                         "UpdatedSuccessfully"
                     );
                     this.alertify.success(successMsg);
                     this.backToList();
                 },
-                (error) => {
+                error: (error) => {
                     const msg =
                         this.translateService.Translate("ErrorOccurred");
                     this.alertify.error(msg);
                     console.log(error);
-                }
-            );
+                },
+            });
     }
 
     GetContractState(id: number): string {
         return this.contractService.GetContractStateById(id);
     }
     ActivateContract(id: any) {
-        this.renterContractService.Activate(id).subscribe(
-            () => {
+        this.renterContractService.Activate(id).subscribe({
+            next: () => {
                 const successMsg = this.translateService.Translate(
                     "ActivatedSuccessfully"
                 );
@@ -313,12 +311,12 @@ export class RenterContractDetailsComponent implements OnInit {
                     "/contracts/rentercontracts/details/" + this.contract.id,
                 ]);
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     HideModal() {
@@ -341,9 +339,9 @@ export class RenterContractDetailsComponent implements OnInit {
                 this.contract.renterFinancialTransactions =
                     this.contract?.renterFinancialTransactions?.filter(
                         (x) =>
-                            (x.id != null && x.id != contractAddition.id) ||
-                            (x.tempId != null &&
-                                x.tempId != contractAddition.tempId)
+                            (x.id !== null && x.id !== contractAddition.id) ||
+                            (x.tempId !== null &&
+                                x.tempId !== contractAddition.tempId)
                     );
                 this.showActivateButton = false;
             }
@@ -355,16 +353,16 @@ export class RenterContractDetailsComponent implements OnInit {
         this.contract.renterFinancialTransactions =
             this.contract.renterFinancialTransactions || [];
 
-        if (data.id != null) {
+        if (data.id !== null) {
             const index = this.contract.renterFinancialTransactions.findIndex(
-                (x) => x.id == data.id
+                (x) => x.id === data.id
             );
             if (index > -1) {
                 this.contract.renterFinancialTransactions[index] = { ...data };
             }
         } else {
             const index = this.contract.renterFinancialTransactions.findIndex(
-                (x) => x.tempId == data.tempId
+                (x) => x.tempId === data.tempId
             );
             if (index === -1) {
                 this.contract.renterFinancialTransactions.push({ ...data });
@@ -414,10 +412,10 @@ export class RenterContractDetailsComponent implements OnInit {
             const otherValue = control?.parent?.get(otherControlName)?.value;
 
             if (
-                thisValue == undefined ||
-                thisValue == null ||
-                thisValue == "" ||
-                thisValue == 0
+                thisValue === undefined ||
+                thisValue === null ||
+                thisValue === "" ||
+                thisValue === 0
             ) {
                 return null;
             }
@@ -442,10 +440,10 @@ export class RenterContractDetailsComponent implements OnInit {
             const otherValue = control?.parent?.get(otherControlName)?.value;
 
             if (
-                thisValue == undefined ||
-                thisValue == null ||
-                thisValue == "" ||
-                thisValue == 0
+                thisValue === undefined ||
+                thisValue === null ||
+                thisValue === "" ||
+                thisValue === 0
             ) {
                 return null;
             }
@@ -461,10 +459,10 @@ export class RenterContractDetailsComponent implements OnInit {
     validateDropdown(control: AbstractControl) {
         const thisValue = control.value;
         if (
-            thisValue == undefined ||
-            thisValue == null ||
-            thisValue == "" ||
-            thisValue == "null"
+            thisValue === undefined ||
+            thisValue === null ||
+            thisValue === "" ||
+            thisValue === "null"
         ) {
             return { required: true };
         }
@@ -481,12 +479,12 @@ export class RenterContractDetailsComponent implements OnInit {
             const otherValue = control?.parent?.get(otherControlName)?.value;
             const thisValue = control.value;
             if (
-                otherValue == value &&
-                (thisValue == undefined ||
-                    thisValue == null ||
-                    thisValue == 0 ||
-                    thisValue == "" ||
-                    thisValue == "0")
+                otherValue === value &&
+                (thisValue === undefined ||
+                    thisValue === null ||
+                    thisValue === 0 ||
+                    thisValue === "" ||
+                    thisValue === "0")
             ) {
                 return {
                     required: true,

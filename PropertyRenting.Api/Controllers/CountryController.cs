@@ -1,9 +1,14 @@
-﻿namespace PropertyRenting.Api.Controllers;
+﻿using PropertyRenting.Api.Services;
+
+namespace PropertyRenting.Api.Controllers;
 
 public class CountryController : BaseController
 {
-    public CountryController(AppDbContext context, IMapper mapper) : base(context, mapper)
+    private readonly ICacheService _cacheService;
+
+    public CountryController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
     {
+        _cacheService = cacheService;
     }
 
     [HttpGet("list")]
@@ -22,11 +27,15 @@ public class CountryController : BaseController
 
         try
         {
-            var data = await Context.Countries
+            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Country.Lookup,
+                () => Context.Countries
                 .AsNoTracking()
                 .OrderBy(x => x.CreatedOnUtc)
-               .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
-               .ToListAsync();
+                .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
+                .ToListAsync(),
+                60);
+
+
             return Ok(data);
         }
         catch (Exception ex)

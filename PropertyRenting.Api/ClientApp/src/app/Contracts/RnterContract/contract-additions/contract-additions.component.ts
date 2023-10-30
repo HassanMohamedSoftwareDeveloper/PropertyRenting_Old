@@ -16,7 +16,7 @@ import {
 } from "@angular/forms";
 import { ContractFinancialTransaction } from "../../../Models/contract-financial-transaction";
 import { ContractAddionsService } from "../../../Services/contract-addions.service";
-import { ContractAddions } from "../../../Models/contract-addions";
+import { Lookup } from "../../../Models/lookup";
 
 @Component({
     selector: "app-contract-additions",
@@ -32,7 +32,7 @@ export class ContractAdditionsComponent implements OnInit, OnChanges {
         new EventEmitter<ContractFinancialTransaction>();
     submitted = false;
 
-    contractAdditions: ContractAddions[] = [];
+    contractAdditions: Lookup[] = [];
     constructor(
         private fb: FormBuilder,
         private contractAdditionService: ContractAddionsService
@@ -43,21 +43,21 @@ export class ContractAdditionsComponent implements OnInit, OnChanges {
     }
     ngOnChanges(): void {
         if (
-            this.contractAddition.id == null &&
-            this.contractAddition.contractAdditionId == null
+            this.contractAddition.id === null &&
+            this.contractAddition.contractAdditionId === null
         ) {
             this.resetFrom();
         }
     }
 
     loadAdditions() {
-        this.contractAdditionService.GetAll().subscribe(
-            (res) =>
+        this.contractAdditionService.GetLookup().subscribe({
+            next: (res) =>
                 (this.contractAdditions = res.filter(
                     (x) => x.id != this.mandatoryId
                 )),
-            (error) => console.log(error)
-        );
+            error: (error) => console.log(error),
+        });
     }
 
     CreateFrom() {
@@ -91,20 +91,17 @@ export class ContractAdditionsComponent implements OnInit, OnChanges {
             return;
         }
         const exp = this.contractAdditions.find(
-            (x) => x.id == this.contractAddition.contractAdditionId
+            (x) => x.id === this.contractAddition.contractAdditionId
         );
-        this.contractAddition.contractAddition =
-            exp?.nameAR + " - " + exp?.nameEN;
+        this.contractAddition.contractAddition = exp?.description;
 
         if (
-            this.contractAddition.id == null &&
-            this.contractAddition.tempId == null
+            this.contractAddition.id === null &&
+            this.contractAddition.tempId === null
         ) {
             this.contractAddition.tempId = uuidv4();
         }
         this.addedContractAdditionEvent.emit(this.contractAddition);
-
-        //this.resetFrom();
     }
 
     resetFrom() {
@@ -135,10 +132,10 @@ export class ContractAdditionsComponent implements OnInit, OnChanges {
     validateDropdown(control: AbstractControl) {
         const thisValue = control.value;
         if (
-            thisValue == undefined ||
-            thisValue == null ||
-            thisValue == "" ||
-            thisValue == "null"
+            thisValue === undefined ||
+            thisValue === null ||
+            thisValue === "" ||
+            thisValue === "null"
         ) {
             return { required: true };
         }

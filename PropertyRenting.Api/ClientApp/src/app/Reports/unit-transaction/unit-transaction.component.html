@@ -1,87 +1,87 @@
 <app-list title="{{'Report.UnitTransactions'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
-  <div body>
-    <form (ngSubmit)='onSubmit()' [formGroup]="filterForm">
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'Report.Unit'|translate}} </label>
-          <div>
-            <ng-select formControlName="UnitId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let unit of units" [value]="unit.id">{{unit.unitNumber}} - {{unit.unitName}}</ng-option>
-            </ng-select>
-          </div>
+    <div body>
+        <form (ngSubmit)='onSubmit()' [formGroup]="filterForm">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'Report.Unit'|translate}} </label>
+                    <div>
+                        <ng-select formControlName="UnitId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let unit of units" [value]="unit.id">{{unit.description}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'Report.FromDate'|translate}}</label>
+                    <div>
+                        <input type="text" class="form-control" formControlName="FromDate" bsDatepicker
+                               [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}"
+                               (bsValueChange)="EmptyToDate($event)">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'Report.ToDate'|translate}}</label>
+                    <div>
+                        <input type="text" class="form-control" formControlName="ToDate" bsDatepicker
+                               [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-2">
+                <button type="submit" class="btn btn-outline-primary ">{{'Report.DisplayReport'|translate}}</button>
+                <button type="reset" class="btn btn-outline-info">{{'Reset'|translate}}</button>
+                <button *ngIf="showReport" type="button" class="btn btn-primary" (click)="exportPDF()">{{'ExportPDF'|translate}}</button>
+                <button *ngIf="showReport" type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
+            </div>
+        </form>
+        <div class="row mt-3" *ngIf="showReport">
+            <app-grid-page>
+                <tr tableHeader>
+                    <th>{{'#'|translate}}</th>
+                    <th colspan="2">{{'Voucher.VoucherNumber'|translate}}</th>
+                    <th>{{'Voucher.VoucherDate'|translate}}</th>
+                    <th>{{'Voucher.RefType'|translate}}</th>
+                    <th colspan="2">{{'Voucher.RefNumber'|translate}}</th>
+                    <th>{{'Voucher.Description'|translate}}</th>
+                    <th>{{'Building.Name'|translate}}</th>
+                    <th class="text-center">{{'Report.Debit'|translate}}</th>
+                    <th class="text-center">{{'Report.Credit'|translate}}</th>
+                    <th class="text-center">{{'Report.Balance'|translate}}</th>
+                </tr>
+                <ng-container tableBody *ngFor="let item of data;index as index">
+                    <tr *ngIf="item.type==1">
+                        <th colspan="9" class="text-center fw-bold">{{'Report.BeginPeriodBalance'|translate}}</th>
+                        <td>{{item.debitAmount}}</td>
+                        <td>{{item.creditAmount}}</td>
+                        <th class="text-center fw-bold balance-class">{{(item.debitAmount||0) - (item.creditAmount||0)}} {{((item.debitAmount||0) - (item.creditAmount||0) > 0 ? 'Report.Debit': (item.debitAmount||0) - (item.creditAmount||0) < 0? 'Report.Credit':'')|translate}}</th>
+                    </tr>
+
+                    <tr *ngIf="item.type==2">
+                        <td>{{index}}</td>
+                        <td>{{item.autoNumber}}</td>
+                        <td>{{item.voucherId}}</td>
+                        <td>{{item.voucherDate|date:'yyyy-MM-dd'}}</td>
+                        <td>{{item.referenceType}}</td>
+                        <td>{{item.referenceAutoNumber}}</td>
+                        <td>{{item.referenceManualNumber}}</td>
+                        <td>{{item.description}}</td>
+                        <td>{{item.buildingName}}</td>
+                        <td>{{item.debitAmount}}</td>
+                        <td>{{item.creditAmount}}</td>
+                    </tr>
+                    <tr *ngIf="item.type==3">
+                        <th colspan="9" class="text-center fw-bold">{{'Report.EndPeriodBalance'|translate}}</th>
+                        <td>{{item.debitAmount}}</td>
+                        <td>{{item.creditAmount}}</td>
+                        <th class="text-center fw-bold balance-class">{{(item.debitAmount||0) - (item.creditAmount||0)}} {{((item.debitAmount||0) - (item.creditAmount||0) > 0 ? 'Report.Debit': (item.debitAmount||0) - (item.creditAmount||0) < 0? 'Report.Credit':'')|translate}}</th>
+                    </tr>
+                </ng-container>
+            </app-grid-page>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'Report.FromDate'|translate}}</label>
-          <div>
-            <input type="text" class="form-control" formControlName="FromDate" bsDatepicker
-                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}"
-                   (bsValueChange)="EmptyToDate($event)">
-          </div>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'Report.ToDate'|translate}}</label>
-          <div>
-            <input type="text" class="form-control" formControlName="ToDate" bsDatepicker
-                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}">
-          </div>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-end mt-2">
-        <button type="submit" class="btn btn-outline-primary ">{{'Report.DisplayReport'|translate}}</button>
-        <button type="reset" class="btn btn-outline-info">{{'Reset'|translate}}</button>
-        <button *ngIf="showReport" type="button" class="btn btn-primary" (click)="exportPDF()">{{'ExportPDF'|translate}}</button>
-        <button *ngIf="showReport" type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
-      </div>
-    </form>
-    <div class="row mt-3" *ngIf="showReport">
-      <app-grid-page>
-        <tr tableHeader>
-          <th>{{'#'|translate}}</th>
-          <th colspan="2">{{'Voucher.VoucherNumber'|translate}}</th>
-          <th>{{'Voucher.VoucherDate'|translate}}</th>
-          <th>{{'Voucher.RefType'|translate}}</th>
-          <th colspan="2">{{'Voucher.RefNumber'|translate}}</th>
-          <th>{{'Voucher.Description'|translate}}</th>
-          <th>{{'Building.Name'|translate}}</th>
-          <th class="text-center">{{'Report.Debit'|translate}}</th>
-          <th class="text-center">{{'Report.Credit'|translate}}</th>
-          <th class="text-center">{{'Report.Balance'|translate}}</th>
-        </tr>
-        <ng-container tableBody *ngFor="let item of data;index as index">
-          <tr *ngIf="item.type==1">
-            <th colspan="9" class="text-center fw-bold">{{'Report.BeginPeriodBalance'|translate}}</th>
-            <td>{{item.debitAmount}}</td>
-            <td>{{item.creditAmount}}</td>
-            <th class="text-center fw-bold balance-class">{{(item.debitAmount||0) - (item.creditAmount||0)}} {{((item.debitAmount||0) - (item.creditAmount||0) > 0 ? 'Report.Debit': (item.debitAmount||0) - (item.creditAmount||0) < 0? 'Report.Credit':'')|translate}}</th>
-          </tr>
-
-          <tr *ngIf="item.type==2">
-            <td>{{index}}</td>
-            <td>{{item.autoNumber}}</td>
-            <td>{{item.voucherId}}</td>
-            <td>{{item.voucherDate|date:'yyyy-MM-dd'}}</td>
-            <td>{{item.referenceType}}</td>
-            <td>{{item.referenceAutoNumber}}</td>
-            <td>{{item.referenceManualNumber}}</td>
-            <td>{{item.description}}</td>
-            <td>{{item.buildingName}}</td>
-            <td>{{item.debitAmount}}</td>
-            <td>{{item.creditAmount}}</td>
-          </tr>
-          <tr *ngIf="item.type==3">
-            <th colspan="9" class="text-center fw-bold">{{'Report.EndPeriodBalance'|translate}}</th>
-            <td>{{item.debitAmount}}</td>
-            <td>{{item.creditAmount}}</td>
-            <th class="text-center fw-bold balance-class">{{(item.debitAmount||0) - (item.creditAmount||0)}} {{((item.debitAmount||0) - (item.creditAmount||0) > 0 ? 'Report.Debit': (item.debitAmount||0) - (item.creditAmount||0) < 0? 'Report.Credit':'')|translate}}</th>
-          </tr>
-        </ng-container>
-      </app-grid-page>
     </div>
-  </div>
 </app-list>
 

@@ -1,10 +1,14 @@
-﻿namespace PropertyRenting.Api.Controllers;
+﻿using PropertyRenting.Api.Services;
+
+namespace PropertyRenting.Api.Controllers;
 
 public class NationalityController : BaseController
 {
+    private readonly ICacheService _cacheService;
 
-    public NationalityController(AppDbContext context, IMapper mapper) : base(context, mapper)
+    public NationalityController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
     {
+        _cacheService = cacheService;
     }
 
     [HttpGet("list")]
@@ -21,11 +25,14 @@ public class NationalityController : BaseController
 
         try
         {
-            var data = await Context.Nationalities
-                .AsNoTracking()
-                .OrderBy(x => x.CreatedOnUtc)
-               .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
-               .ToListAsync();
+            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Nationality.Lookup,
+             () => Context.Nationalities
+             .AsNoTracking()
+             .OrderBy(x => x.CreatedOnUtc)
+             .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
+             .ToListAsync(),
+             60);
+
             return Ok(data);
         }
         catch (Exception ex)

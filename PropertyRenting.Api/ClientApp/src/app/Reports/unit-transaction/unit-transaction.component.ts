@@ -6,7 +6,6 @@ import {
     Validators,
 } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { Unit } from "../../Models/unit";
 import { UnitTransaction } from "../../Models/Reports/unit-transaction";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
@@ -14,6 +13,7 @@ import { UnitService } from "../../Services/unit.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
 import { DatePipe } from "@angular/common";
+import { UnitLookup } from "../../Models/unit-lookup";
 
 @Component({
     selector: "app-unit-transaction",
@@ -22,7 +22,7 @@ import { DatePipe } from "@angular/common";
 })
 export class UnitTransactionComponent implements OnInit {
     data: UnitTransaction[] = [];
-    units: Unit[] = [];
+    units: UnitLookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -51,7 +51,7 @@ export class UnitTransactionComponent implements OnInit {
     }
 
     loadUnits() {
-        this.unitService.GetAll().subscribe(
+        this.unitService.GetLookup().subscribe(
             (res) => {
                 this.units = res;
             },
@@ -107,7 +107,7 @@ export class UnitTransactionComponent implements OnInit {
     }
     exportPDF() {
         const unit = this.units.find((x) => x.id == this.UnitId.value);
-        const name = unit?.unitNumber + "--" + unit?.unitName;
+        const name = unit?.description || "";
         this.reportService
             .ExportUnitTransactions(
                 "PDF",
@@ -139,7 +139,7 @@ export class UnitTransactionComponent implements OnInit {
     }
     exportExcel() {
         const unit = this.units.find((x) => x.id == this.UnitId.value);
-        const name = unit?.unitNumber + "--" + unit?.unitName;
+        const name = unit?.description || "";
         this.reportService
             .ExportUnitTransactions(
                 "EXCEL",

@@ -26,7 +26,7 @@ export class AccountDetailsComponent implements OnInit {
     submitted = false;
     disabled = true;
     accountTypes: Enum[] = [];
-
+    isArabic = false;
     constructor(
         private fb: FormBuilder,
         private accountService: AccountService,
@@ -37,6 +37,7 @@ export class AccountDetailsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.isArabic = this.translateService.GetCurrentLang() === "ar";
         this.CreateFrom();
     }
 

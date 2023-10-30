@@ -13,10 +13,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { NgSelectComponent } from "@ng-select/ng-select";
 import { ModalComponent } from "../../../CustomTemplates/modal/modal.component";
 import { Breadcrumb } from "../../../Models/breadcrumb";
-import { Building } from "../../../Models/building";
 import { ContractFinancialTransaction } from "../../../Models/contract-financial-transaction";
-import { Renter } from "../../../Models/renter";
-import { Unit } from "../../../Models/unit";
 import { Sanad } from "../../../Models/sanad";
 import { BreadcrumbService } from "../../../Services/breadcrumb.service";
 import { BuildingService } from "../../../Services/building.service";
@@ -30,14 +27,12 @@ import { AlertifyService } from "../../../Services/alertify.service";
 import { DialogService } from "../../../Services/dialog.service";
 import { Enum } from "../../../Models/enum";
 import { CashBankService } from "../../../Services/cash-bank.service";
-import { CashBank } from "../../../Models/cash-bank";
-import { Owner } from "../../../Models/owner";
-import { Contributer } from "../../../Models/contributer";
-import { Expense } from "../../../Models/expense";
 import { OwnerService } from "../../../Services/owner.service";
 import { ContributerService } from "../../../Services/contributer.service";
 import { ExpenseService } from "../../../Services/expense.service";
 import { forkJoin } from "rxjs";
+import { UnitLookup } from "../../../Models/unit-lookup";
+import { Lookup } from "../../../Models/lookup";
 
 @Component({
     selector: "app-receipt-details",
@@ -49,13 +44,13 @@ export class ReceiptDetailsComponent implements OnInit {
     voucher: Sanad = { sanadTypeId: 1, sanadDetails: [] };
     voucherForm: FormGroup = this.fb.group({});
     breadcrumbItems: Breadcrumb[] = [];
-    cashOrBanks: CashBank[] = [];
-    buildings: Building[] = [];
-    units: Unit[] = [];
-    owners: Owner[] = [];
-    renters: Renter[] = [];
-    contributers: Contributer[] = [];
-    expenses: Expense[] = [];
+    cashOrBanks: Lookup[] = [];
+    buildings: Lookup[] = [];
+    units: UnitLookup[] = [];
+    owners: Lookup[] = [];
+    renters: Lookup[] = [];
+    contributers: Lookup[] = [];
+    expenses: Lookup[] = [];
     submitted = false;
     showInstallmentBtn = false;
     installments: ContractFinancialTransaction[] = [];
@@ -94,17 +89,17 @@ export class ReceiptDetailsComponent implements OnInit {
     }
 
     loadDataWithVoucher(voucherId: any) {
-        forkJoin(
-            this.cashBankService.GetAll(),
-            this.buildingService.GetAllBuildings(),
-            this.unitService.GetAll(),
-            this.ownerService.GetAllOwners(),
-            this.renterService.GetAll(),
-            this.contributerService.GetAll(),
-            this.expenseService.GetAll(),
-            this.voucherService.GetReceiptById(voucherId)
-        ).subscribe(
-            ([
+        forkJoin([
+            this.cashBankService.GetLookup(),
+            this.buildingService.GetLookup(),
+            this.unitService.GetLookup(),
+            this.ownerService.GetLookup(),
+            this.renterService.GetLookup(),
+            this.contributerService.GetLookup(),
+            this.expenseService.GetLookup(),
+            this.voucherService.GetReceiptById(voucherId),
+        ]).subscribe({
+            next: ([
                 cashRes,
                 buildingRes,
                 unitRes,
@@ -127,8 +122,8 @@ export class ReceiptDetailsComponent implements OnInit {
                 if (this.showInstallmentBtn) {
                     this.renterContractService
                         .GetInstallments(this.voucher.renterId)
-                        .subscribe(
-                            (res) => {
+                        .subscribe({
+                            next: (res) => {
                                 this.installments = res;
                                 for (const installment of this.installments) {
                                     const index =
@@ -140,8 +135,8 @@ export class ReceiptDetailsComponent implements OnInit {
                                     installment.selected = index != -1;
                                 }
                             },
-                            (error) => console.log(error)
-                        );
+                            error: (error) => console.log(error),
+                        });
                 }
 
                 const lines = [];
@@ -186,24 +181,24 @@ export class ReceiptDetailsComponent implements OnInit {
                     lines
                 );
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
     loadData() {
-        forkJoin(
-            this.cashBankService.GetAll(),
-            this.buildingService.GetAllBuildings(),
-            this.unitService.GetAll(),
-            this.ownerService.GetAllOwners(),
-            this.renterService.GetAll(),
-            this.contributerService.GetAll(),
-            this.expenseService.GetAll()
-        ).subscribe(
-            ([
+        forkJoin([
+            this.cashBankService.GetLookup(),
+            this.buildingService.GetLookup(),
+            this.unitService.GetLookup(),
+            this.ownerService.GetLookup(),
+            this.renterService.GetLookup(),
+            this.contributerService.GetLookup(),
+            this.expenseService.GetLookup(),
+        ]).subscribe({
+            next: ([
                 cashRes,
                 buildingRes,
                 unitRes,
@@ -234,12 +229,12 @@ export class ReceiptDetailsComponent implements OnInit {
                     []
                 );
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     createForm(

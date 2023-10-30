@@ -1,50 +1,50 @@
 <app-list title="{{'Report.BuildingRevenueExpense'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
-  <div body>
-    <form (ngSubmit)='onSubmit()' [formGroup]="filterForm">
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'Report.Building'|translate}} </label>
-          <div>
-            <ng-select formControlName="BuildingId"
-                       notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</ng-option>
-            </ng-select>
-          </div>
+    <div body>
+        <form (ngSubmit)='onSubmit()' [formGroup]="filterForm">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'Report.Building'|translate}} </label>
+                    <div>
+                        <ng-select formControlName="BuildingId"
+                                   notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let building of buildings" [value]="building.id">{{building.description}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="form-label">{{'Report.ToDate'|translate}}</label>
+                    <div>
+                        <input type="text" class="form-control" formControlName="ToDate" bsDatepicker
+                               [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-2">
+                <button type="submit" class="btn btn-outline-primary ">{{'Report.DisplayReport'|translate}}</button>
+                <button type="reset" class="btn btn-outline-info">{{'Reset'|translate}}</button>
+                <button *ngIf="showReport" type="button" class="btn btn-primary" (click)="exportPDF()">{{'ExportPDF'|translate}}</button>
+                <button *ngIf="showReport" type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
+            </div>
+        </form>
+        <div class="row mt-3" *ngIf="showReport">
+            <app-grid-page>
+                <tr tableHeader>
+                    <th class="text-center">{{'Report.Building'|translate}}</th>
+                    <th class="text-center">{{'Report.Revenue'|translate}}</th>
+                    <th class="text-center">{{'Report.Expense'|translate}}</th>
+                </tr>
+                <tr tableBody *ngFor="let item of data">
+                    <td>{{item.buildingName}}</td>
+                    <td>{{item.totalRevenue}}</td>
+                    <td>{{item.totalExpense}}</td>
+                </tr>
+
+            </app-grid-page>
         </div>
 
-        <div class="form-group col-md-6">
-          <label class="form-label">{{'Report.ToDate'|translate}}</label>
-          <div>
-            <input type="text" class="form-control" formControlName="ToDate" bsDatepicker
-                   [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}">
-          </div>
-        </div>
-      </div>
 
-      <div class="d-flex justify-content-end mt-2">
-        <button type="submit" class="btn btn-outline-primary ">{{'Report.DisplayReport'|translate}}</button>
-        <button type="reset" class="btn btn-outline-info">{{'Reset'|translate}}</button>
-        <button *ngIf="showReport" type="button" class="btn btn-primary" (click)="exportPDF()">{{'ExportPDF'|translate}}</button>
-        <button *ngIf="showReport" type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
-      </div>
-    </form>
-    <div class="row mt-3" *ngIf="showReport">
-      <app-grid-page>
-        <tr tableHeader>
-          <th class="text-center">{{'Report.Building'|translate}}</th>
-          <th class="text-center">{{'Report.Revenue'|translate}}</th>
-          <th class="text-center">{{'Report.Expense'|translate}}</th>
-        </tr>
-        <tr tableBody *ngFor="let item of data">
-          <td>{{item.buildingName}}</td>
-          <td>{{item.totalRevenue}}</td>
-          <td>{{item.totalExpense}}</td>
-        </tr>
-
-      </app-grid-page>
     </div>
-
-
-  </div>
 </app-list>
 

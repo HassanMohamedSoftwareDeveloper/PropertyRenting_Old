@@ -1,47 +1,47 @@
 <app-list title="{{'CashBank.AddEditPageTitle'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
-  <div body>
-    <form (ngSubmit)='onSubmit()' [formGroup]="cashBankForm" *ngIf="showForm">
+    <div body>
+        <form (ngSubmit)='onSubmit()' [formGroup]="cashBankForm" *ngIf="showForm">
 
-      <div class="row">
-        <div class="form-group col-lg-12">
-          <label class="form-label">{{'CashBank.Name'|translate}}</label>
-          <div>
-            <input class="form-control" formControlName="Name" [(ngModel)]="cashBank.name">
-            <div class="error-block" *ngIf="Name.invalid && (submitted||Name.touched)">
-              {{'RequiredField'|translate}}
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    <label class="form-label">{{'CashBank.Name'|translate}}</label>
+                    <div>
+                        <input class="form-control" formControlName="Name" [(ngModel)]="cashBank.name">
+                        <div class="error-block" *ngIf="Name.invalid && (submitted||Name.touched)">
+                            {{'RequiredField'|translate}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-lg-12">
+                    <label class="form-label">{{'CashBank.Type'|translate}}</label>
+                    <div>
+                        <ng-select formControlName="TypeId" [(ngModel)]="cashBank.typeId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let type of cashBankTypes" [value]="type.id">{{type.description|translate}}</ng-option>
+                        </ng-select>
+                        <div class="error-block" *ngIf="TypeId.invalid && (submitted||TypeId.touched)">
+                            {{'RequiredField'|translate}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-lg-12">
+                    <label class="form-label">{{'CashBank.Account'|translate}}</label>
+                    <div>
+                        <ng-select formControlName="AccountId" [(ngModel)]="cashBank.accountId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.description}}</ng-option>
+                        </ng-select>
+                        <div class="error-block" *ngIf="AccountId.invalid && (submitted||AccountId.touched)">
+                            {{'RequiredField'|translate}}
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="form-group col-lg-12">
-          <label class="form-label">{{'CashBank.Type'|translate}}</label>
-          <div>
-            <ng-select formControlName="TypeId" [(ngModel)]="cashBank.typeId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let type of cashBankTypes" [value]="type.id">{{type.description|translate}}</ng-option>
-            </ng-select>
-            <div class="error-block" *ngIf="TypeId.invalid && (submitted||TypeId.touched)">
-              {{'RequiredField'|translate}}
+            <div class="d-flex justify-content-end mt-2">
+                <button type="submit" class="btn btn-outline-primary">{{'Submit'|translate}}</button>
+                <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
             </div>
-          </div>
-        </div>
-        <div class="form-group col-lg-12">
-          <label class="form-label">{{'CashBank.Account'|translate}}</label>
-          <div>
-            <ng-select formControlName="AccountId" [(ngModel)]="cashBank.accountId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-              <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
-            </ng-select>
-            <div class="error-block" *ngIf="AccountId.invalid && (submitted||AccountId.touched)">
-              {{'RequiredField'|translate}}
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="d-flex justify-content-end mt-2">
-        <button type="submit" class="btn btn-outline-primary">{{'Submit'|translate}}</button>
-        <button type="button" class="btn btn-outline-info" (click)="backToList()">{{'BackToList'|translate}}</button>
-      </div>
-
-    </form>
-  </div>
+        </form>
+    </div>
 </app-list>

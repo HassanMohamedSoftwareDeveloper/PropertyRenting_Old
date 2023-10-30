@@ -8,7 +8,6 @@ import {
 } from "@angular/forms";
 import { forkJoin } from "rxjs";
 import { v4 as uuidv4 } from "uuid";
-import { Account } from "../../../Models/account";
 import { AccountSetup } from "../../../Models/account-setup";
 import { Breadcrumb } from "../../../Models/breadcrumb";
 import { AccountSetupSetupService } from "../../../Services/account-setup.service";
@@ -16,6 +15,7 @@ import { AccountService } from "../../../Services/account.service";
 import { AlertifyService } from "../../../Services/alertify.service";
 import { BreadcrumbService } from "../../../Services/breadcrumb.service";
 import { TranslationService } from "../../../Services/translation.service";
+import { AccountLookup } from "../../../Models/account-lookup";
 
 @Component({
     selector: "app-account-setup-details",
@@ -25,7 +25,7 @@ import { TranslationService } from "../../../Services/translation.service";
 export class AccountSetupDetailsComponent implements OnInit {
     breadcrumbItems: Breadcrumb[] = [];
     accountSetupForm!: FormGroup;
-    accounts: Account[] = [];
+    accounts: AccountLookup[] = [];
     accountSetup: AccountSetup = {
         id: null,
         revenueAccountId: null,
@@ -53,12 +53,12 @@ export class AccountSetupDetailsComponent implements OnInit {
         this.loadData();
     }
     loadData() {
-        forkJoin(
-            this.accountService.GetAll(),
-            this.accountSetupService.Get()
-        ).subscribe(
-            ([accountRes, accSetupRes]) => {
-                this.accounts = accountRes.filter((x) => x.accountTypeId != 5);
+        forkJoin([
+            this.accountService.GetLookup(),
+            this.accountSetupService.Get(),
+        ]).subscribe({
+            next: ([accountRes, accSetupRes]) => {
+                this.accounts = accountRes.filter((x) => x.accountTypeId !== 5);
                 this.accountSetup = accSetupRes || {
                     id: null,
                     revenueAccountId: null,
@@ -69,12 +69,12 @@ export class AccountSetupDetailsComponent implements OnInit {
                 };
                 this.createForm();
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     createForm() {

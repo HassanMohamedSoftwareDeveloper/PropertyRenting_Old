@@ -13,9 +13,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { NgSelectComponent } from "@ng-select/ng-select";
 import { ModalComponent } from "../../../CustomTemplates/modal/modal.component";
 import { Breadcrumb } from "../../../Models/breadcrumb";
-import { Building } from "../../../Models/building";
 import { ContractFinancialTransaction } from "../../../Models/contract-financial-transaction";
-import { Unit } from "../../../Models/unit";
 import { Sanad } from "../../../Models/sanad";
 import { BreadcrumbService } from "../../../Services/breadcrumb.service";
 import { BuildingService } from "../../../Services/building.service";
@@ -24,22 +22,18 @@ import { SanadDetails } from "../../../Models/sanad-details";
 import { VoucherService } from "../../../Services/voucher.service";
 import { TranslationService } from "../../../Services/translation.service";
 import { AlertifyService } from "../../../Services/alertify.service";
-import { Owner } from "../../../Models/owner";
 import { OwnerService } from "../../../Services/owner.service";
 import { OwnerContractService } from "../../../Services/owner-contract.service";
 import { DialogService } from "../../../Services/dialog.service";
 import { Enum } from "../../../Models/enum";
-import { Renter } from "../../../Models/renter";
-import { Contributer } from "../../../Models/contributer";
-import { Expense } from "../../../Models/expense";
 import { RenterService } from "../../../Services/renter.service";
 import { ContributerService } from "../../../Services/contributer.service";
 import { ExpenseService } from "../../../Services/expense.service";
 import { CashBankService } from "../../../Services/cash-bank.service";
-import { CashBank } from "../../../Models/cash-bank";
 import { forkJoin } from "rxjs";
-import { ContractAddions } from "../../../Models/contract-addions";
 import { ContractAddionsService } from "../../../Services/contract-addions.service";
+import { Lookup } from "../../../Models/lookup";
+import { UnitLookup } from "../../../Models/unit-lookup";
 
 @Component({
     selector: "app-exchange-details",
@@ -51,18 +45,18 @@ export class ExchangeDetailsComponent implements OnInit {
     voucher: Sanad = { sanadTypeId: 1, sanadDetails: [] };
     voucherForm: FormGroup = this.fb.group({});
     breadcrumbItems: Breadcrumb[] = [];
-    cashOrBanks: CashBank[] = [];
-    buildings: Building[] = [];
-    units: Unit[] = [];
-    owners: Owner[] = [];
-    renters: Renter[] = [];
-    contributers: Contributer[] = [];
-    expenses: Expense[] = [];
+    cashOrBanks: Lookup[] = [];
+    buildings: Lookup[] = [];
+    units: UnitLookup[] = [];
+    owners: Lookup[] = [];
+    renters: Lookup[] = [];
+    contributers: Lookup[] = [];
+    expenses: Lookup[] = [];
     submitted = false;
     showInstallmentBtn = false;
     installments: ContractFinancialTransaction[] = [];
     sanadTypes: Enum[] = [];
-    additions: ContractAddions[] = [];
+    additions: Lookup[] = [];
     showForm = false;
     showPostButton = true;
     constructor(
@@ -97,18 +91,18 @@ export class ExchangeDetailsComponent implements OnInit {
         }
     }
     loadDataWithVoucher(voucherId: any) {
-        forkJoin(
-            this.cashBankService.GetAll(),
-            this.buildingService.GetAllBuildings(),
-            this.unitService.GetAll(),
-            this.ownerService.GetAllOwners(),
-            this.renterService.GetAll(),
-            this.contributerService.GetAll(),
-            this.expenseService.GetAll(),
-            this.additionService.GetAll(),
-            this.voucherService.GetExchangeById(voucherId)
-        ).subscribe(
-            ([
+        forkJoin([
+            this.cashBankService.GetLookup(),
+            this.buildingService.GetLookup(),
+            this.unitService.GetLookup(),
+            this.ownerService.GetLookup(),
+            this.renterService.GetLookup(),
+            this.contributerService.GetLookup(),
+            this.expenseService.GetLookup(),
+            this.additionService.GetLookup(),
+            this.voucherService.GetExchangeById(voucherId),
+        ]).subscribe({
+            next: ([
                 cashRes,
                 buildingRes,
                 unitRes,
@@ -128,26 +122,26 @@ export class ExchangeDetailsComponent implements OnInit {
                 this.expenses = expenseRes;
                 this.additions = additionRes;
                 this.voucher = voucherRes;
-                this.showInstallmentBtn = this.voucher.ownerId != null;
+                this.showInstallmentBtn = this.voucher.ownerId !== null;
 
                 if (this.showInstallmentBtn) {
                     this.ownerContractService
                         .GetInstallments(this.voucher.ownerId)
-                        .subscribe(
-                            (res) => {
+                        .subscribe({
+                            next: (res) => {
                                 this.installments = res;
                                 for (const installment of this.installments) {
                                     const index =
                                         this.voucher.sanadDetails?.findIndex(
                                             (x) =>
-                                                x.installmentId ==
+                                                x.installmentId ===
                                                 installment.id
                                         );
-                                    installment.selected = index != -1;
+                                    installment.selected = index !== -1;
                                 }
                             },
-                            (error) => console.log(error)
-                        );
+                            error: (error) => console.log(error),
+                        });
                 }
                 const lines = [];
                 for (const detail of this.voucher.sanadDetails) {
@@ -199,25 +193,25 @@ export class ExchangeDetailsComponent implements OnInit {
                     lines
                 );
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
     loadData() {
-        forkJoin(
-            this.cashBankService.GetAll(),
-            this.buildingService.GetAllBuildings(),
-            this.unitService.GetAll(),
-            this.ownerService.GetAllOwners(),
-            this.renterService.GetAll(),
-            this.contributerService.GetAll(),
-            this.expenseService.GetAll(),
-            this.additionService.GetAll()
-        ).subscribe(
-            ([
+        forkJoin([
+            this.cashBankService.GetLookup(),
+            this.buildingService.GetLookup(),
+            this.unitService.GetLookup(),
+            this.ownerService.GetLookup(),
+            this.renterService.GetLookup(),
+            this.contributerService.GetLookup(),
+            this.expenseService.GetLookup(),
+            this.additionService.GetLookup(),
+        ]).subscribe({
+            next: ([
                 cashRes,
                 buildingRes,
                 unitRes,
@@ -250,12 +244,12 @@ export class ExchangeDetailsComponent implements OnInit {
                     []
                 );
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     createForm(
@@ -641,7 +635,7 @@ export class ExchangeDetailsComponent implements OnInit {
         this.voucher.contributerId = null;
         this.showInstallmentBtn = false;
         this.Installments.clear();
-        if (this.voucher.sanadTypeId == 4) {
+        if (this.voucher.sanadTypeId === 4) {
             this.Amount.reset();
         }
     }
@@ -650,7 +644,7 @@ export class ExchangeDetailsComponent implements OnInit {
         if (unitCTR.hasValue) {
             const unitId = unitCTR.selectedValues[0];
             const buildingId = this.units.find(
-                (x) => x.id == unitId
+                (x) => x.id === unitId
             )?.buildingId;
             buildingCTR.writeValue(buildingId);
         }
@@ -663,8 +657,8 @@ export class ExchangeDetailsComponent implements OnInit {
             if (unitCTR.hasValue) {
                 const buildingId = buildingCTR.selectedValues[0];
                 const unitId = unitCTR.selectedValues[0];
-                const selectedUnit = this.units.find((x) => x.id == unitId);
-                if (selectedUnit && selectedUnit.buildingId != buildingId) {
+                const selectedUnit = this.units.find((x) => x.id === unitId);
+                if (selectedUnit && selectedUnit.buildingId !== buildingId) {
                     unitCTR.writeValue(null);
                 }
             }

@@ -2,8 +2,6 @@ import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { Building } from "../../Models/building";
-import { Owner } from "../../Models/owner";
 import { OwnerDueInstallments } from "../../Models/Reports/owner-due-installments";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
@@ -11,6 +9,7 @@ import { BuildingService } from "../../Services/building.service";
 import { OwnerService } from "../../Services/owner.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { Lookup } from "../../Models/lookup";
 
 @Component({
     selector: "app-owner-due-installments",
@@ -22,8 +21,8 @@ export class OwnerDueInstallmentsComponent implements OnInit {
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     submitted = false;
-    owners: Owner[] = [];
-    buildings: Building[] = [];
+    owners: Lookup[] = [];
+    buildings: Lookup[] = [];
     showReport = false;
     constructor(
         private reportService: ReportService,
@@ -44,7 +43,7 @@ export class OwnerDueInstallmentsComponent implements OnInit {
         this.loadReport();
     }
     loadOwners() {
-        this.ownerService.GetAllOwners().subscribe(
+        this.ownerService.GetLookup().subscribe(
             (res) => (this.owners = res),
             (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
@@ -54,7 +53,7 @@ export class OwnerDueInstallmentsComponent implements OnInit {
         );
     }
     loadBuildings() {
-        this.buildingService.GetAllBuildings().subscribe(
+        this.buildingService.GetLookup().subscribe(
             (res) => (this.buildings = res),
             (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");

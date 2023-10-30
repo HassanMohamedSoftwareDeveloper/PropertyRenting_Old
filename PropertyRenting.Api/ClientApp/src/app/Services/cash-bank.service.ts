@@ -24,7 +24,7 @@ export class CashBankService {
     }
     GetLookup(): Observable<Lookup[]> {
         return this.httpClient.get<Lookup[]>(
-            environment.ApiURL + "api/v1/CashBanks/lookup"
+            environment.ApiURL + "api/v1/CashBank/lookup"
         );
     }
     GetById(id: any): Observable<CashBank> {

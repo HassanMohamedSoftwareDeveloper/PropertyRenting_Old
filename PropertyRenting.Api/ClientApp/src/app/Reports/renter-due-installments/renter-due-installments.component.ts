@@ -2,15 +2,15 @@ import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { Renter } from "../../Models/renter";
 import { RenterDueInstallments } from "../../Models/Reports/renter-due-installments";
-import { Unit } from "../../Models/unit";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { RenterService } from "../../Services/renter.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
 import { UnitService } from "../../Services/unit.service";
+import { Lookup } from "../../Models/lookup";
+import { UnitLookup } from "../../Models/unit-lookup";
 
 @Component({
     selector: "app-renter-due-installments",
@@ -21,8 +21,8 @@ export class RenterDueInstallmentsComponent implements OnInit {
     data: RenterDueInstallments[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
-    renters: Renter[] = [];
-    units: Unit[] = [];
+    renters: Lookup[] = [];
+    units: UnitLookup[] = [];
     showReport = false;
     constructor(
         private reportService: ReportService,
@@ -43,7 +43,7 @@ export class RenterDueInstallmentsComponent implements OnInit {
         this.loadReport();
     }
     loadRenters() {
-        this.renterService.GetAll().subscribe(
+        this.renterService.GetLookup().subscribe(
             (res) => (this.renters = res),
             (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
@@ -53,7 +53,7 @@ export class RenterDueInstallmentsComponent implements OnInit {
         );
     }
     loadUnits() {
-        this.unitService.GetAll().subscribe(
+        this.unitService.GetLookup().subscribe(
             (res) => (this.units = res),
             (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");

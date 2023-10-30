@@ -2,13 +2,13 @@ import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { Owner } from "../../Models/owner";
 import { OwnerBalance } from "../../Models/Reports/owner-balance";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { OwnerService } from "../../Services/owner.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { Lookup } from "../../Models/lookup";
 
 @Component({
     selector: "app-owner-balance",
@@ -17,7 +17,7 @@ import { TranslationService } from "../../Services/translation.service";
 })
 export class OwnerBalanceComponent implements OnInit {
     data: OwnerBalance[] = [];
-    owners: Owner[] = [];
+    owners: Lookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -46,7 +46,7 @@ export class OwnerBalanceComponent implements OnInit {
     }
 
     loadOwners() {
-        this.ownerService.GetAllOwners().subscribe(
+        this.ownerService.GetLookup().subscribe(
             (res) => {
                 this.owners = res;
             },

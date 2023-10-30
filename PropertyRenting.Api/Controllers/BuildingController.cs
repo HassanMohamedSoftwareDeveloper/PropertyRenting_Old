@@ -1,9 +1,14 @@
-﻿namespace PropertyRenting.Api.Controllers;
+﻿using PropertyRenting.Api.Services;
+
+namespace PropertyRenting.Api.Controllers;
 
 public class BuildingController : BaseController
 {
-    public BuildingController(AppDbContext context, IMapper mapper) : base(context, mapper)
+    private readonly ICacheService _cacheService;
+
+    public BuildingController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
     {
+        _cacheService = cacheService;
     }
 
     [HttpGet("list")]
@@ -18,14 +23,14 @@ public class BuildingController : BaseController
     [HttpGet("lookup")]
     public async Task<IActionResult> GetLookupAsync()
     {
-
         try
         {
-            var data = await Context.Buildings
+            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Building.Lookup,
+              () => Context.Buildings
                 .AsNoTracking()
                 .OrderBy(x => x.CreatedOnUtc)
                .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
-               .ToListAsync();
+               .ToListAsync(), 60);
             return Ok(data);
         }
         catch (Exception ex)

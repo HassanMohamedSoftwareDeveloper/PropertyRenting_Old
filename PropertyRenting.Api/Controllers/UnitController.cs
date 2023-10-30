@@ -1,9 +1,14 @@
+using PropertyRenting.Api.Services;
+
 namespace PropertyRenting.Api.Controllers;
 
 public class UnitController : BaseController
 {
-    public UnitController(AppDbContext context, IMapper mapper) : base(context, mapper)
+    private readonly ICacheService _cacheService;
+
+    public UnitController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
     {
+        _cacheService = cacheService;
     }
 
     [HttpGet("list")]
@@ -20,11 +25,15 @@ public class UnitController : BaseController
 
         try
         {
-            var data = await Context.Units
-                .AsNoTracking()
-                .OrderBy(x => x.CreatedOnUtc)
-               .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
-               .ToListAsync();
+            var data = await _cacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Unit.Lookup,
+          () => Context.Units
+          .AsNoTracking()
+          .OrderBy(x => x.CreatedOnUtc)
+          .ProjectTo<UnitLookupDTO>(Mapper.ConfigurationProvider)
+          .ToListAsync(),
+          60);
+
+
             return Ok(data);
         }
         catch (Exception ex)
@@ -33,16 +42,20 @@ public class UnitController : BaseController
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
-    [HttpGet("list/available/{buidlingId}")]
-    public async Task<IActionResult> GetAvailableAsync(Guid buidlingId)
+    [HttpGet("list/available/{buildingId}")]
+    public async Task<IActionResult> GetAvailableAsync(Guid buildingId)
     {
-        var data = await Context.Units.AsNoTracking().OrderBy(x => x.CreatedOnUtc)
-            .Where(x => x.BuildingId == buidlingId
-            && (x.RenterContracts.Any() == false
+        var data = await Context.Units.AsNoTracking()
+            .OrderBy(x => x.CreatedOnUtc)
+            .Where(x => x.BuildingId == buildingId
+            && (!x.RenterContracts.Any()
             || x.RenterContracts.All(c => c.ContractState != (int)ContractState.Activated
             || (c.ContractState == (int)ContractState.Activated && c.ContractEndDate.Date < DateTime.UtcNow.Date))))
-            .ProjectTo<UnitDTO>(Mapper.ConfigurationProvider)
+            .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
             .ToListAsync();
+
+
+
         return Ok(data);
     }
     [HttpGet("list/byPage/{pageNumber}/{pageSize}")]

@@ -7,6 +7,7 @@ using PropertyRenting.Api.Helpers;
 using PropertyRenting.Api.Interceptors;
 using PropertyRenting.Api.Models.Helpers;
 using PropertyRenting.Api.Repositories;
+using PropertyRenting.Api.Services;
 using PropertyRenting.Api.Services.Token;
 using System.Globalization;
 using System.Text;
@@ -14,6 +15,9 @@ using System.Text;
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<ICacheService, InMemoryCacheService>();
 
 builder.Services.AddSingleton<AutidableInterceptor>();
 builder.Services.AddSingleton<ActionsInterceptor>();

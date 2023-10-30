@@ -32,19 +32,19 @@ export class AccountListComponent implements OnInit {
     ngOnInit(): void {
         this.loadAccounts();
         this.breadcrumbItems = this.breadcrumbService.AccountListItems;
-        this.isArabic = this.translateService.GetCurrentLang() == "ar";
+        this.isArabic = this.translateService.GetCurrentLang() === "ar";
     }
 
     loadAccounts() {
-        this.accountService.GetAllGrid().subscribe(
-            (result) => {
+        this.accountService.GetAllGrid().subscribe({
+            next: (result) => {
                 this.accounts = result;
                 this.parentAccounts = this.accounts.filter(
                     (x) => x.accountTypeId === 5
                 );
             },
-            (error) => console.log(error)
-        );
+            error: (error) => console.log(error),
+        });
     }
 
     getAccountType(typeId: number) {
@@ -54,16 +54,16 @@ export class AccountListComponent implements OnInit {
         const deleteMsg = this.translateService.Translate("DeleteMessage");
         this.dialogService.confirm(deleteMsg).subscribe((res) => {
             if (res) {
-                this.accountService.Delete(id).subscribe(
-                    () => {
+                this.accountService.Delete(id).subscribe({
+                    next: () => {
                         this.loadAccounts();
                         const successMsg = this.translateService.Translate(
                             "DeletedSuccessfully"
                         );
                         this.alertify.success(successMsg);
                     },
-                    (error) => console.log(error)
-                );
+                    error: (error) => console.log(error),
+                });
             }
         });
     }

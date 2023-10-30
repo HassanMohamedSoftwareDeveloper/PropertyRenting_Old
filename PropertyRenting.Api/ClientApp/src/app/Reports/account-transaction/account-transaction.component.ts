@@ -6,7 +6,6 @@ import {
     FormGroup,
     Validators,
 } from "@angular/forms";
-import { Account } from "../../Models/account";
 import { Breadcrumb } from "../../Models/breadcrumb";
 import { AccountTransaction } from "../../Models/Reports/account-transaction";
 import { AccountService } from "../../Services/account.service";
@@ -14,6 +13,7 @@ import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { AccountLookup } from "../../Models/account-lookup";
 
 @Component({
     selector: "app-account-transaction",
@@ -22,7 +22,7 @@ import { TranslationService } from "../../Services/translation.service";
 })
 export class AccountTransactionComponent implements OnInit {
     data: AccountTransaction[] = [];
-    accounts: Account[] = [];
+    accounts: AccountLookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -51,7 +51,7 @@ export class AccountTransactionComponent implements OnInit {
     }
 
     loadAccounts() {
-        this.accountService.GetAll().subscribe(
+        this.accountService.GetLookup().subscribe(
             (res) => {
                 this.accounts = res.filter((x) => x.accountTypeId != 5);
             },
@@ -108,8 +108,8 @@ export class AccountTransactionComponent implements OnInit {
 
     exportPDF() {
         const accountName =
-            this.accounts.find((x) => x.id == this.AccountId.value)?.nameAR ||
-            "";
+            this.accounts.find((x) => x.id == this.AccountId.value)
+                ?.description || "";
         this.reportService
             .ExportAccountTransactions(
                 "PDF",
@@ -141,8 +141,8 @@ export class AccountTransactionComponent implements OnInit {
     }
     exportExcel() {
         const accountName =
-            this.accounts.find((x) => x.id == this.AccountId.value)?.nameAR ||
-            "";
+            this.accounts.find((x) => x.id == this.AccountId.value)
+                ?.description || "";
         this.reportService
             .ExportAccountTransactions(
                 "EXCEL",

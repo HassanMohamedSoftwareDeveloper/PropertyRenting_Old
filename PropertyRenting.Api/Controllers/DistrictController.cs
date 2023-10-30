@@ -1,11 +1,15 @@
 ﻿using PropertyRenting.Api.Extensions;
+using PropertyRenting.Api.Services;
 
 namespace PropertyRenting.Api.Controllers;
 
 public class DistrictController : BaseController
 {
-    public DistrictController(AppDbContext context, IMapper mapper) : base(context, mapper)
+    private readonly ICacheService _cacheService;
+
+    public DistrictController(AppDbContext context, IMapper mapper, ICacheService cacheService) : base(context, mapper)
     {
+        _cacheService = cacheService;
     }
 
     [HttpGet("list")]
@@ -23,12 +27,20 @@ public class DistrictController : BaseController
         try
         {
             var validValue = Guid.TryParse(cityId, out Guid convertedCityId);
-            var data = await Context.Districts
+            var key = validValue
+              ? string.Format(Constants.Constants.CacheKeys.District.LookupByCity, convertedCityId)
+              : Constants.Constants.CacheKeys.District.Lookup;
+
+            var data = await _cacheService.GetOrCreateAsync(key,
+                () => Context.Districts
                 .AsNoTracking()
-                 .WhereIf(validValue, x => x.CityId == convertedCityId)
+                .WhereIf(validValue, x => x.CityId == convertedCityId)
                 .OrderBy(x => x.CreatedOnUtc)
-               .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
-               .ToListAsync();
+                .ProjectTo<LookupDTO>(Mapper.ConfigurationProvider)
+                .ToListAsync(),
+                60);
+
+
             return Ok(data);
         }
         catch (Exception ex)

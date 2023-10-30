@@ -1,7 +1,6 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { Account } from "../../Models/account";
 import { Breadcrumb } from "../../Models/breadcrumb";
 import { AccountBalance } from "../../Models/Reports/account-balance";
 import { AccountService } from "../../Services/account.service";
@@ -9,6 +8,7 @@ import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { AccountLookup } from "../../Models/account-lookup";
 
 @Component({
     selector: "app-account-balance",
@@ -17,7 +17,7 @@ import { TranslationService } from "../../Services/translation.service";
 })
 export class AccountBalanceComponent implements OnInit {
     data: AccountBalance[] = [];
-    accounts: Account[] = [];
+    accounts: AccountLookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -46,7 +46,7 @@ export class AccountBalanceComponent implements OnInit {
     }
 
     loadAccounts() {
-        this.accountService.GetAll().subscribe(
+        this.accountService.GetLookup().subscribe(
             (res) => {
                 this.accounts = res;
             },

@@ -10,7 +10,6 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { forkJoin } from "rxjs";
-import { Account } from "../../../Models/account";
 import { Breadcrumb } from "../../../Models/breadcrumb";
 import { Voucher } from "../../../Models/voucher";
 import { VoucherDetails } from "../../../Models/voucher-details";
@@ -20,19 +19,16 @@ import { BreadcrumbService } from "../../../Services/breadcrumb.service";
 import { DialogService } from "../../../Services/dialog.service";
 import { TranslationService } from "../../../Services/translation.service";
 import { VoucherService } from "../../../Services/voucher.service";
-import { Building } from "../../../Models/building";
-import { Unit } from "../../../Models/unit";
-import { Owner } from "../../../Models/owner";
-import { Renter } from "../../../Models/renter";
-import { Contributer } from "../../../Models/contributer";
 import { BuildingService } from "../../../Services/building.service";
 import { UnitService } from "../../../Services/unit.service";
 import { ContributerService } from "../../../Services/contributer.service";
 import { RenterService } from "../../../Services/renter.service";
 import { OwnerService } from "../../../Services/owner.service";
 import { NgSelectComponent } from "@ng-select/ng-select";
-import { CashBank } from "../../../Models/cash-bank";
 import { CashBankService } from "../../../Services/cash-bank.service";
+import { AccountLookup } from "../../../Models/account-lookup";
+import { Lookup } from "../../../Models/lookup";
+import { UnitLookup } from "../../../Models/unit-lookup";
 
 @Component({
     selector: "app-voucher-details",
@@ -43,13 +39,13 @@ export class VoucherDetailsComponent implements OnInit {
     voucher: Voucher = { voucherDetails: [] };
     voucherForm!: FormGroup;
     breadcrumbItems: Breadcrumb[] = [];
-    accounts: Account[] = [];
-    buildings: Building[] = [];
-    units: Unit[] = [];
-    owners: Owner[] = [];
-    renters: Renter[] = [];
-    contributers: Contributer[] = [];
-    cashBanks: CashBank[] = [];
+    accounts: AccountLookup[] = [];
+    buildings: Lookup[] = [];
+    units: UnitLookup[] = [];
+    owners: Lookup[] = [];
+    renters: Lookup[] = [];
+    contributers: Lookup[] = [];
+    cashBanks: Lookup[] = [];
     submitted = false;
     showForm = false;
     showPostButton = true;
@@ -82,17 +78,17 @@ export class VoucherDetailsComponent implements OnInit {
         }
     }
     loadDataWithVoucher(voucherId: any) {
-        forkJoin(
-            this.accountService.GetAll(),
-            this.buildingService.GetAllBuildings(),
-            this.unitService.GetAll(),
-            this.ownerService.GetAllOwners(),
-            this.renterService.GetAll(),
-            this.contributerService.GetAll(),
-            this.cashBankService.GetAll(),
-            this.voucherService.GetVoucherById(voucherId)
-        ).subscribe(
-            ([
+        forkJoin([
+            this.accountService.GetLookup(),
+            this.buildingService.GetLookup(),
+            this.unitService.GetLookup(),
+            this.ownerService.GetLookup(),
+            this.renterService.GetLookup(),
+            this.contributerService.GetLookup(),
+            this.cashBankService.GetLookup(),
+            this.voucherService.GetVoucherById(voucherId),
+        ]).subscribe({
+            next: ([
                 accountRes,
                 buildingRes,
                 unitRes,
@@ -143,24 +139,24 @@ export class VoucherDetailsComponent implements OnInit {
                     lines
                 );
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
     loadData() {
-        forkJoin(
-            this.accountService.GetAll(),
-            this.buildingService.GetAllBuildings(),
-            this.unitService.GetAll(),
-            this.ownerService.GetAllOwners(),
-            this.renterService.GetAll(),
-            this.contributerService.GetAll(),
-            this.cashBankService.GetAll()
-        ).subscribe(
-            ([
+        forkJoin([
+            this.accountService.GetLookup(),
+            this.buildingService.GetLookup(),
+            this.unitService.GetLookup(),
+            this.ownerService.GetLookup(),
+            this.renterService.GetLookup(),
+            this.contributerService.GetLookup(),
+            this.cashBankService.GetLookup(),
+        ]).subscribe({
+            next: ([
                 accountRes,
                 buildingRes,
                 unitRes,
@@ -180,12 +176,12 @@ export class VoucherDetailsComponent implements OnInit {
                 this.cashBanks = cashBankRes;
                 this.createForm(null, null, null, null, []);
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     createForm(

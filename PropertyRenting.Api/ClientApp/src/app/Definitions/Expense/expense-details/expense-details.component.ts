@@ -14,8 +14,8 @@ import { BreadcrumbService } from "../../../Services/breadcrumb.service";
 import { ExpenseService } from "../../../Services/expense.service";
 import { TranslationService } from "../../../Services/translation.service";
 import { AccountService } from "../../../Services/account.service";
-import { Account } from "../../../Models/account";
 import { forkJoin } from "rxjs";
+import { AccountLookup } from "../../../Models/account-lookup";
 
 @Component({
     selector: "app-expense-details",
@@ -29,7 +29,7 @@ export class ExpenseDetailsComponent implements OnInit {
     };
     submitted = false;
     expenseForm!: FormGroup;
-    accounts: Account[] = [];
+    accounts: AccountLookup[] = [];
     showForm = false;
     constructor(
         private fb: FormBuilder,
@@ -55,38 +55,38 @@ export class ExpenseDetailsComponent implements OnInit {
         }
     }
     loadDataWithId(id: any) {
-        forkJoin(
-            this.accountService.GetAll(),
-            this.expenseService.GetById(id)
-        ).subscribe(
-            ([accountRes, expenseRes]) => {
+        forkJoin([
+            this.accountService.GetLookup(),
+            this.expenseService.GetById(id),
+        ]).subscribe({
+            next: ([accountRes, expenseRes]) => {
                 this.accounts = accountRes.filter(
                     (x) => (x.accountTypeId || 0) != 5
                 );
                 this.expense = expenseRes;
                 this.createForm();
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
     loadData() {
-        this.accountService.GetAll().subscribe(
-            (accountRes) => {
+        this.accountService.GetLookup().subscribe({
+            next: (accountRes) => {
                 this.accounts = accountRes.filter(
                     (x) => (x.accountTypeId || 0) != 5
                 );
                 this.createForm();
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     get NameAR() {

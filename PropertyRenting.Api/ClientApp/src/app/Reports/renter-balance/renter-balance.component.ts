@@ -2,13 +2,13 @@ import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { Renter } from "../../Models/renter";
 import { RenterBalance } from "../../Models/Reports/renter-balance";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { RenterService } from "../../Services/renter.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { Lookup } from "../../Models/lookup";
 
 @Component({
     selector: "app-renter-balance",
@@ -17,7 +17,7 @@ import { TranslationService } from "../../Services/translation.service";
 })
 export class RenterBalanceComponent implements OnInit {
     data: RenterBalance[] = [];
-    renters: Renter[] = [];
+    renters: Lookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -46,7 +46,7 @@ export class RenterBalanceComponent implements OnInit {
     }
 
     loadRenters() {
-        this.renterService.GetAll().subscribe(
+        this.renterService.GetLookup().subscribe(
             (res) => {
                 this.renters = res;
             },

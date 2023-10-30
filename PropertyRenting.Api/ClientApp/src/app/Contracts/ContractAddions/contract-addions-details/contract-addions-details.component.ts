@@ -14,8 +14,8 @@ import { TranslationService } from "../../../Services/translation.service";
 import { ContractAddions } from "../../../Models/contract-addions";
 import { ContractAddionsService } from "../../../Services/contract-addions.service";
 import { AccountService } from "../../../Services/account.service";
-import { Account } from "../../../Models/account";
-import { forkJoin, Observable } from "rxjs";
+import { forkJoin } from "rxjs";
+import { AccountLookup } from "../../../Models/account-lookup";
 
 @Component({
     selector: "app-contract-addions-details",
@@ -29,7 +29,7 @@ export class ContractAddionsDetailsComponent implements OnInit {
     };
     submitted = false;
     contractAdditionForm!: FormGroup;
-    accounts: Account[] = [];
+    accounts: AccountLookup[] = [];
     showForm = false;
     constructor(
         private fb: FormBuilder,
@@ -57,38 +57,38 @@ export class ContractAddionsDetailsComponent implements OnInit {
     }
 
     loadDataWithId(id: any) {
-        forkJoin(
-            this.accountService.GetAll(),
-            this.contractAdditionService.GetById(id)
-        ).subscribe(
-            ([accountRes, additionRes]) => {
+        forkJoin([
+            this.accountService.GetLookup(),
+            this.contractAdditionService.GetById(id),
+        ]).subscribe({
+            next: ([accountRes, additionRes]) => {
                 this.accounts = accountRes.filter(
-                    (x) => (x.accountTypeId || 0) != 5
+                    (x) => (x.accountTypeId || 0) !== 5
                 );
                 this.contractAddition = additionRes;
                 this.createForm();
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
     loadData() {
-        this.accountService.GetAll().subscribe(
-            (accountRes) => {
+        this.accountService.GetLookup().subscribe({
+            next: (accountRes) => {
                 this.accounts = accountRes.filter(
-                    (x) => (x.accountTypeId || 0) != 5
+                    (x) => (x.accountTypeId || 0) !== 5
                 );
                 this.createForm();
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     get NameAR() {
@@ -116,7 +116,7 @@ export class ContractAddionsDetailsComponent implements OnInit {
             return;
         }
 
-        if (this.contractAddition.id == null) {
+        if (this.contractAddition.id === null) {
             this.Add();
         } else {
             this.Update();

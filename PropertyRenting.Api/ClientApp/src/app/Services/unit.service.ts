@@ -5,6 +5,7 @@ import { environment } from "../../environments/environment";
 import { Pagination } from "../Models/pagination";
 import { Unit } from "../Models/unit";
 import { Lookup } from "../Models/lookup";
+import { UnitLookup } from "../Models/unit-lookup";
 @Injectable({
     providedIn: "root",
 })
@@ -16,13 +17,13 @@ export class UnitService {
             environment.ApiURL + "api/v1/unit/list"
         );
     }
-    GetLookup(): Observable<Lookup[]> {
-        return this.httpClient.get<Lookup[]>(
+    GetLookup(): Observable<UnitLookup[]> {
+        return this.httpClient.get<UnitLookup[]>(
             environment.ApiURL + "api/v1/Unit/lookup"
         );
     }
-    GetAvailable(buildingId: any): Observable<Unit[]> {
-        return this.httpClient.get<Unit[]>(
+    GetAvailable(buildingId: any): Observable<Lookup[]> {
+        return this.httpClient.get<Lookup[]>(
             environment.ApiURL + "api/v1/unit/list/available/" + buildingId
         );
     }

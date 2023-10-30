@@ -8,9 +8,7 @@ import {
 } from "@angular/forms";
 import { v4 as uuidv4 } from "uuid";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Building } from "../../../Models/building";
 import { Enum } from "../../../Models/enum";
-import { Owner } from "../../../Models/owner";
 import { OwnerContract } from "../../../Models/owner-contract";
 import { BuildingService } from "../../../Services/building.service";
 import { ContractService } from "../../../Services/contract.service";
@@ -21,6 +19,7 @@ import { AlertifyService } from "../../../Services/alertify.service";
 import { Breadcrumb } from "../../../Models/breadcrumb";
 import { BreadcrumbService } from "../../../Services/breadcrumb.service";
 import { forkJoin } from "rxjs";
+import { Lookup } from "../../../Models/lookup";
 
 @Component({
     selector: "app-owner-contract-details",
@@ -30,8 +29,8 @@ import { forkJoin } from "rxjs";
 export class OwnerContractDetailsComponent implements OnInit {
     breadcrumbItems: Breadcrumb[] = [];
     contractForm!: FormGroup;
-    buildings: Building[] = [];
-    owners: Owner[] = [];
+    buildings: Lookup[] = [];
+    owners: Lookup[] = [];
     submitted = false;
     contract: OwnerContract = { id: null, buildingId: null, ownerId: null };
     paymentMethods: Enum[] = [];
@@ -64,19 +63,19 @@ export class OwnerContractDetailsComponent implements OnInit {
     }
 
     loadDataWithContractId(contractId: any) {
-        forkJoin(
-            this.buildingService.GetAllBuildings(),
-            this.ownerService.GetAllOwners(),
-            this.ownerContractService.GetById(contractId)
-        ).subscribe(
-            ([buildingRes, ownerRes, contractRes]) => {
+        forkJoin([
+            this.buildingService.GetLookup(),
+            this.ownerService.GetLookup(),
+            this.ownerContractService.GetById(contractId),
+        ]).subscribe({
+            next: ([buildingRes, ownerRes, contractRes]) => {
                 this.buildings = buildingRes;
                 this.owners = ownerRes;
                 this.contract = contractRes;
 
                 if (
-                    this.contract.contractState == 2 ||
-                    this.contract.contractState == 3
+                    this.contract.contractState === 2 ||
+                    this.contract.contractState === 3
                 ) {
                     this.router.navigate([
                         "/contracts/ownercontracts/details/" + this.contract.id,
@@ -84,30 +83,30 @@ export class OwnerContractDetailsComponent implements OnInit {
                 }
                 this.createForm();
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     loadData() {
-        forkJoin(
-            this.buildingService.GetAllBuildings(),
-            this.ownerService.GetAllOwners()
-        ).subscribe(
-            ([buildingRes, ownerRes]) => {
+        forkJoin([
+            this.buildingService.GetLookup(),
+            this.ownerService.GetLookup(),
+        ]).subscribe({
+            next: ([buildingRes, ownerRes]) => {
                 this.buildings = buildingRes;
                 this.owners = ownerRes;
                 this.createForm();
             },
-            (error) => {
+            error: (error) => {
                 const msg = this.translateService.Translate("ErrorOccurred");
                 this.alertify.error(msg);
                 console.log(error);
-            }
-        );
+            },
+        });
     }
 
     createForm() {
@@ -183,7 +182,7 @@ export class OwnerContractDetailsComponent implements OnInit {
             return;
         }
 
-        if (this.contract.id == null) {
+        if (this.contract.id === null) {
             this.Add();
         } else {
             this.Update();

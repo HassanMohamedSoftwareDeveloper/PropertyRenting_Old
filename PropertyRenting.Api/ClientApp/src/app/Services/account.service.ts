@@ -5,7 +5,7 @@ import { environment } from "../../environments/environment";
 import { Account } from "../Models/account";
 import { Enum } from "../Models/enum";
 import { Pagination } from "../Models/pagination";
-import { Lookup } from "../Models/lookup";
+import { AccountLookup } from "../Models/account-lookup";
 
 @Injectable({
     providedIn: "root",
@@ -25,8 +25,8 @@ export class AccountService {
             environment.ApiURL + "api/v1/Account/list"
         );
     }
-    GetLookup(): Observable<Lookup[]> {
-        return this.httpClient.get<Lookup[]>(
+    GetLookup(): Observable<AccountLookup[]> {
+        return this.httpClient.get<AccountLookup[]>(
             environment.ApiURL + "api/v1/Account/lookup"
         );
     }

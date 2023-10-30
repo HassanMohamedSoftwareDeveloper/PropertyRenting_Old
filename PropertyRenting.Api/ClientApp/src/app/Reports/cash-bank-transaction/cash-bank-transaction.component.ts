@@ -7,13 +7,13 @@ import {
     Validators,
 } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { CashBank } from "../../Models/cash-bank";
 import { CashBankTransaction } from "../../Models/Reports/cash-bank-transaction";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { CashBankService } from "../../Services/cash-bank.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { Lookup } from "../../Models/lookup";
 
 @Component({
     selector: "app-cash-bank-transaction",
@@ -22,7 +22,7 @@ import { TranslationService } from "../../Services/translation.service";
 })
 export class CashBankTransactionComponent implements OnInit {
     data: CashBankTransaction[] = [];
-    cashBanks: CashBank[] = [];
+    cashBanks: Lookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -51,7 +51,7 @@ export class CashBankTransactionComponent implements OnInit {
     }
 
     loadCashBanks() {
-        this.cashBankService.GetAll().subscribe(
+        this.cashBankService.GetLookup().subscribe(
             (res) => {
                 this.cashBanks = res;
             },
@@ -107,8 +107,8 @@ export class CashBankTransactionComponent implements OnInit {
     }
     exportPDF() {
         const name =
-            this.cashBanks.find((x) => x.id == this.CashBankId.value)?.name ||
-            "";
+            this.cashBanks.find((x) => x.id == this.CashBankId.value)
+                ?.description || "";
         this.reportService
             .ExportCashBankTransactions(
                 "PDF",
@@ -141,8 +141,8 @@ export class CashBankTransactionComponent implements OnInit {
     }
     exportExcel() {
         const name =
-            this.cashBanks.find((x) => x.id == this.CashBankId.value)?.name ||
-            "";
+            this.cashBanks.find((x) => x.id == this.CashBankId.value)
+                ?.description || "";
         this.reportService
             .ExportCashBankTransactions(
                 "EXCEL",

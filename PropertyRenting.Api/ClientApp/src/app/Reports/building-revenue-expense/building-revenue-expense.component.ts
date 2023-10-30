@@ -7,13 +7,13 @@ import {
     FormGroup,
 } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { Building } from "../../Models/building";
 import { BuildingRevenuExpense } from "../../Models/Reports/building-revenu-expense";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { BuildingService } from "../../Services/building.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { Lookup } from "../../Models/lookup";
 
 @Component({
     selector: "app-building-revenue-expense",
@@ -22,7 +22,7 @@ import { TranslationService } from "../../Services/translation.service";
 })
 export class BuildingRevenueExpenseComponent implements OnInit {
     data: BuildingRevenuExpense[] = [];
-    buildings: Building[] = [];
+    buildings: Lookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     submitted = false;
@@ -52,7 +52,7 @@ export class BuildingRevenueExpenseComponent implements OnInit {
     }
 
     loadBuildings() {
-        this.buildingservice.GetAllBuildings().subscribe(
+        this.buildingservice.GetLookup().subscribe(
             (res) => {
                 this.buildings = res;
             },

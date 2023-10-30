@@ -7,13 +7,13 @@ import {
     Validators,
 } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { Renter } from "../../Models/renter";
 import { RenterTransaction } from "../../Models/Reports/renter-transaction";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { RenterService } from "../../Services/renter.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { Lookup } from "../../Models/lookup";
 
 @Component({
     selector: "app-renter-transaction",
@@ -22,7 +22,7 @@ import { TranslationService } from "../../Services/translation.service";
 })
 export class RenterTransactionComponent implements OnInit {
     data: RenterTransaction[] = [];
-    renters: Renter[] = [];
+    renters: Lookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -51,7 +51,7 @@ export class RenterTransactionComponent implements OnInit {
     }
 
     loadRenters() {
-        this.renterService.GetAll().subscribe(
+        this.renterService.GetLookup().subscribe(
             (res) => {
                 this.renters = res;
             },
@@ -108,7 +108,8 @@ export class RenterTransactionComponent implements OnInit {
 
     exportPDF() {
         const name =
-            this.renters.find((x) => x.id == this.RenterId.value)?.nameAR || "";
+            this.renters.find((x) => x.id == this.RenterId.value)
+                ?.description || "";
         this.reportService
             .ExportRenterTransactions(
                 "PDF",
@@ -140,7 +141,8 @@ export class RenterTransactionComponent implements OnInit {
     }
     exportExcel() {
         const name =
-            this.renters.find((x) => x.id == this.RenterId.value)?.nameAR || "";
+            this.renters.find((x) => x.id == this.RenterId.value)
+                ?.description || "";
         this.reportService
             .ExportRenterTransactions(
                 "EXCEL",

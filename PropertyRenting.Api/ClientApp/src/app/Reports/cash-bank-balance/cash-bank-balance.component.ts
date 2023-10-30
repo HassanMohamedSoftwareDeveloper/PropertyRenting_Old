@@ -2,13 +2,13 @@ import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
-import { CashBank } from "../../Models/cash-bank";
 import { CashBankBalance } from "../../Models/Reports/cash-bank-balance";
 import { AlertifyService } from "../../Services/alertify.service";
 import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { CashBankService } from "../../Services/cash-bank.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
+import { Lookup } from "../../Models/lookup";
 
 @Component({
     selector: "app-cash-bank-balance",
@@ -17,7 +17,7 @@ import { TranslationService } from "../../Services/translation.service";
 })
 export class CashBankBalanceComponent implements OnInit {
     data: CashBankBalance[] = [];
-    cashBanks: CashBank[] = [];
+    cashBanks: Lookup[] = [];
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
@@ -47,7 +47,7 @@ export class CashBankBalanceComponent implements OnInit {
     }
 
     loadCashBanks() {
-        this.cashBankService.GetAll().subscribe(
+        this.cashBankService.GetLookup().subscribe(
             (res) => {
                 this.cashBanks = res;
             },

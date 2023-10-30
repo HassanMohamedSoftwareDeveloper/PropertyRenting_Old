@@ -8,7 +8,7 @@
                     <div>
                         <ng-select formControlName="RevenueAccountId" [(ngModel)]="accountSetup.revenueAccountId"
                                    notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{ account.nameAR}} - {{account.nameEN}}</ng-option>
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{ account.description}}</ng-option>
                         </ng-select>
                         <div class="error-block" *ngIf="RevenueAccountId.invalid && (submitted||RevenueAccountId.touched)">
                             {{'RequiredField'|translate}}
@@ -21,7 +21,7 @@
                     <div>
                         <ng-select formControlName="ExpenseAccountId" [(ngModel)]="accountSetup.expenseAccountId"
                                    notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.description}}</ng-option>
                         </ng-select>
                         <div class="error-block" *ngIf="ExpenseAccountId.invalid && (submitted||ExpenseAccountId.touched)">
                             {{'RequiredField'|translate}}
@@ -37,7 +37,7 @@
                     <div>
                         <ng-select formControlName="AccruedRevenueAccountId" [(ngModel)]="accountSetup.accruedRevenueAccountId"
                                    notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.description}}</ng-option>
                         </ng-select>
                         <div class="error-block" *ngIf="AccruedRevenueAccountId.invalid && (submitted||AccruedRevenueAccountId.touched)">
                             {{'RequiredField'|translate}}
@@ -50,7 +50,7 @@
                     <div>
                         <ng-select formControlName="AccruedExpenseAccountId" [(ngModel)]="accountSetup.accruedExpenseAccountId"
                                    notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.description}}</ng-option>
                         </ng-select>
                         <div class="error-block" *ngIf="AccruedExpenseAccountId.invalid && (submitted||AccruedExpenseAccountId.touched)">
                             {{'RequiredField'|translate}}
@@ -65,7 +65,7 @@
                     <div>
                         <ng-select formControlName="ContributerAccountId" [(ngModel)]="accountSetup.contributerAccountId"
                                    notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.description}}</ng-option>
                         </ng-select>
                         <div class="error-block" *ngIf="ContributerAccountId.invalid && (submitted||ContributerAccountId.touched)">
                             {{'RequiredField'|translate}}
@@ -79,7 +79,7 @@
                     <div>
                         <ng-select formControlName="RenterAccountId" [(ngModel)]="accountSetup.renterAccountId"
                                    notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.description}}</ng-option>
                         </ng-select>
                         <div class="error-block" *ngIf="RenterAccountId.invalid && (submitted||RenterAccountId.touched)">
                             {{'RequiredField'|translate}}
@@ -97,7 +97,7 @@
                     <div>
                         <ng-select formControlName="OwnerAccountId" [(ngModel)]="accountSetup.ownerAccountId"
                                    notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
-                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.nameAR}} - {{account.nameEN}}</ng-option>
+                            <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.description}}</ng-option>
                         </ng-select>
                         <div class="error-block" *ngIf="OwnerAccountId.invalid && (submitted||OwnerAccountId.touched)">
                             {{'RequiredField'|translate}}
