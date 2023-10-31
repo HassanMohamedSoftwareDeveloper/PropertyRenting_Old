@@ -6,6 +6,7 @@ import { Pagination } from "../Models/pagination";
 import { Unit } from "../Models/unit";
 import { Lookup } from "../Models/lookup";
 import { UnitLookup } from "../Models/unit-lookup";
+import { UnitCount } from "../Models/unit-count";
 @Injectable({
     providedIn: "root",
 })
@@ -59,6 +60,12 @@ export class UnitService {
     Delete(id: any) {
         return this.httpClient.delete(
             environment.ApiURL + "api/v1/unit/delete/" + id
+        );
+    }
+
+    GetCountByCity(): Observable<UnitCount[]> {
+        return this.httpClient.get<UnitCount[]>(
+            environment.ApiURL + "api/v1/unit/count-by-city"
         );
     }
 }

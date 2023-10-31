@@ -1,3 +1,4 @@
+using PropertyRenting.Api.Helpers;
 using PropertyRenting.Api.Services;
 
 namespace PropertyRenting.Api.Controllers;
@@ -98,7 +99,9 @@ public class UnitController : BaseController
         unit.Id = Guid.NewGuid();
         var mappedEntity = Mapper.Map<UnitEntity>(unit);
         await Context.Units.AddAsync(mappedEntity);
-
+        var building = await Context.Buildings.FirstAsync(x => x.Id == unit.BuildingId);
+        building.UnitsNo += 1;
+        Context.Buildings.Update(building);
         bool saved = (await Context.SaveChangesAsync()) > 0;
         if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
         await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Unit.Prefix);
@@ -128,12 +131,30 @@ public class UnitController : BaseController
         if (currentUnit == null) return NotFound();
 
         Context.Units.Remove(currentUnit);
-
+        var building = currentUnit.Building;
+        building.UnitsNo -= 1;
+        Context.Buildings.Update(building);
         bool saved = (await Context.SaveChangesAsync()) > 0;
         if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
         await CacheService.RemoveByPrefixAsync(Constants.Constants.CacheKeys.Unit.Prefix);
 
         return Ok();
+    }
+    [HttpGet("count-by-city")]
+    public async Task<IActionResult> GetCountByCity()
+    {
+        var result = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Unit.CountByCity,
+                 () =>
+                 {
+                     return Context.Units
+                      .GroupBy(x => Localizable.IsArabic ? x.District.City.NameAR : x.District.City.NameEN)
+                      .Select(x => new UnitCountDTO { Description = x.Key, Count = x.Count() })
+                      .ToListAsync();
+                 },
+                60);
+
+
+        return Ok(result);
     }
     #endregion
 }

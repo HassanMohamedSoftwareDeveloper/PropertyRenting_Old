@@ -22,6 +22,7 @@ public static class Constants
             public const string CountByConstructionStatus = $"{Prefix}-CountByConstructionStatus";
             public const string CountByBuildingType = $"{Prefix}-CountByBuildingType";
             public const string CountByCity = $"{Prefix}-CountByCity";
+            public const string RentedUnitsPercentage = $"{Prefix}-RentedUnitsPercentage";
         }
         public static class CashBank
         {
@@ -84,6 +85,12 @@ public static class Constants
         {
             public const string Prefix = "unit";
             public const string Lookup = $"{Prefix}-lookup";
+            public const string CountByCity = $"{Prefix}-CountByCity";
+        }
+        public static class RenterContract
+        {
+            public const string Prefix = "renter-contract";
+            public const string CountByState = $"{Prefix}-CountByState";
         }
     }
 }

@@ -1,22 +1,17 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PropertyRenting.Api.DTOs;
-using PropertyRenting.Api.Enums;
-using PropertyRenting.Api.Factory;
-using PropertyRenting.Api.Models.Contexts;
-using PropertyRenting.Api.Models.Entities;
-using PropertyRenting.Api.ViewModels;
+﻿using PropertyRenting.Api.Factory;
+using PropertyRenting.Api.Helpers;
 
 namespace PropertyRenting.Api.Controllers;
 
 public class RenterContractController : BaseController
 {
+    #region CTORS :
     public RenterContractController(AppDbContext context, IMapper mapper) : base(context, mapper)
     {
     }
+    #endregion
 
+    #region Actions :
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
     {
@@ -74,7 +69,8 @@ public class RenterContractController : BaseController
         await Context.RenterContracts.AddAsync(mappedEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
 
         return Created($"~/byId/{entityDTO.Id}", entityDTO);
     }
@@ -103,7 +99,7 @@ public class RenterContractController : BaseController
 
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
 
         return Ok();
     }
@@ -116,7 +112,7 @@ public class RenterContractController : BaseController
         Context.RenterContracts.Remove(currentEntity);
 
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
 
         return Ok();
     }
@@ -177,9 +173,11 @@ public class RenterContractController : BaseController
 
             Context.Vouchers.Add(voucher);
         }
-
+        var unit = currentEntity.Unit;
+        unit.RentStatus = true;
+        Context.Units.Update(unit);
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
         return Ok();
     }
     [HttpPost("cancel/{id}")]
@@ -195,7 +193,7 @@ public class RenterContractController : BaseController
         var accountSetup = await Context.AccountSetups.FirstOrDefaultAsync();
         if (accountSetup is null) return BadRequest("NoSetupExist");
 
-        currentEntity.ContractState = (int)ContractState.Cancelled;
+        currentEntity.ContractState = (int)ContractState.Canceled;
 
         foreach (var item in currentEntity.RenterFinancialTransactions)
         {
@@ -238,9 +236,11 @@ public class RenterContractController : BaseController
         }
 
         Context.RenterContracts.Update(currentEntity);
-
+        var unit = currentEntity.Unit;
+        unit.RentStatus = false;
+        Context.Units.Update(unit);
         bool saved = (await Context.SaveChangesAsync()) > 0;
-        if (saved is false) return StatusCode(StatusCodes.Status500InternalServerError);
+        if (!saved) return StatusCode(StatusCodes.Status500InternalServerError);
         return Ok();
     }
     [HttpGet("byId/{renterId}/installments")]
@@ -255,4 +255,21 @@ public class RenterContractController : BaseController
 
         return Ok(installments);
     }
+    [HttpGet("count-by-state")]
+    public async Task<IActionResult> GetCountByState()
+    {
+        var groupedData = await Context.RenterContracts
+                     .AsNoTracking()
+                     .GroupBy(x => x.ContractState)
+                     .Select(x => new { ContractState = x.Key, Count = x.Count() })
+                     .ToListAsync();
+        var data = groupedData.Select(x => new ContractCountDTO
+        {
+            Description = Resources.ContractState.ResourceManager.GetResourceValue(((ContractState)x.ContractState).ToEnumString()),
+            Count = x.Count
+        });
+
+        return Ok(data);
+    }
+    #endregion
 }

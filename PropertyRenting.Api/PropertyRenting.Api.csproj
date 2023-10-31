@@ -56,6 +56,11 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>ConstructionStatus.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Resources\ContractState.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>ContractState.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Resources\Resource.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -77,6 +82,13 @@
 		<EmbeddedResource Update="Resources\ConstructionStatus.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>ConstructionStatus.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ContractState.ar.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ContractState.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>ContractState.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Resources\Resource.ar.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>

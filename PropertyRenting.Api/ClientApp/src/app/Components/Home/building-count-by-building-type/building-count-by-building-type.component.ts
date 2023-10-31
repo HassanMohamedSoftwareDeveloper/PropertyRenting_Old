@@ -48,13 +48,6 @@ export class BuildingCountByBuildingTypeComponent implements OnInit {
                     },
                 ],
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
         });
     }
 }

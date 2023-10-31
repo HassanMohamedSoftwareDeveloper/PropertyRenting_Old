@@ -5,6 +5,7 @@ import { environment } from "../../environments/environment";
 import { RenterContract } from "../Models/renter-contract";
 import { Pagination } from "../Models/pagination";
 import { ContractFinancialTransaction } from "../Models/contract-financial-transaction";
+import { ContractCount } from "../Models/contract-count";
 
 @Injectable({
     providedIn: "root",
@@ -69,6 +70,11 @@ export class RenterContractService {
                 "api/v1/RenterContract/byId/" +
                 id +
                 "/installments"
+        );
+    }
+    GetCountByState(): Observable<ContractCount[]> {
+        return this.httpClient.get<ContractCount[]>(
+            environment.ApiURL + "api/v1/RenterContract/count-by-state"
         );
     }
 }

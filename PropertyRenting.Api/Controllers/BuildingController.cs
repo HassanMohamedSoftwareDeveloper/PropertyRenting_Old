@@ -196,5 +196,20 @@ public class BuildingController : BaseController
 
         return Ok(result);
     }
+    [HttpGet("rented-units-percentage")]
+    public async Task<IActionResult> GetRentedUnitsPercentage()
+    {
+        var result = await Context.Buildings
+             .Where(x => x.UnitsNo > 0)
+             .Select(x => new RentedUnitsPercentageDTO
+             {
+                 Building = x.Name,
+                 Percentage = (((decimal)x.Units.Count(x => x.RentStatus) / x.UnitsNo) * 100.0m)
+             })
+             .ToListAsync();
+
+
+        return Ok(result);
+    }
+    #endregion
 }
-#endregion

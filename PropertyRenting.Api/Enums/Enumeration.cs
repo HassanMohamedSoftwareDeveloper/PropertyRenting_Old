@@ -27,7 +27,7 @@ public enum ContractState
 {
     Open = 1,
     Activated = 2,
-    Cancelled = 3,
+    Canceled = 3,
     Closed = 4
 }
 public enum TransactionType

@@ -141,6 +141,9 @@ import { ChangePasswordComponent } from "./Auth/change-password/change-password.
 import { BuildingCountByConstructionStatusComponent } from "./Components/Home/building-count-by-construction-status/building-count-by-construction-status.component";
 import { BuildingCountByBuildingTypeComponent } from "./Components/Home/building-count-by-building-type/building-count-by-building-type.component";
 import { BuildingCountByCityComponent } from './Components/Home/building-count-by-city/building-count-by-city.component';
+import { RentedUnitsPercentageComponent } from './Components/Home/rented-units-percentage/rented-units-percentage.component';
+import { UnitCountByCityComponent } from './Components/Home/unit-count-by-city/unit-count-by-city.component';
+import { RenterContractCountByStateComponent } from './Components/Home/renter-contract-count-by-state/renter-contract-count-by-state.component';
 
 @NgModule({
     declarations: [
@@ -236,6 +239,9 @@ import { BuildingCountByCityComponent } from './Components/Home/building-count-b
         BuildingCountByConstructionStatusComponent,
         BuildingCountByBuildingTypeComponent,
         BuildingCountByCityComponent,
+        RentedUnitsPercentageComponent,
+        UnitCountByCityComponent,
+        RenterContractCountByStateComponent,
     ],
     imports: [
         BrowserModule,

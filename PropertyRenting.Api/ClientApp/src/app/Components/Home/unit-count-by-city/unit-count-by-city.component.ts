@@ -1,20 +1,19 @@
 import { Component, OnInit } from "@angular/core";
+import { UnitService } from "../../../Services/unit.service";
+import { UnitCount } from "../../../Models/unit-count";
 import { Chart, registerables } from "node_modules/chart.js";
-import { BuildingService } from "../../../Services/building.service";
-import { BuildingCount } from "../../../Models/building-count";
 Chart.register(...registerables);
-
 @Component({
-    selector: "app-building-count-by-city",
-    templateUrl: "./building-count-by-city.component.html",
-    styleUrls: ["./building-count-by-city.component.css"],
+    selector: "app-unit-count-by-city",
+    templateUrl: "./unit-count-by-city.component.html",
+    styleUrls: ["./unit-count-by-city.component.css"],
 })
-export class BuildingCountByCityComponent implements OnInit {
-    chartData: BuildingCount[] = [];
-    constructor(private buildingService: BuildingService) {}
+export class UnitCountByCityComponent implements OnInit {
+    chartData: UnitCount[] = [];
+    constructor(private unitService: UnitService) {}
 
     ngOnInit(): void {
-        this.buildingService.GetCountByCity().subscribe({
+        this.unitService.GetCountByCity().subscribe({
             next: (res) => {
                 this.chartData = res;
                 const labelData = [];
@@ -28,7 +27,7 @@ export class BuildingCountByCityComponent implements OnInit {
                         labelData,
                         realData,
                         "doughnut",
-                        "cityChart"
+                        "unitCountByCityChart"
                     );
                 }
             },

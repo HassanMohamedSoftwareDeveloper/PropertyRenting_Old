@@ -1,13 +1,4 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PropertyRenting.Api.DTOs;
-using PropertyRenting.Api.Enums;
-using PropertyRenting.Api.Factory;
-using PropertyRenting.Api.Models.Contexts;
-using PropertyRenting.Api.Models.Entities;
-using PropertyRenting.Api.ViewModels;
+﻿using PropertyRenting.Api.Factory;
 
 namespace PropertyRenting.Api.Controllers;
 
@@ -177,7 +168,7 @@ public class OwnerContractController : BaseController
         var accountSetup = await Context.AccountSetups.FirstOrDefaultAsync();
         if (accountSetup is null) return BadRequest("NoSetupExist");
 
-        currentEntity.ContractState = (int)ContractState.Cancelled;
+        currentEntity.ContractState = (int)ContractState.Canceled;
         foreach (var trans in currentEntity.OwnerFinancialTransactions)
         {
             if (trans.IsPaid) continue;

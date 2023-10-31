@@ -7,6 +7,7 @@ import { Enum } from "../Models/enum";
 import { Pagination } from "../Models/pagination";
 import { Lookup } from "../Models/lookup";
 import { BuildingCount } from "../Models/building-count";
+import { RentedUnitsPercentage } from "../Models/rented-units-percentage";
 
 @Injectable({
     providedIn: "root",
@@ -72,18 +73,23 @@ export class BuildingService {
         );
     }
     GetCountByConstructionStatus(): Observable<BuildingCount[]> {
-        return this.httpClient.get<Lookup[]>(
+        return this.httpClient.get<BuildingCount[]>(
             environment.ApiURL + "api/v1/building/count-by-construction-status"
         );
     }
     GetCountByBuildingType(): Observable<BuildingCount[]> {
-        return this.httpClient.get<Lookup[]>(
+        return this.httpClient.get<BuildingCount[]>(
             environment.ApiURL + "api/v1/building/count-by-building-type"
         );
     }
     GetCountByCity(): Observable<BuildingCount[]> {
-        return this.httpClient.get<Lookup[]>(
+        return this.httpClient.get<BuildingCount[]>(
             environment.ApiURL + "api/v1/building/count-by-city"
+        );
+    }
+    GetRentedUnitsPercentage(): Observable<RentedUnitsPercentage[]> {
+        return this.httpClient.get<RentedUnitsPercentage[]>(
+            environment.ApiURL + "api/v1/building/rented-units-percentage"
         );
     }
 }
