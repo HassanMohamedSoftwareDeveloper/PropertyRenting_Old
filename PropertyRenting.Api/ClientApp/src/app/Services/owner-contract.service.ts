@@ -5,6 +5,7 @@ import { environment } from "../../environments/environment";
 import { ContractFinancialTransaction } from "../Models/contract-financial-transaction";
 import { OwnerContract } from "../Models/owner-contract";
 import { Pagination } from "../Models/pagination";
+import { InstallmentsPerDate } from "../Models/installments-per-date";
 
 @Injectable({
     providedIn: "root",
@@ -69,6 +70,11 @@ export class OwnerContractService {
                 "api/v1/OwnerContract/byId/" +
                 id +
                 "/installments"
+        );
+    }
+    GetInstallmentsPerDate(): Observable<InstallmentsPerDate[]> {
+        return this.httpClient.get<InstallmentsPerDate[]>(
+            environment.ApiURL + "api/v1/OwnerContract/installments-per-date"
         );
     }
 }

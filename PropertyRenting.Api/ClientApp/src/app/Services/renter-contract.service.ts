@@ -6,6 +6,7 @@ import { RenterContract } from "../Models/renter-contract";
 import { Pagination } from "../Models/pagination";
 import { ContractFinancialTransaction } from "../Models/contract-financial-transaction";
 import { ContractCount } from "../Models/contract-count";
+import { InstallmentsPerDate } from "../Models/installments-per-date";
 
 @Injectable({
     providedIn: "root",
@@ -75,6 +76,11 @@ export class RenterContractService {
     GetCountByState(): Observable<ContractCount[]> {
         return this.httpClient.get<ContractCount[]>(
             environment.ApiURL + "api/v1/RenterContract/count-by-state"
+        );
+    }
+    GetInstallmentsPerDate(): Observable<InstallmentsPerDate[]> {
+        return this.httpClient.get<InstallmentsPerDate[]>(
+            environment.ApiURL + "api/v1/RenterContract/installments-per-date"
         );
     }
 }

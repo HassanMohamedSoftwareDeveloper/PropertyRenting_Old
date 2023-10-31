@@ -156,6 +156,22 @@ public class UnitController : BaseController
 
         return Ok(result);
     }
+    [HttpGet("count-by-district")]
+    public async Task<IActionResult> GetCountByDistrict()
+    {
+        var result = await CacheService.GetOrCreateAsync(Constants.Constants.CacheKeys.Unit.CountByDistrict,
+                 () =>
+                 {
+                     return Context.Units
+                      .GroupBy(x => Localizable.IsArabic ? x.District.NameAR : x.District.NameEN)
+                      .Select(x => new UnitCountDTO { Description = x.Key, Count = x.Count() })
+                      .ToListAsync();
+                 },
+                60);
+
+
+        return Ok(result);
+    }
     #endregion
 }
 

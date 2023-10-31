@@ -140,11 +140,14 @@ import { UserListComponent } from "./Auth/user-list/user-list.component";
 import { ChangePasswordComponent } from "./Auth/change-password/change-password.component";
 import { BuildingCountByConstructionStatusComponent } from "./Components/Home/building-count-by-construction-status/building-count-by-construction-status.component";
 import { BuildingCountByBuildingTypeComponent } from "./Components/Home/building-count-by-building-type/building-count-by-building-type.component";
-import { BuildingCountByCityComponent } from './Components/Home/building-count-by-city/building-count-by-city.component';
-import { RentedUnitsPercentageComponent } from './Components/Home/rented-units-percentage/rented-units-percentage.component';
-import { UnitCountByCityComponent } from './Components/Home/unit-count-by-city/unit-count-by-city.component';
-import { RenterContractCountByStateComponent } from './Components/Home/renter-contract-count-by-state/renter-contract-count-by-state.component';
-import { BuildingUnitsCountComponent } from './Components/Home/building-units-count/building-units-count.component';
+import { BuildingCountByCityComponent } from "./Components/Home/building-count-by-city/building-count-by-city.component";
+import { RentedUnitsPercentageComponent } from "./Components/Home/rented-units-percentage/rented-units-percentage.component";
+import { UnitCountByCityComponent } from "./Components/Home/unit-count-by-city/unit-count-by-city.component";
+import { RenterContractCountByStateComponent } from "./Components/Home/renter-contract-count-by-state/renter-contract-count-by-state.component";
+import { BuildingUnitsCountComponent } from "./Components/Home/building-units-count/building-units-count.component";
+import { RenterInstallmentsPerDateComponent } from "./Components/Home/renter-installments-per-date/renter-installments-per-date.component";
+import { OwnerInstallmentsPerDateComponent } from "./Components/Home/owner-installments-per-date/owner-installments-per-date.component";
+import { UnitCountByDistrictComponent } from './Components/Home/unit-count-by-district/unit-count-by-district.component';
 
 @NgModule({
     declarations: [
@@ -244,6 +247,9 @@ import { BuildingUnitsCountComponent } from './Components/Home/building-units-co
         UnitCountByCityComponent,
         RenterContractCountByStateComponent,
         BuildingUnitsCountComponent,
+        RenterInstallmentsPerDateComponent,
+        OwnerInstallmentsPerDateComponent,
+        UnitCountByDistrictComponent,
     ],
     imports: [
         BrowserModule,

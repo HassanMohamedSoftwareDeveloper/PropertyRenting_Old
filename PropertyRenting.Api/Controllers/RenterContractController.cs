@@ -271,5 +271,18 @@ public class RenterContractController : BaseController
 
         return Ok(data);
     }
+    [HttpGet("installments-per-date")]
+    public async Task<IActionResult> GetInstallmentsPerDate()
+    {
+        var data = await Context.RenterFinancialTransactions
+                     .AsNoTracking()
+                     .Where(x => !x.IsPaid && !x.IsCancelled)
+                     .OrderBy(x => x.DueDate.Date)
+                     .GroupBy(x => x.DueDate.Date)
+                     .Select(x => new InstallmentsPerDateDTO { DueDate = x.Key.ToString("yyyy-MM-dd"), Count = x.Count(), Total = x.Sum(c => c.Balance) })
+                     .ToListAsync();
+
+        return Ok(data);
+    }
     #endregion
 }

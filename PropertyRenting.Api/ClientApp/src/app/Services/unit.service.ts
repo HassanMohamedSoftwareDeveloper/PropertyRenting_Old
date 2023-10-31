@@ -68,4 +68,9 @@ export class UnitService {
             environment.ApiURL + "api/v1/unit/count-by-city"
         );
     }
+    GetCountByDistrict(): Observable<UnitCount[]> {
+        return this.httpClient.get<UnitCount[]>(
+            environment.ApiURL + "api/v1/unit/count-by-district"
+        );
+    }
 }

@@ -86,6 +86,7 @@ public static class Constants
             public const string Prefix = "unit";
             public const string Lookup = $"{Prefix}-lookup";
             public const string CountByCity = $"{Prefix}-CountByCity";
+            public const string CountByDistrict = $"{Prefix}-CountByDistrict";
         }
         public static class RenterContract
         {

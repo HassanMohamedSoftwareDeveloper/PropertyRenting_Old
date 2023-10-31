@@ -4,11 +4,14 @@ namespace PropertyRenting.Api.Controllers;
 
 public class OwnerContractController : BaseController
 {
+    #region CTORS :
     public OwnerContractController(AppDbContext context, IMapper mapper) : base(context, mapper)
     {
     }
+    #endregion
 
 
+    #region Actions :
     [HttpGet("list")]
     public async Task<IActionResult> GetAllAsync()
     {
@@ -225,4 +228,18 @@ public class OwnerContractController : BaseController
 
         return Ok(installments);
     }
+    [HttpGet("installments-per-date")]
+    public async Task<IActionResult> GetInstallmentsPerDate()
+    {
+        var data = await Context.OwnerFinancialTransactions
+                     .AsNoTracking()
+                     .Where(x => !x.IsPaid && !x.IsCancelled)
+                     .OrderBy(x => x.DueDate.Date)
+                     .GroupBy(x => x.DueDate.Date)
+                     .Select(x => new InstallmentsPerDateDTO { DueDate = x.Key.ToString("yyyy-MM-dd"), Count = x.Count(), Total = x.Sum(c => c.Balance) })
+                     .ToListAsync();
+
+        return Ok(data);
+    }
+    #endregion
 }
