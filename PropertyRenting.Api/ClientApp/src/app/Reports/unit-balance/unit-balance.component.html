@@ -43,20 +43,16 @@
         <div class="row mt-3" *ngIf="showReport">
             <app-grid-page>
                 <tr tableHeader>
-                    <th colspan="2" class="text-center">{{'Report.Unit'|translate}}</th>
-                    <th rowspan="2" class="text-center">{{'Report.Building'|translate}}</th>
-                    <th rowspan="2" class="text-center">{{'Report.BeginPeriodBalance'|translate}}</th>
-                    <th rowspan="2" class="text-center">{{'Report.Debit'|translate}}</th>
-                    <th rowspan="2" class="text-center">{{'Report.Credit'|translate}}</th>
-                    <th rowspan="2" class="text-center">{{'Report.EndPeriodBalance'|translate}}</th>
+                    <th class="text-center">{{'Unit.UnitNumber'|translate}}</th>
+                    <th class="text-center">{{'Report.Building'|translate}}</th>
+                    <th class="text-center">{{'Report.BeginPeriodBalance'|translate}}</th>
+                    <th class="text-center">{{'Report.Debit'|translate}}</th>
+                    <th class="text-center">{{'Report.Credit'|translate}}</th>
+                    <th class="text-center">{{'Report.EndPeriodBalance'|translate}}</th>
                 </tr>
-                <tr tableHeader>
-                    <th>{{'Unit.UnitNumber'|translate}}</th>
-                    <th>{{'Unit.UnitName'|translate}}</th>
-                </tr>
+
                 <tr tableBody *ngFor="let item of data">
                     <td>{{item.unitNumber}}</td>
-                    <td>{{item.unitName}}</td>
                     <td>{{item.buildingName}}</td>
                     <td>{{item.beginPeriodBalance}} {{(item.beginPeriodBalance > 0 ? 'Report.Debit': item.beginPeriodBalance < 0? 'Report.Credit':'')|translate}}</td>
                     <td>{{item.debit}}</td>

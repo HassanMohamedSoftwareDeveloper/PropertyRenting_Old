@@ -1,31 +1,24 @@
 <app-list title="{{'Report.ActiveRenters'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
-  <div body>
-    <div class="d-flex justify-content-end mt-2">
-      <button type="button" class="btn btn-primary" (click)="exportPDF()">{{'ExportPDF'|translate}}</button>
-      <button type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
-    </div>
+    <div body>
+        <div class="d-flex justify-content-end mt-2 mb-2">
+            <button type="button" class="btn btn-primary" (click)="exportPDF()">{{'ExportPDF'|translate}}</button>
+            <button type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
+        </div>
 
-    <app-grid-page>
-      <tr tableHeader>
-        <th colspan="3" class="text-center">{{'Report.Renter'|translate}}</th>
-        <th rowspan="2" class="text-center">{{'Report.Building'|translate}}</th>
-        <th colspan="2" class="text-center">{{'Report.Unit'|translate}}</th>
-      </tr>
-      <tr tableHeader>
-        <th>{{'NameAR'|translate}}</th>
-        <th>{{'NameEN'|translate}}</th>
-        <th>{{'Report.MobileNumber'|translate}}</th>
-        <th>{{'Unit.UnitName'|translate}}</th>
-        <th>{{'Unit.UnitNumber'|translate}}</th>
-      </tr>
-      <tr tableBody *ngFor="let item of data">
-        <td>{{item.renterNameAR}}</td>
-        <td>{{item.renterNameEN}}</td>
-        <td>{{item.mobileNumber}}</td>
-        <td>{{item.buildingName}}</td>
-        <td>{{item.unitName}}</td>
-        <td>{{item.unitNumber}}</td>
-      </tr>
-    </app-grid-page>
-  </div>
+        <app-grid-page>
+            <tr tableHeader>
+                <th class="text-center">{{'Report.Renter'|translate}}</th>
+                <th class="text-center">{{'Report.MobileNumber'|translate}}</th>
+                <th class="text-center">{{'Report.Building'|translate}}</th>
+                <th class="text-center">{{'Unit.UnitNumber'|translate}}</th>
+            </tr>
+
+            <tr tableBody *ngFor="let item of data">
+                <td>{{item.renterNameAR}}</td>
+                <td>{{item.mobileNumber}}</td>
+                <td>{{item.buildingName}}</td>
+                <td>{{item.unitNumber}}</td>
+            </tr>
+        </app-grid-page>
+    </div>
 </app-list>

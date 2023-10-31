@@ -42,37 +42,27 @@
         <div class="row mt-3" *ngIf="showReport">
             <app-grid-page>
                 <tr tableHeader>
-                    <th rowspan="2" colspan="2" class="text-center">{{'Contract.ContractNumber'|translate}}</th>
-                    <th colspan="2" class="text-center">{{'Installment.Type'|translate}}</th>
-                    <th rowspan="2" class="text-center">{{'Report.Installment'|translate}}</th>
-                    <th rowspan="2" class="text-center">{{'Report.PaidAmount'|translate}}</th>
-                    <th rowspan="2" class="text-center">{{'Report.Amount'|translate}}</th>
-                    <th rowspan="2" class="text-center">{{'Contract.DueDate'|translate}}</th>
-                    <th colspan="2" class="text-center">{{'Report.Renter'|translate}}</th>
-                    <th rowspan="2" class="text-center">{{'Report.Building'|translate}}</th>
-                    <th colspan="2" class="text-center">{{'Report.Unit'|translate}}</th>
+                    <th colspan="2" class="text-center">{{'Contract.ContractNumber'|translate}}</th>
+                    <th class="text-center">{{'Installment.Type'|translate}}</th>
+                    <th class="text-center">{{'Report.Installment'|translate}}</th>
+                    <th class="text-center">{{'Report.PaidAmount'|translate}}</th>
+                    <th class="text-center">{{'Report.Amount'|translate}}</th>
+                    <th class="text-center">{{'Contract.DueDate'|translate}}</th>
+                    <th class="text-center">{{'Report.Renter'|translate}}</th>
+                    <th class="text-center">{{'Report.Building'|translate}}</th>
+                    <th class="text-center">{{'Unit.UnitNumber'|translate}}</th>
                 </tr>
-                <tr tableHeader>
-                    <th>{{'NameAR'|translate}}</th>
-                    <th>{{'NameEN'|translate}}</th>
-                    <th>{{'NameAR'|translate}}</th>
-                    <th>{{'NameEN'|translate}}</th>
-                    <th>{{'Unit.UnitName'|translate}}</th>
-                    <th>{{'Unit.UnitNumber'|translate}}</th>
-                </tr>
+
                 <tr tableBody *ngFor="let item of data">
                     <td>{{item.autoNumber}}</td>
                     <td>{{item.contractNumber}}</td>
                     <td>{{item.typeAR}}</td>
-                    <td>{{item.typeEN}}</td>
                     <td>{{item.amount}}</td>
                     <td>{{item.paidAmount}}</td>
                     <td>{{item.balance}}</td>
                     <td>{{item.dueDate|date:'yyyy-MM-dd'}}</td>
                     <td>{{item.renterAR}}</td>
-                    <td>{{item.renterEN}}</td>
                     <td>{{item.buildingName}}</td>
-                    <td>{{item.unitName}}</td>
                     <td>{{item.unitNumber}}</td>
                 </tr>
             </app-grid-page>

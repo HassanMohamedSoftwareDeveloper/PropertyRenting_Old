@@ -47,7 +47,6 @@
                     <th>{{'Voucher.RefType'|translate}}</th>
                     <th colspan="2">{{'Voucher.RefNumber'|translate}}</th>
                     <th>{{'Voucher.Description'|translate}}</th>
-                    <th>{{'Unit.UnitName'|translate}}</th>
                     <th>{{'Unit.UnitNumber'|translate}}</th>
                     <th>{{'Building.Name'|translate}}</th>
                     <th class="text-center">{{'Report.Debit'|translate}}</th>
@@ -56,7 +55,7 @@
                 </tr>
                 <ng-container tableBody *ngFor="let item of data;index as index">
                     <tr *ngIf="item.type==1">
-                        <th colspan="11" class="text-center fw-bold">{{'Report.BeginPeriodBalance'|translate}} {{((item.debitAmount||0) - (item.creditAmount||0) > 0 ? 'Report.Debit': (item.debitAmount||0) - (item.creditAmount||0) < 0? 'Report.Credit':'')|translate}}</th>
+                        <th colspan="10" class="text-center fw-bold">{{'Report.BeginPeriodBalance'|translate}} {{((item.debitAmount||0) - (item.creditAmount||0) > 0 ? 'Report.Debit': (item.debitAmount||0) - (item.creditAmount||0) < 0? 'Report.Credit':'')|translate}}</th>
                         <td>{{item.debitAmount}}</td>
                         <td>{{item.creditAmount}}</td>
                         <th class="text-center fw-bold balance-class">{{(item.debitAmount||0) - (item.creditAmount||0)}}</th>
@@ -71,14 +70,13 @@
                         <td>{{item.referenceAutoNumber}}</td>
                         <td>{{item.referenceManualNumber}}</td>
                         <td>{{item.description}}</td>
-                        <td>{{item.unitName}}</td>
                         <td>{{item.unitNumber}}</td>
                         <td>{{item.buildingName}}</td>
                         <td>{{item.debitAmount}}</td>
                         <td>{{item.creditAmount}}</td>
                     </tr>
                     <tr *ngIf="item.type==3">
-                        <th colspan="11" class="text-center fw-bold">{{'Report.EndPeriodBalance'|translate}}</th>
+                        <th colspan="10" class="text-center fw-bold">{{'Report.EndPeriodBalance'|translate}}</th>
                         <td>{{item.debitAmount}}</td>
                         <td>{{item.creditAmount}}</td>
                         <th class="text-center fw-bold balance-class">{{(item.debitAmount||0) - (item.creditAmount||0)}} {{((item.debitAmount||0) - (item.creditAmount||0) > 0 ? 'Report.Debit': (item.debitAmount||0) - (item.creditAmount||0) < 0? 'Report.Credit':'')|translate}}</th>
