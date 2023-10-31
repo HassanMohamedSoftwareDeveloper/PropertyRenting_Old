@@ -144,6 +144,7 @@ import { BuildingCountByCityComponent } from './Components/Home/building-count-b
 import { RentedUnitsPercentageComponent } from './Components/Home/rented-units-percentage/rented-units-percentage.component';
 import { UnitCountByCityComponent } from './Components/Home/unit-count-by-city/unit-count-by-city.component';
 import { RenterContractCountByStateComponent } from './Components/Home/renter-contract-count-by-state/renter-contract-count-by-state.component';
+import { BuildingUnitsCountComponent } from './Components/Home/building-units-count/building-units-count.component';
 
 @NgModule({
     declarations: [
@@ -242,6 +243,7 @@ import { RenterContractCountByStateComponent } from './Components/Home/renter-co
         RentedUnitsPercentageComponent,
         UnitCountByCityComponent,
         RenterContractCountByStateComponent,
+        BuildingUnitsCountComponent,
     ],
     imports: [
         BrowserModule,

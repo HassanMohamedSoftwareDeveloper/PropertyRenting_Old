@@ -45,29 +45,9 @@ export class RentedUnitsPercentageComponent implements OnInit {
                     {
                         data: maindata,
                         borderWidth: 1,
+                        label: "النسبة المؤجرة",
                     },
                 ],
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        title: {
-                            display: false,
-                        },
-                        display: false,
-                    },
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 100,
-                        title: {
-                            display: true,
-                            text: "Percentage",
-                        },
-                    },
-                },
             },
         });
     }

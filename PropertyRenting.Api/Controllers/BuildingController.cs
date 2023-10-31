@@ -211,5 +211,21 @@ public class BuildingController : BaseController
 
         return Ok(result);
     }
+    [HttpGet("units-count")]
+    public async Task<IActionResult> GetUnitsCount()
+    {
+        var result = await Context.Buildings
+             .Select(x => new BuildingUnitsCountDTO
+             {
+                 Building = x.Name,
+                 Total = x.UnitsNo,
+                 Rented = x.Units.Count(u => u.RentStatus),
+                 Available = x.Units.Count(u => !u.RentStatus)
+             })
+             .ToListAsync();
+
+
+        return Ok(result);
+    }
     #endregion
 }

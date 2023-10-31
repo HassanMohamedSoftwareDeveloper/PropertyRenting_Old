@@ -8,6 +8,7 @@ import { Pagination } from "../Models/pagination";
 import { Lookup } from "../Models/lookup";
 import { BuildingCount } from "../Models/building-count";
 import { RentedUnitsPercentage } from "../Models/rented-units-percentage";
+import { BuildingUnitsCount } from "../Models/building-units-count";
 
 @Injectable({
     providedIn: "root",
@@ -90,6 +91,11 @@ export class BuildingService {
     GetRentedUnitsPercentage(): Observable<RentedUnitsPercentage[]> {
         return this.httpClient.get<RentedUnitsPercentage[]>(
             environment.ApiURL + "api/v1/building/rented-units-percentage"
+        );
+    }
+    GetUnitsCount(): Observable<BuildingUnitsCount[]> {
+        return this.httpClient.get<BuildingUnitsCount[]>(
+            environment.ApiURL + "api/v1/building/units-count"
         );
     }
 }
