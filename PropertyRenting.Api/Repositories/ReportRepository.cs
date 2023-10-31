@@ -8,15 +8,20 @@ namespace PropertyRenting.Api.Repositories;
 
 public class ReportRepository : IReportRepository
 {
+    #region Fields :
     private readonly DapperContext _context;
     private readonly QueryHepler _queryHepler;
+    #endregion
 
-    public ReportRepository(DapperContext context, QueryHepler queryHepler)
+    #region CTORS :
+    public ReportRepository(DapperContext context, QueryHepler queryHelper)
     {
         _context = context;
-        _queryHepler = queryHepler;
+        _queryHepler = queryHelper;
     }
+    #endregion
 
+    #region Methods :
     public async Task<List<ActiveRenterDTO>> GetActiveRenterAsync()
     {
         var query = _queryHepler.GetQuery(FolderName.Reports, ReportName.ActiveRenters);
@@ -174,4 +179,5 @@ public class ReportRepository : IReportRepository
         var result = await connection.QueryAsync<AvailableUnitDTO>(query);
         return result.ToList();
     }
+    #endregion
 }

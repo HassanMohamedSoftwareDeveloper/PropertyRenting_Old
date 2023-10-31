@@ -123,16 +123,13 @@ ORDER BY BuildingName, Unit.CreatedOnUtc
                   <Width>2.01223cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.01223cm</Width>
+                  <Width>3.1764cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.01223cm</Width>
+                  <Width>2.64723cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.43063cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.30151cm</Width>
+                  <Width>2.90122cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -377,7 +374,7 @@ ORDER BY BuildingName, Unit.CreatedOnUtc
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>العنوان en</Value>
+                                  <Value>العنوان </Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>12pt</FontSize>
@@ -405,47 +402,10 @@ ORDER BY BuildingName, Unit.CreatedOnUtc
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
+                        <ColSpan>2</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox21">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>العنوان ar</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>12pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox21</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>DimGray</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>LightGrey</BackgroundColor>
-                            <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>0.2pt</PaddingLeft>
-                            <PaddingRight>0.2pt</PaddingRight>
-                            <PaddingTop>0.2pt</PaddingTop>
-                            <PaddingBottom>0.2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
+                    <TablixCell />
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox19">
@@ -469,45 +429,6 @@ ORDER BY BuildingName, Unit.CreatedOnUtc
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox19</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>DimGray</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>LightGrey</BackgroundColor>
-                            <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>0.2pt</PaddingLeft>
-                            <PaddingRight>0.2pt</PaddingRight>
-                            <PaddingTop>0.2pt</PaddingTop>
-                            <PaddingBottom>0.2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox27">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>إسم الوحدة</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>12pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox27</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>DimGray</Color>
@@ -675,7 +596,6 @@ ORDER BY BuildingName, Unit.CreatedOnUtc
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -788,43 +708,6 @@ ORDER BY BuildingName, Unit.CreatedOnUtc
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="AddressEN">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!AddressEN.Value</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>8pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>AddressEN</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>DimGray</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>0.2pt</PaddingLeft>
-                            <PaddingRight>0.2pt</PaddingRight>
-                            <PaddingTop>0.2pt</PaddingTop>
-                            <PaddingBottom>0.2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
                         <Textbox Name="AddressAR">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -858,8 +741,10 @@ ORDER BY BuildingName, Unit.CreatedOnUtc
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
+                        <ColSpan>2</ColSpan>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell />
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="BuildingName1">
@@ -882,43 +767,6 @@ ORDER BY BuildingName, Unit.CreatedOnUtc
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>BuildingName1</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>DimGray</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>0.2pt</PaddingLeft>
-                            <PaddingRight>0.2pt</PaddingRight>
-                            <PaddingTop>0.2pt</PaddingTop>
-                            <PaddingBottom>0.2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="UnitName1">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!UnitName.Value</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>8pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>UnitName1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>DimGray</Color>
@@ -987,7 +835,6 @@ ORDER BY BuildingName, Unit.CreatedOnUtc
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
-                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -1004,7 +851,7 @@ ORDER BY BuildingName, Unit.CreatedOnUtc
             <Top>0.04233cm</Top>
             <Left>0cm</Left>
             <Height>1.581cm</Height>
-            <Width>27.93003cm</Width>
+            <Width>27.89828cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>

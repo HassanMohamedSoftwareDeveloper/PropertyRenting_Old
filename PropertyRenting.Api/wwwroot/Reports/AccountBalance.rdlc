@@ -515,42 +515,7 @@ GROUP BY Details.AccountId
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="AccountNameEN1">
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!AccountNameEN.Value</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>AccountNameEN1</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>DimGray</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>0.2pt</PaddingLeft>
-                            <PaddingRight>0.2pt</PaddingRight>
-                            <PaddingTop>0.2pt</PaddingTop>
-                            <PaddingBottom>0.2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="AccountNameAR1">
+                        <Textbox Name="AccountNameAR">
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -567,7 +532,7 @@ GROUP BY Details.AccountId
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>AccountNameAR1</rd:DefaultName>
+                          <rd:DefaultName>AccountNameAR</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>DimGray</Color>
@@ -581,8 +546,10 @@ GROUP BY Details.AccountId
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
+                        <ColSpan>2</ColSpan>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell />
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="AccountCode1">

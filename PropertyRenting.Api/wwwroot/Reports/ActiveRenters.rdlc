@@ -69,22 +69,19 @@ JOIN Building
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.30211cm</Width>
+                  <Width>3.76778cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>4.19111cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>3.61961cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>3.30211cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.30211cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>3.30211cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>3.30211cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>3.30211cm</Width>
+                  <Width>4.67794cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -99,7 +96,7 @@ JOIN Building
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>إسم الوحدة</Value>
+                                  <Value>كود الوحدة</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>12pt</FontSize>
@@ -113,44 +110,6 @@ JOIN Building
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox3</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>DimGray</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>LightGrey</BackgroundColor>
-                            <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>0.2pt</PaddingLeft>
-                            <PaddingRight>0.2pt</PaddingRight>
-                            <PaddingTop>0.2pt</PaddingTop>
-                            <PaddingBottom>0.2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox5">
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>رقم الوحدة</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>12pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox5</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>DimGray</Color>
@@ -290,41 +249,6 @@ JOIN Building
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="UnitName">
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!UnitName.Value</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>UnitName</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>DimGray</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>0.2pt</PaddingLeft>
-                            <PaddingRight>0.2pt</PaddingRight>
-                            <PaddingTop>0.2pt</PaddingTop>
-                            <PaddingBottom>0.2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
                         <Textbox Name="UnitNumber">
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -356,6 +280,7 @@ JOIN Building
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -430,41 +355,6 @@ JOIN Building
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="RenterNameEN">
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!RenterNameEN.Value</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>RenterNameEN</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>DimGray</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>0.2pt</PaddingLeft>
-                            <PaddingRight>0.2pt</PaddingRight>
-                            <PaddingTop>0.2pt</PaddingTop>
-                            <PaddingBottom>0.2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
                         <Textbox Name="RenterNameAR">
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -496,15 +386,16 @@ JOIN Building
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
+                        <ColSpan>2</ColSpan>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell />
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
-                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -526,7 +417,7 @@ JOIN Building
             <Top>0cm</Top>
             <Left>0cm</Left>
             <Height>1.581cm</Height>
-            <Width>19.81264cm</Width>
+            <Width>19.55855cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
