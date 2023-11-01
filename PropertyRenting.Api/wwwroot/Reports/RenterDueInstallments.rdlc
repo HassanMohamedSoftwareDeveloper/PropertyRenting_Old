@@ -178,7 +178,7 @@ ORDER BY Contract.AutoNumber,ConractTrans.DueDate</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>الباقى</Value>
+                                  <Value>المتبقى</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>12pt</FontSize>
