@@ -78,10 +78,7 @@ JOIN Building
                   <Width>3.61961cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.30211cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>4.67794cm</Width>
+                  <Width>7.91664cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -238,10 +235,8 @@ JOIN Building
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
-                        <ColSpan>2</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell />
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -280,7 +275,6 @@ JOIN Building
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -386,17 +380,14 @@ JOIN Building
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
-                        <ColSpan>2</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell />
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
-                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -417,7 +408,7 @@ JOIN Building
             <Top>0cm</Top>
             <Left>0cm</Left>
             <Height>1.581cm</Height>
-            <Width>19.55855cm</Width>
+            <Width>19.49514cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -432,7 +423,7 @@ JOIN Building
           </Border>
         </Style>
       </Body>
-      <Width>19.982cm</Width>
+      <Width>19.72798cm</Width>
       <Page>
         <PageHeader>
           <Height>3.81cm</Height>
@@ -515,7 +506,7 @@ JOIN Building
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0cm</Top>
-              <Left>0.00001cm</Left>
+              <Left>0cm</Left>
               <Height>2.886cm</Height>
               <Width>8.65011cm</Width>
               <Style>
@@ -535,7 +526,7 @@ JOIN Building
               <Value>logo</Value>
               <Sizing>Fit</Sizing>
               <Top>0cm</Top>
-              <Left>8.98175cm</Left>
+              <Left>8.82299cm</Left>
               <Height>2.886cm</Height>
               <Width>4.49859cm</Width>
               <ZIndex>1</ZIndex>
@@ -623,7 +614,7 @@ JOIN Building
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0cm</Top>
-              <Left>13.80956cm</Left>
+              <Left>13.6508cm</Left>
               <Height>2.886cm</Height>
               <Width>6.00308cm</Width>
               <ZIndex>2</ZIndex>
@@ -657,7 +648,7 @@ JOIN Building
               </Paragraphs>
               <rd:DefaultName>Textbox26</rd:DefaultName>
               <Top>3.03375cm</Top>
-              <Left>6.6543cm</Left>
+              <Left>6.49554cm</Left>
               <Height>0.6635cm</Height>
               <Width>6.77923cm</Width>
               <ZIndex>3</ZIndex>
@@ -679,6 +670,92 @@ JOIN Building
             </Border>
           </Style>
         </PageHeader>
+        <PageFooter>
+          <Height>0.76636cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="Textbox29">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="تاريخ اليوم : " &amp; Globals!ExecutionTime</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>Red</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox27</rd:DefaultName>
+              <Top>0.06053cm</Top>
+              <Left>0cm</Left>
+              <Height>0.70583cm</Height>
+              <Width>7.63736cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Direction>RTL</Direction>
+              </Style>
+            </Textbox>
+            <Textbox Name="TextboxUserName">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="إسم المُستخدم : " &amp; Parameters!UserName.Value</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>Red</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.04939cm</Top>
+              <Left>11.82602cm</Left>
+              <Height>0.70583cm</Height>
+              <Width>7.63736cm</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Direction>RTL</Direction>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageFooter>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
         <LeftMargin>0.5cm</LeftMargin>
@@ -690,10 +767,23 @@ JOIN Building
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="UserName">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
       <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>UserName</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <EmbeddedImages>

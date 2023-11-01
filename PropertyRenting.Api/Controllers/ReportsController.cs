@@ -1,6 +1,7 @@
 ﻿using Microsoft.Reporting.NETCore;
 using PropertyRenting.Api.Contracts.Requests;
 using PropertyRenting.Api.Repositories;
+using System.Security.Claims;
 
 namespace PropertyRenting.Api.Controllers;
 
@@ -326,17 +327,20 @@ new ReportParameter("UnitName", request.UnitName)
     {
         try
         {
+            var userName = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
+            var parameters = reportParameters.Append(new("UserName", userName));
+
             type = type.ToUpper();
             string mimeType = type == "PDF" ? "pdf" : "xls";
             Stream reportDefinition;
             var path = Path.Combine(_env.WebRootPath, "Reports", $"{reportName}.rdlc");
-            using var fs = new FileStream(path, FileMode.Open);
+            var fs = new FileStream(path, FileMode.Open);
             reportDefinition = fs;
             LocalReport report = new();
             report.LoadReportDefinition(reportDefinition);
             report.DataSources.Add(new ReportDataSource("DataSet", data));
-            if (reportParameters.Any())
-                report.SetParameters(reportParameters);
+
+            report.SetParameters(parameters);
             byte[] content = report.Render(type);
             fs.Dispose();
 

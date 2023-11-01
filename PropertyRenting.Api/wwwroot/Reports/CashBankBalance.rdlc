@@ -533,7 +533,7 @@ GROUP BY Details.CashBankId
           </Border>
         </Style>
       </Body>
-      <Width>19.93964cm</Width>
+      <Width>19.95023cm</Width>
       <Page>
         <PageHeader>
           <Height>4.7625cm</Height>
@@ -616,7 +616,7 @@ GROUP BY Details.CashBankId
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.07038cm</Top>
-              <Left>0.00001cm</Left>
+              <Left>0.06881cm</Left>
               <Height>2.886cm</Height>
               <Width>8.65011cm</Width>
               <Style>
@@ -636,7 +636,7 @@ GROUP BY Details.CashBankId
               <Value>logo</Value>
               <Sizing>Fit</Sizing>
               <Top>0.09846cm</Top>
-              <Left>8.80183cm</Left>
+              <Left>8.87063cm</Left>
               <Height>2.886cm</Height>
               <Width>4.49859cm</Width>
               <ZIndex>1</ZIndex>
@@ -724,7 +724,7 @@ GROUP BY Details.CashBankId
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.04921cm</Top>
-              <Left>13.54498cm</Left>
+              <Left>13.61378cm</Left>
               <Height>2.886cm</Height>
               <Width>6.27825cm</Width>
               <ZIndex>2</ZIndex>
@@ -758,7 +758,7 @@ GROUP BY Details.CashBankId
               </Paragraphs>
               <rd:DefaultName>Textbox26</rd:DefaultName>
               <Top>3.16085cm</Top>
-              <Left>7.56921cm</Left>
+              <Left>7.638cm</Left>
               <Height>0.6635cm</Height>
               <Width>6.77923cm</Width>
               <ZIndex>3</ZIndex>
@@ -795,7 +795,7 @@ GROUP BY Details.CashBankId
               </Paragraphs>
               <rd:DefaultName>Textbox27</rd:DefaultName>
               <Top>3.92278cm</Top>
-              <Left>14.08386cm</Left>
+              <Left>14.08916cm</Left>
               <Height>0.70583cm</Height>
               <Width>5.73937cm</Width>
               <ZIndex>4</ZIndex>
@@ -833,7 +833,7 @@ GROUP BY Details.CashBankId
               </Paragraphs>
               <rd:DefaultName>Textbox27</rd:DefaultName>
               <Top>3.94395cm</Top>
-              <Left>0.00001cm</Left>
+              <Left>0.06881cm</Left>
               <Height>0.70583cm</Height>
               <Width>7.63736cm</Width>
               <ZIndex>5</ZIndex>
@@ -855,6 +855,92 @@ GROUP BY Details.CashBankId
             </Border>
           </Style>
         </PageHeader>
+        <PageFooter>
+          <Height>0.9525cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="Textbox29">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="تاريخ اليوم : " &amp; Globals!ExecutionTime</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>Red</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox27</rd:DefaultName>
+              <Top>0.127cm</Top>
+              <Left>0cm</Left>
+              <Height>0.70583cm</Height>
+              <Width>7.63736cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Direction>RTL</Direction>
+              </Style>
+            </Textbox>
+            <Textbox Name="TextboxUserName">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="إسم المُستخدم : " &amp; Parameters!UserName.Value</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>Red</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.127cm</Top>
+              <Left>12.21762cm</Left>
+              <Height>0.70583cm</Height>
+              <Width>7.63736cm</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Direction>RTL</Direction>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageFooter>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
         <LeftMargin>0.5cm</LeftMargin>
@@ -882,6 +968,10 @@ GROUP BY Details.CashBankId
       <Nullable>true</Nullable>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="UserName">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -902,6 +992,11 @@ GROUP BY Details.CashBankId
           <ColumnIndex>3</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>CashBankId</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>UserName</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

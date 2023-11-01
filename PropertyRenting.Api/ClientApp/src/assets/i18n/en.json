@@ -455,7 +455,8 @@
     "CurrentUnits": "Current Units Report",
     "AvailableUnits": "Available Units Report",
     "Revenue": "Revenue",
-    "Expense": "Expense"
+    "Expense": "Expense",
+    "RemainingDays": "Remaining Days"
   },
   "SanadType": {
     "General": "General",

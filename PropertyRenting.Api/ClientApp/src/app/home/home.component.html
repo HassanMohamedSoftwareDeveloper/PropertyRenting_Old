@@ -2,14 +2,23 @@
           [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
     <div body>
         <div class="row">
-            <div class="col-4">
+            <div class="col-2">
                 <app-building-count-by-construction-status></app-building-count-by-construction-status>
             </div>
-            <div class="col-4">
+            <div class="col-2">
                 <app-building-count-by-building-type></app-building-count-by-building-type>
             </div>
-            <div class="col-4">
+            <div class="col-2">
                 <app-building-count-by-city></app-building-count-by-city>
+            </div>
+            <div class="col-2">
+                <app-unit-count-by-city></app-unit-count-by-city>
+            </div>
+            <div class="col-2">
+                <app-unit-count-by-district></app-unit-count-by-district>
+            </div>
+            <div class="col-2">
+                <app-renter-contract-count-by-state></app-renter-contract-count-by-state>
             </div>
         </div>
         <div class="row mt-2">
@@ -21,17 +30,17 @@
             </div>
 
         </div>
-        <div class="row mt-2">
-            <div class="col-4">
-                <app-unit-count-by-city></app-unit-count-by-city>
-            </div>
-            <div class="col-4">
-                <app-unit-count-by-district></app-unit-count-by-district>
-            </div>
-            <div class="col-4">
-                <app-renter-contract-count-by-state></app-renter-contract-count-by-state>
-            </div>
-        </div>
+        <!--    <div class="row mt-2">
+               <div class="col-4">
+                   <app-unit-count-by-city></app-unit-count-by-city>
+               </div>
+               <div class="col-4">
+                   <app-unit-count-by-district></app-unit-count-by-district>
+               </div>
+               <div class="col-4">
+                   <app-renter-contract-count-by-state></app-renter-contract-count-by-state>
+               </div>
+           </div> -->
         <div class="row mt-2">
             <div class="col-6">
                 <app-renter-installments-per-date></app-renter-installments-per-date>

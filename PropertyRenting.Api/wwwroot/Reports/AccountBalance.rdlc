@@ -109,25 +109,22 @@ GROUP BY Details.AccountId
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.86969cm</Width>
+                  <Width>2.91505cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.86969cm</Width>
+                  <Width>2.91505cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.86969cm</Width>
+                  <Width>2.91505cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.86969cm</Width>
+                  <Width>2.91505cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.86969cm</Width>
+                  <Width>4.24854cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.86969cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.86969cm</Width>
+                  <Width>3.85097cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -322,10 +319,8 @@ GROUP BY Details.AccountId
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
-                        <ColSpan>2</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell />
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox21">
@@ -546,10 +541,8 @@ GROUP BY Details.AccountId
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
-                        <ColSpan>2</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell />
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="AccountCode1">
@@ -597,7 +590,6 @@ GROUP BY Details.AccountId
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
-                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -614,7 +606,7 @@ GROUP BY Details.AccountId
             <Top>0.0213cm</Top>
             <Left>0cm</Left>
             <Height>1.581cm</Height>
-            <Width>20.08783cm</Width>
+            <Width>19.75971cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -622,14 +614,14 @@ GROUP BY Details.AccountId
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>1.62983cm</Height>
+        <Height>1.65127cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>20.16189cm</Width>
+      <Width>19.91846cm</Width>
       <Page>
         <PageHeader>
           <Height>4.67783cm</Height>
@@ -731,7 +723,7 @@ GROUP BY Details.AccountId
               <Value>logo</Value>
               <Sizing>Fit</Sizing>
               <Top>0.02808cm</Top>
-              <Left>8.98174cm</Left>
+              <Left>8.78065cm</Left>
               <Height>2.886cm</Height>
               <Width>4.49859cm</Width>
               <ZIndex>1</ZIndex>
@@ -819,7 +811,7 @@ GROUP BY Details.AccountId
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0cm</Top>
-              <Left>13.80955cm</Left>
+              <Left>13.54496cm</Left>
               <Height>2.886cm</Height>
               <Width>6.27825cm</Width>
               <ZIndex>2</ZIndex>
@@ -853,7 +845,7 @@ GROUP BY Details.AccountId
               </Paragraphs>
               <rd:DefaultName>Textbox26</rd:DefaultName>
               <Top>3.09047cm</Top>
-              <Left>7.5692cm</Left>
+              <Left>7.39986cm</Left>
               <Height>0.6635cm</Height>
               <Width>6.77923cm</Width>
               <ZIndex>3</ZIndex>
@@ -890,7 +882,7 @@ GROUP BY Details.AccountId
               </Paragraphs>
               <rd:DefaultName>Textbox27</rd:DefaultName>
               <Top>3.89508cm</Top>
-              <Left>14.34843cm</Left>
+              <Left>14.02034cm</Left>
               <Height>0.70583cm</Height>
               <Width>5.73937cm</Width>
               <ZIndex>4</ZIndex>
@@ -950,6 +942,92 @@ GROUP BY Details.AccountId
             </Border>
           </Style>
         </PageHeader>
+        <PageFooter>
+          <Height>0.78317cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="TextboxUserName">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="إسم المُستخدم : " &amp; Parameters!UserName.Value</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>Red</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.05686cm</Top>
+              <Left>11.87892cm</Left>
+              <Height>0.70583cm</Height>
+              <Width>7.63736cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Direction>RTL</Direction>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox29">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="تاريخ اليوم : " &amp; Globals!ExecutionTime</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>Red</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox27</rd:DefaultName>
+              <Top>0cm</Top>
+              <Left>0cm</Left>
+              <Height>0.70583cm</Height>
+              <Width>7.63736cm</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Direction>RTL</Direction>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageFooter>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
         <LeftMargin>0.5cm</LeftMargin>
@@ -977,6 +1055,10 @@ GROUP BY Details.AccountId
       <Nullable>true</Nullable>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="UserName">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -997,6 +1079,11 @@ GROUP BY Details.AccountId
           <ColumnIndex>3</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>AccountId</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>UserName</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

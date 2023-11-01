@@ -1,5 +1,6 @@
 ﻿using Microsoft.Reporting.NETCore;
 using PropertyRenting.Api.DTOs.Reports;
+using System.Security.Claims;
 
 namespace PropertyRenting.Api.Controllers;
 
@@ -257,7 +258,7 @@ public class VoucherController : BaseController
     {
         try
         {
-
+            var userName = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
             var data = await Context.ReceiptVouchers.Where(x => x.Id == id)
                 .Select(x => new SanadDTO
                 {
@@ -274,12 +275,15 @@ public class VoucherController : BaseController
                 }).ToListAsync().ConfigureAwait(false);
             Stream reportDefinition;
             var path = Path.Combine(_env.WebRootPath, "Reports", "Receipt.rdlc");
-            using var fs = new FileStream(path, FileMode.Open);
+            var fs = new FileStream(path, FileMode.Open);
             reportDefinition = fs;
             LocalReport report = new();
             report.LoadReportDefinition(reportDefinition);
             report.DataSources.Add(new ReportDataSource("DataSet", data));
-            report.SetParameters(new[] { new ReportParameter("ID", data?[0]?.SanadNumber ?? "") });
+            report.SetParameters(new[] {
+                new ReportParameter("ID", data?[0]?.SanadNumber ?? ""),
+                new ReportParameter("UserName",userName)
+            });
             byte[] pdf = report.Render("PDF");
             fs.Dispose();
 
@@ -535,7 +539,7 @@ public class VoucherController : BaseController
     {
         try
         {
-
+            var userName = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
             var data = await Context.ExchangeVouchers.Where(x => x.Id == id)
                 .Select(x => new SanadDTO
                 {
@@ -551,12 +555,15 @@ public class VoucherController : BaseController
                 }).ToListAsync().ConfigureAwait(false);
             Stream reportDefinition;
             var path = Path.Combine(_env.WebRootPath, "Reports", "Exchange.rdlc");
-            using var fs = new FileStream(path, FileMode.Open);
+            var fs = new FileStream(path, FileMode.Open);
             reportDefinition = fs;
             LocalReport report = new();
             report.LoadReportDefinition(reportDefinition);
             report.DataSources.Add(new ReportDataSource("DataSet", data));
-            report.SetParameters(new[] { new ReportParameter("ID", data?[0]?.SanadNumber ?? "") });
+            report.SetParameters(new[] {
+                new ReportParameter("ID", data?[0]?.SanadNumber ?? ""),
+                new ReportParameter("UserName",userName)
+            });
             byte[] pdf = report.Render("PDF");
             fs.Dispose();
 

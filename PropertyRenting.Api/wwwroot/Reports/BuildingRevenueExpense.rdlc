@@ -262,7 +262,6 @@ END CATCH</CommandText>
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -299,7 +298,6 @@ END CATCH</CommandText>
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -377,7 +375,7 @@ END CATCH</CommandText>
           </Border>
         </Style>
       </Body>
-      <Width>19.98197cm</Width>
+      <Width>19.92906cm</Width>
       <Page>
         <PageHeader>
           <Height>4.63951cm</Height>
@@ -460,7 +458,7 @@ END CATCH</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.00401cm</Top>
-              <Left>0.00001cm</Left>
+              <Left>0.04764cm</Left>
               <Height>2.886cm</Height>
               <Width>8.65011cm</Width>
               <Style>
@@ -480,7 +478,7 @@ END CATCH</CommandText>
               <Value>logo</Value>
               <Sizing>Fit</Sizing>
               <Top>0.00401cm</Top>
-              <Left>8.98175cm</Left>
+              <Left>9.02938cm</Left>
               <Height>2.886cm</Height>
               <Width>4.49859cm</Width>
               <ZIndex>1</ZIndex>
@@ -568,7 +566,7 @@ END CATCH</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0cm</Top>
-              <Left>13.80956cm</Left>
+              <Left>13.85719cm</Left>
               <Height>2.886cm</Height>
               <Width>5.83375cm</Width>
               <ZIndex>2</ZIndex>
@@ -602,7 +600,7 @@ END CATCH</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox26</rd:DefaultName>
               <Top>3.02711cm</Top>
-              <Left>7.56921cm</Left>
+              <Left>7.61684cm</Left>
               <Height>0.6635cm</Height>
               <Width>6.77923cm</Width>
               <ZIndex>3</ZIndex>
@@ -640,7 +638,7 @@ END CATCH</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox27</rd:DefaultName>
               <Top>3.83172cm</Top>
-              <Left>0.00001cm</Left>
+              <Left>0.04764cm</Left>
               <Height>0.70583cm</Height>
               <Width>7.63736cm</Width>
               <ZIndex>4</ZIndex>
@@ -662,6 +660,92 @@ END CATCH</CommandText>
             </Border>
           </Style>
         </PageHeader>
+        <PageFooter>
+          <Height>0.84667cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="Textbox29">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="تاريخ اليوم : " &amp; Globals!ExecutionTime</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>Red</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox27</rd:DefaultName>
+              <Top>0.04396cm</Top>
+              <Left>0cm</Left>
+              <Height>0.70583cm</Height>
+              <Width>7.63736cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Direction>RTL</Direction>
+              </Style>
+            </Textbox>
+            <Textbox Name="TextboxUserName">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="إسم المُستخدم : " &amp; Parameters!UserName.Value</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>Red</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.01221cm</Top>
+              <Left>12.28112cm</Left>
+              <Height>0.70583cm</Height>
+              <Width>7.63736cm</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Direction>RTL</Direction>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageFooter>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
         <LeftMargin>0.5cm</LeftMargin>
@@ -684,6 +768,10 @@ END CATCH</CommandText>
       <Nullable>true</Nullable>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="UserName">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -699,6 +787,11 @@ END CATCH</CommandText>
           <ColumnIndex>3</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>BuildingId</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>UserName</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

@@ -1,15 +1,13 @@
 export interface RenterDueInstallments {
-    autoNumber: number;
-    contractNumber: string;
+    contractStartDate: Date;
+    contractEndDate: Date;
     typeAR: string;
-    typeEN: string;
     amount: number;
     paidAmount: number;
     balance: number;
     dueDate: Date;
+    remainingDays: number;
     renterAR: string;
-    renterEN: string;
-    buildingName: string;
-    unitName: string;
+    mobileNumber: string;
     unitNumber: string;
 }

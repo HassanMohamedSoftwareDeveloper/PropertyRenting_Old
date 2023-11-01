@@ -1,28 +1,26 @@
 ﻿SELECT
-	Contract.AutoNumber
-   ,Contract.ContractNumber
+    Contract.ContractStartDate
+   ,Contract.ContractEndDate
    ,ConractTrans.Amount 
    ,ConractTrans.PaidAmount 
    ,ConractTrans.Balance 
    ,Addition.NameAR As 'TypeAR'
-   ,Addition.NameEN As 'TypeEN'
    ,DueDate
+   ,DATEDIFF(DAY,GETDATE(),ConractTrans.DueDate) RemainingDays
    ,Renter.NameAR AS 'RenterAR'
-   ,Renter.NameEN AS 'RenterEN'
-   ,Building.Name AS 'BuildingName'
-   ,Unit.UnitName
+   ,Renter.Mobile1 MobileNumber
    ,Unit.UnitNumber
 FROM Renter
 JOIN RenterContract Contract
-	ON Renter.Id = Contract.RenterId
+    ON Renter.Id = Contract.RenterId
 JOIN RenterFinancialTransaction ConractTrans
-	ON Contract.Id = ConractTrans.ContractId
+    ON Contract.Id = ConractTrans.ContractId
 JOIN Unit
-	ON Contract.UnitId = Unit.Id
+    ON Contract.UnitId = Unit.Id
 JOIN Building
-	ON Unit.BuildingId = Building.Id
+    ON Unit.BuildingId = Building.Id
 LEFT JOIN ContractAdditions Addition
-	ON ConractTrans.ContractAdditionId = Addition.Id
+    ON ConractTrans.ContractAdditionId = Addition.Id
 
 WHERE (@RenterId IS NULL
 OR Renter.Id = @RenterId)

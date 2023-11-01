@@ -732,7 +732,7 @@ ORDER BY Contract.AutoNumber,ConractTrans.DueDate</CommandText>
             </TablixRowHierarchy>
             <DataSetName>DataSet</DataSetName>
             <Top>0cm</Top>
-            <Left>0.03498cm</Left>
+            <Left>0cm</Left>
             <Height>1.581cm</Height>
             <Width>27.80303cm</Width>
             <Style>
@@ -749,7 +749,7 @@ ORDER BY Contract.AutoNumber,ConractTrans.DueDate</CommandText>
           </Border>
         </Style>
       </Body>
-      <Width>27.96501cm</Width>
+      <Width>27.83801cm</Width>
       <Page>
         <PageHeader>
           <Height>4.72017cm</Height>
@@ -832,7 +832,7 @@ ORDER BY Contract.AutoNumber,ConractTrans.DueDate</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.00875cm</Top>
-              <Left>0.03497cm</Left>
+              <Left>0cm</Left>
               <Height>2.886cm</Height>
               <Width>8.65011cm</Width>
               <Style>
@@ -852,7 +852,7 @@ ORDER BY Contract.AutoNumber,ConractTrans.DueDate</CommandText>
               <Value>logo</Value>
               <Sizing>Fit</Sizing>
               <Top>0.00875cm</Top>
-              <Left>12.92196cm</Left>
+              <Left>12.60446cm</Left>
               <Height>2.886cm</Height>
               <Width>4.49859cm</Width>
               <ZIndex>1</ZIndex>
@@ -940,7 +940,7 @@ ORDER BY Contract.AutoNumber,ConractTrans.DueDate</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0cm</Top>
-              <Left>21.55976cm</Left>
+              <Left>21.24226cm</Left>
               <Height>2.886cm</Height>
               <Width>6.27825cm</Width>
               <ZIndex>2</ZIndex>
@@ -974,7 +974,7 @@ ORDER BY Contract.AutoNumber,ConractTrans.DueDate</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox26</rd:DefaultName>
               <Top>3.03586cm</Top>
-              <Left>11.80101cm</Left>
+              <Left>11.48351cm</Left>
               <Height>0.74817cm</Height>
               <Width>6.77923cm</Width>
               <ZIndex>3</ZIndex>
@@ -1012,7 +1012,7 @@ ORDER BY Contract.AutoNumber,ConractTrans.DueDate</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox27</rd:DefaultName>
               <Top>3.94209cm</Top>
-              <Left>0.03497cm</Left>
+              <Left>0cm</Left>
               <Height>0.70583cm</Height>
               <Width>7.63736cm</Width>
               <ZIndex>4</ZIndex>
@@ -1034,6 +1034,93 @@ ORDER BY Contract.AutoNumber,ConractTrans.DueDate</CommandText>
             </Border>
           </Style>
         </PageHeader>
+        <PageFooter>
+          <Height>0.889cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="Textbox30">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="إسم المُستخدم : " &amp; Parameters!UserName.Value</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>Red</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox27</rd:DefaultName>
+              <Top>0.0635cm</Top>
+              <Left>20.11438cm</Left>
+              <Height>0.70583cm</Height>
+              <Width>7.63736cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Direction>RTL</Direction>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox29">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="تاريخ اليوم : " &amp; Globals!ExecutionTime</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>Red</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox27</rd:DefaultName>
+              <Top>0.0635cm</Top>
+              <Left>0.11802cm</Left>
+              <Height>0.70583cm</Height>
+              <Width>7.63736cm</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Direction>RTL</Direction>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageFooter>
         <PageHeight>21cm</PageHeight>
         <PageWidth>29.7cm</PageWidth>
         <LeftMargin>0.5cm</LeftMargin>
@@ -1061,6 +1148,10 @@ ORDER BY Contract.AutoNumber,ConractTrans.DueDate</CommandText>
       <Nullable>true</Nullable>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="UserName">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -1081,6 +1172,11 @@ ORDER BY Contract.AutoNumber,ConractTrans.DueDate</CommandText>
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>1</RowIndex>
           <ParameterName>BuildingId</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>UserName</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

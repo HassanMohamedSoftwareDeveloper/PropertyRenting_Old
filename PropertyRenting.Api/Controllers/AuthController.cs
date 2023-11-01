@@ -45,7 +45,7 @@ public class AuthController : ControllerBase
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
-        if (result.Succeeded is false) return BadRequest();
+        if (!result.Succeeded) return BadRequest();
 
         var roles = await _userManager.GetRolesAsync(user);
 
@@ -53,7 +53,7 @@ public class AuthController : ControllerBase
         {
             Result = result,
             Username = user.UserName,
-            Email = user.Email,
+            user.Email,
             Token = _tokenGenerator.GenerateToken(user, roles)
         });
     }
