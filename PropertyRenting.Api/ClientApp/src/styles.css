@@ -11,6 +11,10 @@
   --footer-height: 44px;
 }
 
+body {
+  position: relative;
+}
+
 body,
 button {
   font-family: "Inter", sans-serif;

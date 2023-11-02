@@ -73,7 +73,7 @@
                             <tr *ngFor="let fg of VoucherLinesFormGroups;index as index" [formGroup]="fg">
                                 <td class="text-center align-middle">{{index+1}}</td>
                                 <td>
-                                    <ng-select formControlName="AccountId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}">
+                                    <ng-select formControlName="AccountId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}" appendTo="body">
                                         <ng-option *ngFor="let account of accounts" [value]="account.id">{{account.description}}</ng-option>
                                     </ng-select>
                                 </td>
@@ -85,39 +85,39 @@
                                 </td>
                                 <td>
                                     <ng-select formControlName="RenterId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
-                                               [readonly]="getControlByName(fg,'OwnerId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value">
+                                               [readonly]="getControlByName(fg,'OwnerId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value" appendTo="body">
                                         <ng-option *ngFor="let renter of renters" [value]="renter.id">{{renter.description}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>
                                     <ng-select formControlName="OwnerId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
-                                               [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value">
+                                               [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value" appendTo="body">
                                         <ng-option *ngFor="let owner of owners" [value]="owner.id">{{owner.description}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>
                                     <ng-select formControlName="ContributerId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
-                                               [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'OwnerId').value || getControlByName(fg,'CashBankId').value">
+                                               [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'OwnerId').value || getControlByName(fg,'CashBankId').value" appendTo="body">
                                         <ng-option *ngFor="let contributer of contributers" [value]="contributer.id">{{contributer.description}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>
                                     <ng-select #buildingCTR formControlName="BuildingId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
                                                (change)="onBuildingChange(unitCTR,buildingCTR)"
-                                               [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'UnitId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value">
+                                               [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'UnitId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value" appendTo="body">
                                         <ng-option *ngFor="let building of buildings" [value]="building.id">{{building.description}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>
                                     <ng-select #unitCTR formControlName="UnitId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
                                                (change)="onUnitChange(unitCTR,buildingCTR)"
-                                               [readonly]="getControlByName(fg,'OwnerId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value">
+                                               [readonly]="getControlByName(fg,'OwnerId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'CashBankId').value" appendTo="body">
                                         <ng-option *ngFor="let unit of units" [value]="unit.id">{{unit.description}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>
                                     <ng-select formControlName="CashBankId" notFoundText="{{'NotFound'|translate}}" placeholder="{{'Select'|translate}}"
-                                               [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'OwnerId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'BuildingId').value || getControlByName(fg,'UnitId').value">
+                                               [readonly]="getControlByName(fg,'RenterId').value || getControlByName(fg,'OwnerId').value || getControlByName(fg,'ContributerId').value || getControlByName(fg,'BuildingId').value || getControlByName(fg,'UnitId').value" appendTo="body">
                                         <ng-option *ngFor="let cashBank of cashBanks" [value]="cashBank.id">{{cashBank.description}}</ng-option>
                                     </ng-select>
                                 </td>
