@@ -39,7 +39,7 @@
                 <button *ngIf="showReport" type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
             </div>
         </form>
-        <div class="row mt-3" *ngIf="showReport">
+        <div class="row mt-3" *ngIf="showReport" id="testId" #testId>
             <app-grid-page>
                 <tr tableHeader>
                     <th>{{'#'|translate}}</th>
@@ -79,6 +79,8 @@
                         <th class="text-center fw-bold balance-class">{{(item.debitAmount||0) - (item.creditAmount||0)}} {{((item.debitAmount||0) - (item.creditAmount||0) > 0 ? 'Report.Debit': (item.debitAmount||0) - (item.creditAmount||0) < 0? 'Report.Credit':'')|translate}}</th>
                     </tr>
                 </ng-container>
+
+
             </app-grid-page>
         </div>
     </div>
