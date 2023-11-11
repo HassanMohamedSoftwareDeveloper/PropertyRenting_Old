@@ -11,7 +11,8 @@ export class SideBarComponent implements OnInit {
     isAdmin = false;
     constructor(private autService: AuthService) {}
     ngOnInit(): void {
-        this.isAdmin = this.autService.IsAdmin();
+        this.isAdmin =
+            this.autService.IsAdmin() || this.autService.IsSubAdmin();
     }
     definitionsList = [
         {

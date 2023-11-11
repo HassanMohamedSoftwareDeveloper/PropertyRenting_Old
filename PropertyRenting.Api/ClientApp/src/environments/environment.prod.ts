@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    ApiURL: "http://api.sakanalghad.com/",
+    ApiURL: "https://api.sakanalghad.com/",
     PageSize: 10,
 };

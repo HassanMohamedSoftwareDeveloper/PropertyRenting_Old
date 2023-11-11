@@ -148,6 +148,8 @@ import { BuildingUnitsCountComponent } from "./Components/Home/building-units-co
 import { RenterInstallmentsPerDateComponent } from "./Components/Home/renter-installments-per-date/renter-installments-per-date.component";
 import { OwnerInstallmentsPerDateComponent } from "./Components/Home/owner-installments-per-date/owner-installments-per-date.component";
 import { UnitCountByDistrictComponent } from './Components/Home/unit-count-by-district/unit-count-by-district.component';
+import { UpdateUserComponent } from './Auth/update-user/update-user.component';
+import { ResetUserPasswordComponent } from './Auth/reset-user-password/reset-user-password.component';
 
 @NgModule({
     declarations: [
@@ -250,6 +252,8 @@ import { UnitCountByDistrictComponent } from './Components/Home/unit-count-by-di
         RenterInstallmentsPerDateComponent,
         OwnerInstallmentsPerDateComponent,
         UnitCountByDistrictComponent,
+        UpdateUserComponent,
+        ResetUserPasswordComponent,
     ],
     imports: [
         BrowserModule,

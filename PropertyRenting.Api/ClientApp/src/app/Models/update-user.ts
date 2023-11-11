@@ -1,7 +1,6 @@
-export interface User {
-    id?: any;
+export interface UpdateUser {
+    userId?: string;
     username?: string;
     email?: string;
-    roleId?: any;
     role?: string;
 }

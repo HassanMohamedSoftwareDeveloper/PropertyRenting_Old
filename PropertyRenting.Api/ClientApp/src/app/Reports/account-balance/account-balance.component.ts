@@ -21,6 +21,7 @@ export class AccountBalanceComponent implements OnInit {
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
+
     constructor(
         private reportService: ReportService,
         private alertify: AlertifyService,

@@ -1,22 +1,29 @@
 <app-list title="{{'User.PageTitle'|translate}}" [hasPagination]=false [breadcrumbItems]="breadcrumbItems">
 
-  <a actions class="nav-link" routerLink="/auth/users/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
+    <a actions class="nav-link" routerLink="/auth/users/add"><i class="bi bi-plus-circle-fill me-2 "></i>{{'AddNew'|translate}}</a>
 
-  <div body>
-    <app-grid-page>
-      <tr tableHeader>
-        <th>{{'User.Username'|translate}}</th>
-        <th>{{'User.Email'|translate}}</th>
-        <th>{{'User.Role'|translate}}</th>
-      </tr>
+    <div body>
+        <app-grid-page>
+            <tr tableHeader>
+                <th>{{'User.Username'|translate}}</th>
+                <th>{{'User.Email'|translate}}</th>
+                <th>{{'User.Role'|translate}}</th>
+                <th>{{'Actions'|translate}}</th>
+            </tr>
 
-      <tr tableBody *ngFor="let user of users">
-        <td>{{user.username}}</td>
-        <td>{{user.email}}</td>
-        <td>{{user.role}}</td>
-      </tr>
-    </app-grid-page>
-  </div>
+            <tr tableBody *ngFor="let user of users">
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.role}}</td>
+                <td>
+                    <div class="d-flex justify-content-end ">
+                        <button type="button" class="btn btn-primary " routerLink="/auth/users/edit/{{user.id}}"><i class="bi bi-pencil-square"></i></button>
+                        <button *ngIf="authService.UserName()!=user.username" type="button" class="btn btn-danger" routerLink="/auth/users/reset-password/{{user.id}}"><i class="bi bi-pencil-square"></i></button>
+                    </div>
+                </td>
+            </tr>
+        </app-grid-page>
+    </div>
 
 </app-list>
 

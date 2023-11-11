@@ -8,12 +8,14 @@ import { Register } from "../Models/register";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { User } from "../Models/user";
 import { ChangePassword } from "../Models/change-password";
+import { UpdateUser } from "../Models/update-user";
+import { ResetUserPassword } from "../Models/reset-user-password";
 
 @Injectable({
     providedIn: "root",
 })
 export class AuthService {
-    roles = ["Admin", "User"];
+    roles = ["Admin", "SubAdmin", "User"];
 
     currentUser: IUser = { username: "", email: "", role: "" };
 
@@ -52,6 +54,11 @@ export class AuthService {
     GetAll(): Observable<User[]> {
         return this.http.get<User[]>(environment.ApiURL + "api/v1/auth/users");
     }
+    GetUserById(userId: string): Observable<User> {
+        return this.http.get<User>(
+            environment.ApiURL + "api/v1/auth/users/" + userId
+        );
+    }
     ChangePassword(request: ChangePassword) {
         return this.http.post(
             environment.ApiURL + "api/v1/auth/change-password",
@@ -81,5 +88,17 @@ export class AuthService {
     }
     IsUser(): boolean {
         return this.LoggedIn() && this.currentUser.role === "User";
+    }
+    UpdateUser(model: UpdateUser) {
+        return this.http.post(
+            environment.ApiURL + "api/v1/auth/update-user",
+            model
+        );
+    }
+    ResetUserPassword(model: ResetUserPassword) {
+        return this.http.post(
+            environment.ApiURL + "api/v1/auth/reset-user-password",
+            model
+        );
     }
 }

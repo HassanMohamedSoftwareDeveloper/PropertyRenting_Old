@@ -67,6 +67,15 @@ public class AuthController : ControllerBase
         var result = await connection.QueryAsync<UserDTO>(query);
         return Ok(result.ToList());
     }
+    [HttpGet("users/{userId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetUserByIdAsync(string userId)
+    {
+        var query = "SELECT AspNetUsers.Id,AspNetUsers.UserName AS 'Username',AspNetUsers.Email,AspNetRoles.Id AS 'RoleId',AspNetRoles.Name AS 'Role' FROM AspNetUsers JOIN AspNetUserRoles ON AspNetUsers.Id = AspNetUserRoles.UserId JOIN AspNetRoles ON AspNetUserRoles.RoleId=AspNetRoles.Id where AspNetUsers.Id=@UserId";
+        using var connection = _context.CreateConnection();
+        var result = await connection.QueryFirstOrDefaultAsync<UserDTO>(query, new { UserId = userId });
+        return Ok(result);
+    }
     [HttpPost("register")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> RegisterAsync(RegisterVM model)
@@ -102,6 +111,49 @@ public class AuthController : ControllerBase
         if (result.Succeeded) return Ok();
         return BadRequest(result.Errors.Select(x => x.Description).ToList());
 
+    }
+    [HttpPost("update-user")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> UpdateUserAsync(UpdateUserVM model)
+    {
+        var user = await _userManager.FindByIdAsync(model.UserId);
+        if (user is null) return NotFound("this user not exist.");
+        user.UserName = model.Username;
+        user.Email = model.Email;
+
+
+        var result = await _userManager.UpdateAsync(user);
+
+        if (result.Succeeded)
+        {
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            if (currentRoles.Any())
+            {
+
+                await _userManager.RemoveFromRolesAsync(user, currentRoles);
+                await _userManager.AddToRoleAsync(user, model.Role);
+            }
+            return Ok(result);
+        }
+
+        return BadRequest(result);
+    }
+    [HttpPost("reset-user-password")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> ResetUserPasswordAsync(ResetUserPasswordVM model)
+    {
+        var user = await _userManager.FindByIdAsync(model.UserId);
+        if (user is null) return NotFound("this user not exist.");
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var result = await _userManager.ResetPasswordAsync(user, token, model.Password);
+
+        if (result.Succeeded)
+        {
+            return Ok(result);
+        }
+
+        return BadRequest(result);
     }
     #endregion
 }

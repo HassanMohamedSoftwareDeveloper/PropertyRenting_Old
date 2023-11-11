@@ -65,6 +65,8 @@ import { ReceiptViewComponent } from "./Vouchers/Receipt/receipt-view/receipt-vi
 import { VoucherDetailsComponent } from "./Vouchers/Voucher/voucher-details/voucher-details.component";
 import { VoucherListComponent } from "./Vouchers/Voucher/voucher-list/voucher-list.component";
 import { VoucherViewComponent } from "./Vouchers/Voucher/voucher-view/voucher-view.component";
+import { UpdateUserComponent } from "./Auth/update-user/update-user.component";
+import { ResetUserPasswordComponent } from "./Auth/reset-user-password/reset-user-password.component";
 
 const routes: Routes = [
     { path: "", component: HomeComponent, canActivate: [AuthGuard] },
@@ -82,6 +84,16 @@ const routes: Routes = [
     {
         path: "auth/users/add",
         component: RegisterComponent,
+        canActivate: [AdminGuard],
+    },
+    {
+        path: "auth/users/edit/:id",
+        component: UpdateUserComponent,
+        canActivate: [AdminGuard],
+    },
+    {
+        path: "auth/users/reset-password/:id",
+        component: ResetUserPasswordComponent,
         canActivate: [AdminGuard],
     },
     { path: "not-authorized", component: UnauthorizedComponent },

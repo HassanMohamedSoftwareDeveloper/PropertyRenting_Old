@@ -500,5 +500,7 @@
   "RegisterSuccess": "Register successfully",
   "ChangePasswordSuccess": "Change password successfully",
   "ExportPDF": "Export PDF",
-  "ExportExcel": "Export Excel"
+  "ExportExcel": "Export Excel",
+  "UpdateSuccess": "Update successfully",
+  "ResetSuccess": "Reset successfully"
 }
