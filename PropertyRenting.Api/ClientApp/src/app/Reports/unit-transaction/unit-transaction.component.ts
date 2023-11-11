@@ -14,6 +14,7 @@ import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
 import { DatePipe } from "@angular/common";
 import { UnitLookup } from "../../Models/unit-lookup";
+import { AuthService } from "../../Services/auth.service";
 
 @Component({
     selector: "app-unit-transaction",
@@ -26,13 +27,15 @@ export class UnitTransactionComponent implements OnInit {
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
+    minDate: any = null;
     constructor(
         private reportService: ReportService,
         private alertify: AlertifyService,
         private translateService: TranslationService,
         private breadcrumbService: BreadcrumbService,
         private fb: FormBuilder,
-        private unitService: UnitService
+        private unitService: UnitService,
+        public authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -43,9 +46,14 @@ export class UnitTransactionComponent implements OnInit {
         this.loadUnits();
     }
     createForm() {
+        const date = new Date();
+        date.setMonth(0, 1);
+        if (this.authService.IsSubAdmin()) {
+            this.minDate = date;
+        }
         this.filterForm = this.fb.group({
             UnitId: [null, Validators.required],
-            FromDate: [null],
+            FromDate: [date],
             ToDate: [null],
         });
     }

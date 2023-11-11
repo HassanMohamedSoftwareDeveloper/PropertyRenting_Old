@@ -14,6 +14,7 @@ import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
 import { AccountLookup } from "../../Models/account-lookup";
+import { AuthService } from "../../Services/auth.service";
 
 @Component({
     selector: "app-account-transaction",
@@ -26,13 +27,15 @@ export class AccountTransactionComponent implements OnInit {
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
+    minDate: any = null;
     constructor(
         private reportService: ReportService,
         private alertify: AlertifyService,
         private translateService: TranslationService,
         private breadcrumbService: BreadcrumbService,
         private fb: FormBuilder,
-        private accountService: AccountService
+        private accountService: AccountService,
+        public authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -43,9 +46,14 @@ export class AccountTransactionComponent implements OnInit {
         this.loadAccounts();
     }
     createForm() {
+        const date = new Date();
+        date.setMonth(0, 1);
+        if (this.authService.IsSubAdmin()) {
+            this.minDate = date;
+        }
         this.filterForm = this.fb.group({
             AccountId: [null, Validators.required],
-            FromDate: [null],
+            FromDate: [date],
             ToDate: [null],
         });
     }

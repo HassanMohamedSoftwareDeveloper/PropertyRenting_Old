@@ -14,6 +14,7 @@ import { BuildingService } from "../../Services/building.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
 import { Lookup } from "../../Models/lookup";
+import { AuthService } from "../../Services/auth.service";
 
 @Component({
     selector: "app-building-transaction",
@@ -26,13 +27,15 @@ export class BuildingTransactionComponent implements OnInit {
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
+    minDate: any = null;
     constructor(
         private reportService: ReportService,
         private alertify: AlertifyService,
         private translateService: TranslationService,
         private breadcrumbService: BreadcrumbService,
         private fb: FormBuilder,
-        private buildingService: BuildingService
+        private buildingService: BuildingService,
+        public authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -43,9 +46,14 @@ export class BuildingTransactionComponent implements OnInit {
         this.loadBuildings();
     }
     createForm() {
+        const date = new Date();
+        date.setMonth(0, 1);
+        if (this.authService.IsSubAdmin()) {
+            this.minDate = date;
+        }
         this.filterForm = this.fb.group({
             BuildingId: [null, Validators.required],
-            FromDate: [null],
+            FromDate: [date],
             ToDate: [null],
         });
     }

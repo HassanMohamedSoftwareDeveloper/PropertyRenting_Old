@@ -1,6 +1,11 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from "@angular/forms";
 import { Breadcrumb } from "../../Models/breadcrumb";
 import { AccountBalance } from "../../Models/Reports/account-balance";
 import { AccountService } from "../../Services/account.service";
@@ -9,6 +14,7 @@ import { BreadcrumbService } from "../../Services/breadcrumb.service";
 import { ReportService } from "../../Services/report.service";
 import { TranslationService } from "../../Services/translation.service";
 import { AccountLookup } from "../../Models/account-lookup";
+import { AuthService } from "../../Services/auth.service";
 
 @Component({
     selector: "app-account-balance",
@@ -21,14 +27,15 @@ export class AccountBalanceComponent implements OnInit {
     breadcrumbItems: Breadcrumb[] = [];
     filterForm!: FormGroup;
     showReport = false;
-
+    minDate: any = null;
     constructor(
         private reportService: ReportService,
         private alertify: AlertifyService,
         private translateService: TranslationService,
         private breadcrumbService: BreadcrumbService,
         private fb: FormBuilder,
-        private accountService: AccountService
+        private accountService: AccountService,
+        public authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -39,9 +46,15 @@ export class AccountBalanceComponent implements OnInit {
         this.loadReport();
     }
     createForm() {
+        const date = new Date();
+        date.setMonth(0, 1);
+        if (this.authService.IsSubAdmin()) {
+            this.minDate = date;
+        }
         this.filterForm = this.fb.group({
             AccountId: [null],
-            FromDate: [null],
+
+            FromDate: [date, Validators.required],
             ToDate: [null],
         });
     }

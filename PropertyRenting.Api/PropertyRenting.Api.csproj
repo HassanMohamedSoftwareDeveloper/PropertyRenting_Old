@@ -101,7 +101,6 @@
 
 	<ItemGroup>
 	  <Folder Include="ClientApp\src\app\Components\Home\" />
-	  <Folder Include="ClientApp\src\app\Pages\" />
 	</ItemGroup>
 
 </Project>

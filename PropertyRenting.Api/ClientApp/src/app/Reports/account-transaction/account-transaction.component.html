@@ -17,7 +17,7 @@
                 <div class="form-group col-md-6">
                     <label class="form-label">{{'Report.FromDate'|translate}}</label>
                     <div>
-                        <input type="text" class="form-control" formControlName="FromDate" bsDatepicker
+                        <input [minDate]="minDate" [readonly]="authService.IsSubAdmin()" type="text" class="form-control" formControlName="FromDate" bsDatepicker
                                [bsConfig]="{containerClass: 'theme-dark-blue',  dateInputFormat: 'YYYY-MM-DD',useUtc:false,initCurrentTime:true}"
                                (bsValueChange)="EmptyToDate($event)">
                     </div>
@@ -34,7 +34,6 @@
 
             <div class="d-flex justify-content-end mt-2 mb-2">
                 <button type="submit" class="btn btn-outline-primary ">{{'Report.DisplayReport'|translate}}</button>
-                <button type="reset" class="btn btn-outline-info">{{'Reset'|translate}}</button>
                 <button *ngIf="showReport" type="button" class="btn btn-primary" (click)="exportPDF()">{{'ExportPDF'|translate}}</button>
                 <button *ngIf="showReport" type="button" class="btn btn-success" (click)="exportExcel()">{{'ExportExcel'|translate}}</button>
             </div>
