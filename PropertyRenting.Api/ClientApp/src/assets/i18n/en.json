@@ -62,7 +62,9 @@
     "CashBankTransactions": "CashBank Transactions",
     "CurrentUnits": "Current Units",
     "AvailableUnits": "Available Units",
-    "Users": "Users"
+    "Users": "Users",
+    "ContributorBalance": "Contributor Balance",
+    "ContributorTransactions": "Contributor Transactions"
 
 
   },
@@ -456,7 +458,10 @@
     "AvailableUnits": "Available Units Report",
     "Revenue": "Revenue",
     "Expense": "Expense",
-    "RemainingDays": "Remaining Days"
+    "RemainingDays": "Remaining Days",
+    "Contributor": "Contributor",
+    "ContributorBalance": "Contributor Balance",
+    "ContributorTransactions": "Contributor Transactions"
   },
   "SanadType": {
     "General": "General",

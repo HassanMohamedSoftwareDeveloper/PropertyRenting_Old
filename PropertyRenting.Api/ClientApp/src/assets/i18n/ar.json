@@ -63,7 +63,9 @@
     "CashBankTransactions": "حركات الخزينة / البنك",
     "CurrentUnits": "الوحدات الحالية",
     "AvailableUnits": "الوحدات الفارغة",
-    "Users": "المُستخدمين"
+    "Users": "المُستخدمين",
+    "ContributorBalance": "كشف حساب الشركاء",
+    "ContributorTransactions": "كشف حساب تفصيلى الشركاء"
   },
   "Footer": {
     "Company": "تطوير وتشغيل شركة كيو بيزنس ",
@@ -455,7 +457,10 @@
     "AvailableUnits": "تقرير الوحدات الفارغة",
     "Revenue": "الإيرادات",
     "Expense": "المصروفات",
-    "RemainingDays": "عدد الأيام المتبقية"
+    "RemainingDays": "عدد الأيام المتبقية",
+    "Contributor": "الشريك",
+    "ContributorBalance": "تقرير كشف حساب الشريك",
+    "ContributorTransactions": "تقرير كشف حساب تفصيلى الشريك"
 
   },
   "SanadType": {

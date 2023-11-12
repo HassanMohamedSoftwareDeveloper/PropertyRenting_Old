@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using PropertyRenting.Api.DTOs.Reports;
-using PropertyRenting.Api.Enums;
 using PropertyRenting.Api.Helpers;
-using PropertyRenting.Api.Models.Contexts;
 
 namespace PropertyRenting.Api.Repositories;
 
@@ -177,6 +175,24 @@ public class ReportRepository : IReportRepository
         var query = _queryHepler.GetQuery(FolderName.Reports, ReportName.AvailableUnits);
         using var connection = _context.CreateConnection();
         var result = await connection.QueryAsync<AvailableUnitDTO>(query);
+        return result.ToList();
+    }
+    public async Task<List<ContributorBalanceDTO>> GetContributorBalanceAsync(Guid? ContributorId,
+                                                                              DateTime? FromDate,
+                                                                              DateTime? ToDate)
+    {
+        var query = _queryHepler.GetQuery(FolderName.Reports, ReportName.ContributorBalance);
+        using var connection = _context.CreateConnection();
+        var result = await connection.QueryAsync<ContributorBalanceDTO>(query, new { ContributorId, FromDate, ToDate });
+        return result.ToList();
+    }
+    public async Task<List<ContributorTransactionDTO>> GetContributorTransactionAsync(Guid ContributorId,
+                                                                                      DateTime? FromDate,
+                                                                                      DateTime? ToDate)
+    {
+        var query = _queryHepler.GetQuery(FolderName.Reports, ReportName.ContributorTransaction);
+        using var connection = _context.CreateConnection();
+        var result = await connection.QueryAsync<ContributorTransactionDTO>(query, new { ContributorId, FromDate, ToDate });
         return result.ToList();
     }
     #endregion

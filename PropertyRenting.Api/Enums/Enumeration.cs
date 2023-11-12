@@ -114,5 +114,9 @@ public enum ReportName
     [Description("Get Available Units")]
     AvailableUnits,
     [Description("Get Building Revenue Expense")]
-    BuildingRevenueExpense
+    BuildingRevenueExpense,
+    [Description("Get Contributor Balance")]
+    ContributorBalance,
+    [Description("Get Contributor Transaction")]
+    ContributorTransaction
 }

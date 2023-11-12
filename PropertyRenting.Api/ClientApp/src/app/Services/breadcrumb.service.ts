@@ -496,7 +496,22 @@ export class BreadcrumbService {
             isActive: true,
         },
     ];
-
+    ContributorBalanceReportItems: Breadcrumb[] = [
+        { displayName: "SideBar.Home", url: "/", isActive: false },
+        {
+            displayName: "SideBar.ContributorBalance",
+            url: "",
+            isActive: true,
+        },
+    ];
+    ContributorTransactionReportItems: Breadcrumb[] = [
+        { displayName: "SideBar.Home", url: "/", isActive: false },
+        {
+            displayName: "SideBar.ContributorTransactions",
+            url: "",
+            isActive: true,
+        },
+    ];
     UsersItems: Breadcrumb[] = [
         { displayName: "SideBar.Home", url: "/", isActive: false },
         {

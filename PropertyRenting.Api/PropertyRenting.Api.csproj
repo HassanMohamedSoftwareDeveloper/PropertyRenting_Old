@@ -6,8 +6,13 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Remove="wwwroot\app_data\reports\ContributorBalance.sql" />
+	</ItemGroup>
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="appsettings.Production.json" />
+		<_ContentIncludedByDefault Remove="wwwroot\app_data\reports\ContributorBalance.sql" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -101,6 +106,10 @@
 
 	<ItemGroup>
 	  <Folder Include="ClientApp\src\app\Components\Home\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\app_data\reports\ContributorBalance.sql" />
 	</ItemGroup>
 
 </Project>

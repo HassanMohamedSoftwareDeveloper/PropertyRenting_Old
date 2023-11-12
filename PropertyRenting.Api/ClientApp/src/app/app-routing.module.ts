@@ -67,6 +67,8 @@ import { VoucherListComponent } from "./Vouchers/Voucher/voucher-list/voucher-li
 import { VoucherViewComponent } from "./Vouchers/Voucher/voucher-view/voucher-view.component";
 import { UpdateUserComponent } from "./Auth/update-user/update-user.component";
 import { ResetUserPasswordComponent } from "./Auth/reset-user-password/reset-user-password.component";
+import { ContributorBalanceComponent } from "./Reports/contributor-balance/contributor-balance.component";
+import { ContributorTransactionComponent } from "./Reports/contributor-transaction/contributor-transaction.component";
 
 const routes: Routes = [
     { path: "", component: HomeComponent, canActivate: [AuthGuard] },
@@ -423,6 +425,16 @@ const routes: Routes = [
     {
         path: "reports/available-units",
         component: UnitAvailableComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "reports/contributor-balance",
+        component: ContributorBalanceComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "reports/contributor-transaction",
+        component: ContributorTransactionComponent,
         canActivate: [AuthGuard],
     },
     {

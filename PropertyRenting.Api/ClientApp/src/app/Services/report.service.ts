@@ -20,6 +20,8 @@ import { UnitAvailable } from "../Models/Reports/unit-available";
 import { UnitBalance } from "../Models/Reports/unit-balance";
 import { UnitCurrent } from "../Models/Reports/unit-current";
 import { UnitTransaction } from "../Models/Reports/unit-transaction";
+import { ContributorBalance } from "../Models/Reports/contributor-balance";
+import { ContributorTransaction } from "../Models/Reports/contributor-transaction";
 
 @Injectable({
     providedIn: "root",
@@ -207,7 +209,26 @@ export class ReportService {
             environment.ApiURL + "api/v1/Reports/unit/available/"
         );
     }
-
+    GetContributorBalance(
+        contributorId?: any,
+        fromDate?: Date,
+        toDate?: Date
+    ): Observable<ContributorBalance[]> {
+        return this.httpClient.post<ContributorBalance[]>(
+            environment.ApiURL + "api/v1/Reports/contributor/balance/",
+            { contributorId: contributorId, fromDate: fromDate, toDate: toDate }
+        );
+    }
+    GetContributorTransactions(
+        contributorId: any,
+        fromDate?: Date,
+        toDate?: Date
+    ): Observable<ContributorTransaction[]> {
+        return this.httpClient.post<ContributorTransaction[]>(
+            environment.ApiURL + "api/v1/Reports/contributor/transaction/",
+            { contributorId: contributorId, fromDate: fromDate, toDate: toDate }
+        );
+    }
     ExportActiveRenters(type: string) {
         return this.httpClient.get(
             environment.ApiURL + "api/v1/reports/renters/active/export/" + type,
@@ -511,6 +532,48 @@ export class ReportService {
     ExportAvailableUnits(type: string) {
         return this.httpClient.get(
             environment.ApiURL + "api/v1/Reports/unit/available/export/" + type,
+            {
+                responseType: "blob",
+            }
+        );
+    }
+    ExportContributorBalance(
+        type: string,
+        contributorId?: any,
+        fromDate?: Date,
+        toDate?: Date
+    ) {
+        return this.httpClient.post(
+            environment.ApiURL +
+                "api/v1/Reports/contributor/balance/export/" +
+                type,
+            {
+                contributorId: contributorId,
+                fromDate: fromDate,
+                toDate: toDate,
+            },
+            {
+                responseType: "blob",
+            }
+        );
+    }
+    ExportContributorTransactions(
+        type: string,
+        contributorId: any,
+        contributor: string,
+        fromDate?: Date,
+        toDate?: Date
+    ) {
+        return this.httpClient.post(
+            environment.ApiURL +
+                "api/v1/Reports/contributor/transaction/export/" +
+                type,
+            {
+                contributorId: contributorId,
+                fromDate: fromDate,
+                toDate: toDate,
+                contributor: contributor,
+            },
             {
                 responseType: "blob",
             }

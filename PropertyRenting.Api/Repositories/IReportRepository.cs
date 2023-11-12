@@ -53,4 +53,10 @@ public interface IReportRepository
 
     Task<List<CurrentUnitDTO>> GetCurrentUnitsAsync();
     Task<List<AvailableUnitDTO>> GetAvailableUnitsAsync();
+    Task<List<ContributorBalanceDTO>> GetContributorBalanceAsync(Guid? contributorId,
+                                                          DateTime? FromDate,
+                                                          DateTime? ToDate);
+    Task<List<ContributorTransactionDTO>> GetContributorTransactionAsync(Guid contributorId,
+                                                                   DateTime? FromDate,
+                                                                   DateTime? ToDate);
 }

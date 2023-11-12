@@ -1,141 +1,143 @@
 <div class="side-nav-content">
-  <ul class="nav-list" [ngClass]="{'nav-list-open':sideNavStatus}">
-    <li routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{exact:true}"
-        class="nav-list-item  small fw-bold" title="{{'SideBar.Home'|translate}}">
-      <span class="nav-list-item-span">
-        <a routerLink="/">
-          <i class="bi bi-speedometer"></i>
-          <span> {{'SideBar.Home'|translate}}</span>
-        </a>
-      </span>
-    </li>
-    <li> <hr /> </li>
-
-    <li class="drp-list">
-      <a class="sidebar-link  small fw-bold text-uppercase" data-bs-toggle="collapse" href="#definitionCollapse" role="button"
-         aria-expanded="false" aria-controls="definitionCollapse">
-        <img class="img-link" src="../../../assets/definitions.png" />
-        <span *ngIf="sideNavStatus"> {{'SideBar.Definitions'|translate}}</span>
-
-        <span class="right-icon ms-auto">  <i class="bi bi-chevron-down"></i>  </span>
-      </a>
-      <div class="collapse" id="definitionCollapse">
-        <div>
-          <ul class="navbar-nav" [ngClass]="{'ps-3':sideNavStatus}">
-            <li routerLinkActive="active" routerLink="{{item.link}}" [routerLinkActiveOptions]="{exact:item.activeOptionsExact}" class="nav-list-item text-muted"
-                *ngFor="let item of definitionsList" title="{{item.name|translate}}">
-              <span class="nav-list-item-span">
-                <a routerLink="{{item.link}}" class="small">
-                  <img class="img-link" src="../../../assets/{{item.icon}}" />
-                  <span> {{item.name|translate}}</span><!--*ngIf="sideNavStatus"-->
+    <ul class="nav-list" [ngClass]="{'nav-list-open':sideNavStatus}">
+        <li routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{exact:true}"
+            class="nav-list-item  small fw-bold" title="{{'SideBar.Home'|translate}}">
+            <span class="nav-list-item-span">
+                <a routerLink="/">
+                    <i class="bi bi-speedometer"></i>
+                    <span> {{'SideBar.Home'|translate}}</span>
                 </a>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </li>
-
-    <li> <hr /> </li>
-    <li class="drp-list">
-      <a class="sidebar-link  small fw-bold text-uppercase" data-bs-toggle="collapse" href="#accountCollapse" role="button"
-         aria-expanded="false" aria-controls="accountCollapse">
-        <img class="img-link" src="../../../assets/accountsdrp.png" />
-        <span *ngIf="sideNavStatus"> {{'SideBar.Accounts'|translate}}</span>
-        <span class="right-icon ms-auto">  <i class="bi bi-chevron-down"></i>  </span>
-      </a>
-      <div class="collapse" id="accountCollapse">
-        <div>
-          <ul class="navbar-nav" [ngClass]="{'ps-3':sideNavStatus}">
-            <li routerLinkActive="active" routerLink="{{item.link}}" [routerLinkActiveOptions]="{exact:item.activeOptionsExact}" class="nav-list-item "
-                *ngFor="let item of accountList" title="{{item.name|translate}}">
-              <span class="nav-list-item-span">
-                <a routerLink="{{item.link}}" class="small">
-                  <img class="img-link" src="../../../assets/{{item.icon}}" />
-                  <span> {{item.name|translate}}</span>
-                </a>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </li>
-
-    <li> <hr /> </li>
-    <li class="drp-list">
-      <a class="sidebar-link  small fw-bold text-uppercase" data-bs-toggle="collapse" href="#contractCollapse" role="button"
-         aria-expanded="false" aria-controls="contractCollapse">
-        <img class="img-link" src="../../../assets/contracts.png" />
-        <span *ngIf="sideNavStatus"> {{'SideBar.Contracts'|translate}}</span>
-        <span class="right-icon ms-auto">  <i class="bi bi-chevron-down"></i>  </span>
-      </a>
-      <div class="collapse" id="contractCollapse">
-        <div>
-          <ul class="navbar-nav" [ngClass]="{'ps-3':sideNavStatus}">
-            <li routerLinkActive="active" routerLink="{{item.link}}" [routerLinkActiveOptions]="{exact:item.activeOptionsExact}" class="nav-list-item "
-                *ngFor="let item of contractList" title="{{item.name|translate}}">
-              <span class="nav-list-item-span">
-                <a routerLink="{{item.link}}" class="small">
-                  <img class="img-link" src="../../../assets/{{item.icon}}" />
-                  <span> {{item.name|translate}}</span>
-                </a>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </li>
+            </span>
+        </li>
 
 
-    <li> <hr /> </li>
-    <li class="drp-list">
-      <a class="sidebar-link  small fw-bold text-uppercase" data-bs-toggle="collapse" href="#voucherCollapse" role="button"
-         aria-expanded="false" aria-controls="voucherCollapse">
-        <img class="img-link" src="../../../assets/vouchers.png" />
-        <span *ngIf="sideNavStatus"> {{'SideBar.Financials'|translate}}</span>
-        <span class="right-icon ms-auto">  <i class="bi bi-chevron-down"></i>  </span>
-      </a>
-      <div class="collapse" id="voucherCollapse">
-        <div>
-          <ul class="navbar-nav" [ngClass]="{'ps-3':sideNavStatus}">
-            <li routerLinkActive="active" routerLink="{{item.link}}" [routerLinkActiveOptions]="{exact:item.activeOptionsExact}" class="nav-list-item "
-                *ngFor="let item of voucherList" title="{{item.name|translate}}">
-              <span class="nav-list-item-span">
-                <a routerLink="{{item.link}}" class="small">
-                  <img class="img-link" src="../../../assets/{{item.icon}}" />
-                  <span> {{item.name|translate}}</span>
-                </a>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </li>
+        <li> <hr /> </li>
+        <li class="drp-list">
+            <a class="sidebar-link  small fw-bold text-uppercase" data-bs-toggle="collapse" href="#accountCollapse" role="button"
+               aria-expanded="false" aria-controls="accountCollapse">
+                <img class="img-link" src="../../../assets/accountsdrp.png" />
+                <span *ngIf="sideNavStatus"> {{'SideBar.Accounts'|translate}}</span>
+                <span class="right-icon ms-auto">  <i class="bi bi-chevron-down"></i>  </span>
+            </a>
+            <div class="collapse" id="accountCollapse">
+                <div>
+                    <ul class="navbar-nav" [ngClass]="{'ps-3':sideNavStatus}">
+                        <li routerLinkActive="active" routerLink="{{item.link}}" [routerLinkActiveOptions]="{exact:item.activeOptionsExact}" class="nav-list-item "
+                            *ngFor="let item of accountList" title="{{item.name|translate}}">
+                            <span class="nav-list-item-span">
+                                <a routerLink="{{item.link}}" class="small">
+                                    <img class="img-link" src="../../../assets/{{item.icon}}" />
+                                    <span> {{item.name|translate}}</span>
+                                </a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+
+        <li> <hr /> </li>
+        <li class="drp-list">
+            <a class="sidebar-link  small fw-bold text-uppercase" data-bs-toggle="collapse" href="#contractCollapse" role="button"
+               aria-expanded="false" aria-controls="contractCollapse">
+                <img class="img-link" src="../../../assets/contracts.png" />
+                <span *ngIf="sideNavStatus"> {{'SideBar.Contracts'|translate}}</span>
+                <span class="right-icon ms-auto">  <i class="bi bi-chevron-down"></i>  </span>
+            </a>
+            <div class="collapse" id="contractCollapse">
+                <div>
+                    <ul class="navbar-nav" [ngClass]="{'ps-3':sideNavStatus}">
+                        <li routerLinkActive="active" routerLink="{{item.link}}" [routerLinkActiveOptions]="{exact:item.activeOptionsExact}" class="nav-list-item "
+                            *ngFor="let item of contractList" title="{{item.name|translate}}">
+                            <span class="nav-list-item-span">
+                                <a routerLink="{{item.link}}" class="small">
+                                    <img class="img-link" src="../../../assets/{{item.icon}}" />
+                                    <span> {{item.name|translate}}</span>
+                                </a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
 
 
-    <li *ngIf="isAdmin"> <hr /> </li>
-    <li class="drp-list" *ngIf="isAdmin">
-      <a class="sidebar-link  small fw-bold text-uppercase" data-bs-toggle="collapse" href="#reportCollapse" role="button"
-         aria-expanded="false" aria-controls="reportCollapse">
-        <img class="img-link" src="../../../assets/reports.png" />
-        <span *ngIf="sideNavStatus"> {{'SideBar.Reports'|translate}}</span>
-        <span class="right-icon ms-auto">  <i class="bi bi-chevron-down"></i>  </span>
-      </a>
-      <div class="collapse" id="reportCollapse">
-        <div>
-          <ul class="navbar-nav" [ngClass]="{'ps-3':sideNavStatus}">
-            <li routerLinkActive="active" routerLink="{{item.link}}" [routerLinkActiveOptions]="{exact:item.activeOptionsExact}" class="nav-list-item "
-                *ngFor="let item of reportList" title="{{item.name|translate}}">
-              <span class="nav-list-item-span">
-                <a routerLink="{{item.link}}" class="small">
-                  <img class="img-link" src="../../../assets/{{item.icon}}" />
-                  <span> {{item.name|translate}}</span>
-                </a>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </li>
-  </ul>
+        <li> <hr /> </li>
+        <li class="drp-list">
+            <a class="sidebar-link  small fw-bold text-uppercase" data-bs-toggle="collapse" href="#voucherCollapse" role="button"
+               aria-expanded="false" aria-controls="voucherCollapse">
+                <img class="img-link" src="../../../assets/vouchers.png" />
+                <span *ngIf="sideNavStatus"> {{'SideBar.Financials'|translate}}</span>
+                <span class="right-icon ms-auto">  <i class="bi bi-chevron-down"></i>  </span>
+            </a>
+            <div class="collapse" id="voucherCollapse">
+                <div>
+                    <ul class="navbar-nav" [ngClass]="{'ps-3':sideNavStatus}">
+                        <li routerLinkActive="active" routerLink="{{item.link}}" [routerLinkActiveOptions]="{exact:item.activeOptionsExact}" class="nav-list-item "
+                            *ngFor="let item of voucherList" title="{{item.name|translate}}">
+                            <span class="nav-list-item-span">
+                                <a routerLink="{{item.link}}" class="small">
+                                    <img class="img-link" src="../../../assets/{{item.icon}}" />
+                                    <span> {{item.name|translate}}</span>
+                                </a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+
+
+        <li *ngIf="isAdmin"> <hr /> </li>
+        <li class="drp-list" *ngIf="isAdmin">
+            <a class="sidebar-link  small fw-bold text-uppercase" data-bs-toggle="collapse" href="#reportCollapse" role="button"
+               aria-expanded="false" aria-controls="reportCollapse">
+                <img class="img-link" src="../../../assets/reports.png" />
+                <span *ngIf="sideNavStatus"> {{'SideBar.Reports'|translate}}</span>
+                <span class="right-icon ms-auto">  <i class="bi bi-chevron-down"></i>  </span>
+            </a>
+            <div class="collapse" id="reportCollapse">
+                <div>
+                    <ul class="navbar-nav" [ngClass]="{'ps-3':sideNavStatus}">
+                        <li routerLinkActive="active" routerLink="{{item.link}}" [routerLinkActiveOptions]="{exact:item.activeOptionsExact}" class="nav-list-item "
+                            *ngFor="let item of reportList" title="{{item.name|translate}}">
+                            <span class="nav-list-item-span">
+                                <a routerLink="{{item.link}}" class="small">
+                                    <img class="img-link" src="../../../assets/{{item.icon}}" />
+                                    <span> {{item.name|translate}}</span>
+                                </a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+
+        <li> <hr /> </li>
+
+        <li class="drp-list">
+            <a class="sidebar-link  small fw-bold text-uppercase" data-bs-toggle="collapse" href="#definitionCollapse" role="button"
+               aria-expanded="false" aria-controls="definitionCollapse">
+                <img class="img-link" src="../../../assets/definitions.png" />
+                <span *ngIf="sideNavStatus"> {{'SideBar.Definitions'|translate}}</span>
+
+                <span class="right-icon ms-auto">  <i class="bi bi-chevron-down"></i>  </span>
+            </a>
+            <div class="collapse" id="definitionCollapse">
+                <div>
+                    <ul class="navbar-nav" [ngClass]="{'ps-3':sideNavStatus}">
+                        <li routerLinkActive="active" routerLink="{{item.link}}" [routerLinkActiveOptions]="{exact:item.activeOptionsExact}" class="nav-list-item text-muted"
+                            *ngFor="let item of definitionsList" title="{{item.name|translate}}">
+                            <span class="nav-list-item-span">
+                                <a routerLink="{{item.link}}" class="small">
+                                    <img class="img-link" src="../../../assets/{{item.icon}}" />
+                                    <span> {{item.name|translate}}</span><!--*ngIf="sideNavStatus"-->
+                                </a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>

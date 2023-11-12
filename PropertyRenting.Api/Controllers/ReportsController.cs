@@ -137,6 +137,18 @@ public class ReportsController : BaseController
         var data = await _reportRepository.GetAvailableUnitsAsync();
         return Ok(data);
     }
+    [HttpPost("contributor/balance")]
+    public async Task<IActionResult> GetContributorBalanceAsync(ContributorBalanceRequest request)
+    {
+        var data = await _reportRepository.GetContributorBalanceAsync(request.ContributorId, request.FromDate, request.ToDate);
+        return Ok(data);
+    }
+    [HttpPost("contributor/transaction")]
+    public async Task<IActionResult> GetContributorTransactionAsync(ContributorTransactionRequest request)
+    {
+        var data = await _reportRepository.GetContributorTransactionAsync(request.ContributorId, request.FromDate, request.ToDate);
+        return Ok(data);
+    }
     #endregion
 
     #region Exports :
@@ -319,6 +331,27 @@ new ReportParameter("UnitName", request.UnitName)
     {
         var data = await _reportRepository.GetAvailableUnitsAsync();
         return ExportReport(type, ReportName.AvailableUnits.ToString(), data);
+    }
+    [HttpPost("contributor/balance/export/{type}")]
+    public async Task<IActionResult> ExportContributorBalanceAsync(string type, ContributorBalanceRequest request)
+    {
+        var data = await _reportRepository.GetContributorBalanceAsync(request.ContributorId, request.FromDate, request.ToDate);
+        return ExportReport(type, ReportName.ContributorBalance.ToString(), data,
+            new ReportParameter("ContributorId", request.ContributorId?.ToString()),
+            new ReportParameter("FromDate", request.FromDate?.ToString("yyyy-MM-dd")),
+            new ReportParameter("ToDate", request.ToDate?.ToString("yyyy-MM-dd"))
+            );
+    }
+    [HttpPost("contributor/transaction/export/{type}")]
+    public async Task<IActionResult> ExportContributorTransactionAsync(string type, ContributorTransactionRequest request)
+    {
+        var data = await _reportRepository.GetContributorTransactionAsync(request.ContributorId, request.FromDate, request.ToDate);
+        return ExportReport(type, ReportName.ContributorTransaction.ToString(), data,
+            new ReportParameter("ContributorId", request.ContributorId.ToString()),
+            new ReportParameter("FromDate", request.FromDate?.ToString("yyyy-MM-dd")),
+            new ReportParameter("ToDate", request.ToDate?.ToString("yyyy-MM-dd")),
+            new ReportParameter("Contributor", request.Contributor)
+            );
     }
     #endregion
 

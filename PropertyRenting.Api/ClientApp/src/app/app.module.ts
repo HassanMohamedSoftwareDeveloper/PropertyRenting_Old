@@ -147,9 +147,11 @@ import { RenterContractCountByStateComponent } from "./Components/Home/renter-co
 import { BuildingUnitsCountComponent } from "./Components/Home/building-units-count/building-units-count.component";
 import { RenterInstallmentsPerDateComponent } from "./Components/Home/renter-installments-per-date/renter-installments-per-date.component";
 import { OwnerInstallmentsPerDateComponent } from "./Components/Home/owner-installments-per-date/owner-installments-per-date.component";
-import { UnitCountByDistrictComponent } from './Components/Home/unit-count-by-district/unit-count-by-district.component';
-import { UpdateUserComponent } from './Auth/update-user/update-user.component';
-import { ResetUserPasswordComponent } from './Auth/reset-user-password/reset-user-password.component';
+import { UnitCountByDistrictComponent } from "./Components/Home/unit-count-by-district/unit-count-by-district.component";
+import { UpdateUserComponent } from "./Auth/update-user/update-user.component";
+import { ResetUserPasswordComponent } from "./Auth/reset-user-password/reset-user-password.component";
+import { ContributorBalanceComponent } from "./Reports/contributor-balance/contributor-balance.component";
+import { ContributorTransactionComponent } from "./Reports/contributor-transaction/contributor-transaction.component";
 
 @NgModule({
     declarations: [
@@ -254,6 +256,8 @@ import { ResetUserPasswordComponent } from './Auth/reset-user-password/reset-use
         UnitCountByDistrictComponent,
         UpdateUserComponent,
         ResetUserPasswordComponent,
+        ContributorBalanceComponent,
+        ContributorTransactionComponent,
     ],
     imports: [
         BrowserModule,

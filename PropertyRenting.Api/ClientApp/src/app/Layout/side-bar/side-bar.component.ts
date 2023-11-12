@@ -290,5 +290,19 @@ export class SideBarComponent implements OnInit {
             link: "reports/available-units",
             activeOptionsExact: false,
         },
+        {
+            number: 19,
+            name: "SideBar.ContributorBalance",
+            icon: "reports.png",
+            link: "reports/contributor-balance",
+            activeOptionsExact: false,
+        },
+        {
+            number: 20,
+            name: "SideBar.ContributorTransactions",
+            icon: "reports.png",
+            link: "reports/contributor-transaction",
+            activeOptionsExact: false,
+        },
     ];
 }
