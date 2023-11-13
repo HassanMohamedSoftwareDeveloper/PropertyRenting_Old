@@ -26,7 +26,9 @@ import { Lookup } from "../../../Models/lookup";
 export class ContractAdditionsComponent implements OnInit, OnChanges {
     mandatoryId = "6d26195c-46e2-4ef2-ba84-f50174c042ea";
     contractAdditionForm!: FormGroup;
-    @Input() contractAddition: ContractFinancialTransaction = { id: null };
+    @Input() contractAddition: ContractFinancialTransaction = {
+        id: null,
+    };
     @Output() hideModalEvent = new EventEmitter<void>();
     @Output() addedContractAdditionEvent =
         new EventEmitter<ContractFinancialTransaction>();

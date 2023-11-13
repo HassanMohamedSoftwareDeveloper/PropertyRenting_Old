@@ -27,7 +27,9 @@ export class BuildingContributerAddUpdateComponent
     implements OnInit, OnChanges
 {
     buildingContributerForm!: FormGroup;
-    @Input() buildingContributer: BuildingContributer = { contributerId: null };
+    @Input() buildingContributer: BuildingContributer = {
+        contributerId: null,
+    };
     @Output() hideModalEvent = new EventEmitter<void>();
     @Output() addedContributerEvent = new EventEmitter<BuildingContributer>();
     submitted = false;
@@ -85,7 +87,6 @@ export class BuildingContributerAddUpdateComponent
             (x) => x.id === this.buildingContributer.contributerId
         );
         this.buildingContributer.contributer = contributer?.description;
-
         if (
             this.buildingContributer.id === null &&
             this.buildingContributer.tempId === null
@@ -93,8 +94,6 @@ export class BuildingContributerAddUpdateComponent
             this.buildingContributer.tempId = uuidv4();
         }
         this.addedContributerEvent.emit(this.buildingContributer);
-
-        //this.resetFrom();
     }
 
     resetFrom() {

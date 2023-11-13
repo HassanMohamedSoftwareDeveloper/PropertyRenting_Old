@@ -246,7 +246,11 @@ export class BuildingAddUpdateComponent implements OnInit {
         return this.isCollapsed;
     }
     addBuildingContributer() {
-        this.buildingContributer = { id: null, contributerId: null };
+        this.buildingContributer = {
+            id: null,
+            contributerId: null,
+            tempId: null,
+        };
         this.modal?.showModal();
     }
     editBuildingContributer(buildingContributer: BuildingContributer) {
@@ -324,6 +328,7 @@ export class BuildingAddUpdateComponent implements OnInit {
     }
 
     addUpdateContributer(data: BuildingContributer) {
+        console.log(data);
         this.building.contributers = this.building.contributers || [];
         const isExist =
             this.building.contributers.find(
