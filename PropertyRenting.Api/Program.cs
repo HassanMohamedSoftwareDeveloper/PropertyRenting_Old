@@ -35,8 +35,6 @@ builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddSingleton<QueryHepler>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 
-
-
 builder.Services
     .AddIdentity<IdentityUser, IdentityRole>(opt =>
     {
@@ -115,7 +113,6 @@ builder.Services.AddAuthentication(cfg =>
 
 builder.Services.AddAuthorization();
 
-
 builder.Services.AddLocalization(options =>
 {
     options.ResourcesPath = "Resources";
@@ -135,8 +132,6 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
     options.SupportedCultures = supportedCultures;
     options.DefaultRequestCulture = new RequestCulture(culture: supportedCultures[0]);
-
-
 });
 
 var app = builder.Build();
@@ -152,7 +147,6 @@ app.UseHttpsRedirection();
 
 app.UseRequestLocalization();
 
-
 app.UseRouting();
 
 app.UseCors(MyAllowSpecificOrigins);
@@ -162,4 +156,3 @@ app.UseAuthorization();
 app.MapControllers();
 await DatabaseCreater.Create(app.Services);
 app.Run();
-
